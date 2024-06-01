@@ -1,0 +1,1 @@
+export { InitializersModule } from './initializers.module';
