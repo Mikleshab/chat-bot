@@ -1,1 +1,1 @@
-export { ExecuteCommand } from './execute.command';
+export * from './welcome-command';
