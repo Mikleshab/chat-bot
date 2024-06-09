@@ -8,6 +8,7 @@ export class GreetingsController {
 
   @Get()
   async welcome(@Query('name') name?: string): Promise<string> {
-    return this.chatBotService.welcome(new WelcomeCommand(name || ''));
+    const response = await this.chatBotService.welcome(new WelcomeCommand(name || ''));
+    return response.getMessage();
   }
 }

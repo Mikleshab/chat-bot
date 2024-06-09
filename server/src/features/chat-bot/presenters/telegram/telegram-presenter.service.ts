@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { TelegramConfiguration } from './config';
 import { Telegraf } from 'telegraf';
 import { ChatBotService } from '../../application/chat-bot.service';
-import { WelcomeCommand } from '../../application/commands';
+import { SurveyCommand, WelcomeCommand } from '../../application/commands';
 
 @Injectable()
 export class TelegramPresenterService implements OnModuleInit {
@@ -23,8 +23,14 @@ export class TelegramPresenterService implements OnModuleInit {
 
   private init(): void {
     this.bot.command('greetings', (ctx) =>
-      this.chatBotService.welcome(new WelcomeCommand(ctx.message.from?.first_name || '')).then(message => {
-        ctx.reply(message);
+      this.chatBotService.welcome(new WelcomeCommand(ctx.message.from?.first_name || '')).then(response => {
+        ctx.reply(response.getMessage());
+      })
+    );
+
+    this.bot.command('survey', (ctx) =>
+      this.chatBotService.survey(new SurveyCommand(`${ctx.message.chat.id}`)).then(response => {
+        ctx.reply(response.getMessage());
       })
     );
   }

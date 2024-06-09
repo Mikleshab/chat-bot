@@ -20,7 +20,11 @@ export class GoogleAuthService {
 
     const auth = new GoogleAuth({
       keyFile: KEYFILE_PATH,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+      scopes: [
+        'https://www.googleapis.com/auth/spreadsheets',
+        'https://www.googleapis.com/auth/forms',
+        'https://www.googleapis.com/auth/drive',
+      ],
     });
 
     this.authClient = await auth.getClient() as JWT;

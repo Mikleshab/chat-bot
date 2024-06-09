@@ -1,3 +1,8 @@
 export abstract class ChatBotRepository {
-  abstract welcome(): Promise<string[]>;
+  abstract getWelcomeText(): Promise<string[]>;
+
+  abstract getFormLink(): Promise<{
+    title: string;
+    url: string
+  }>;
 }

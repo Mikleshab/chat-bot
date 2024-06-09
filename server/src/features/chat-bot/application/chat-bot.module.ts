@@ -4,10 +4,11 @@ import { GooglePersistenceModule } from '../infrastructure/persistence/google/go
 import { TelegramPresenterModule } from '../presenters/telegram/telegram-presenter.module';
 import { TelegramPresenterService } from '../presenters/telegram/telegram-presenter.service';
 import { GreetingsController } from '../presenters/http/controllers/greetings.controller';
+import { SurveyController } from '../presenters/http/controllers/survey.controller';
 
 @Module({
   providers: [ChatBotService, TelegramPresenterService],
-  controllers: [GreetingsController],
+  controllers: [GreetingsController, SurveyController],
   imports: [
     GooglePersistenceModule,
     TelegramPresenterModule,
