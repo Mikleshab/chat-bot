@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ChatBotRepository } from './ports/chat-bot.repository';
-import { WelcomeCommand } from './commands';
+import { SurveyCommand, WelcomeCommand } from './commands';
+import { Survey, Welcome } from '../domain';
 
 @Injectable()
 export class ChatBotService {
@@ -8,10 +9,15 @@ export class ChatBotService {
     private readonly chatBotRepository: ChatBotRepository,
   ) {}
 
-  async welcome(command: WelcomeCommand): Promise<string> {
-    const text = await this.chatBotRepository.welcome();
-    const [firstLine, secondLine] = text;
+  async survey(command: SurveyCommand): Promise<Survey> {
+    const formInfo = await this.chatBotRepository.getFormLink();
 
-    return `${firstLine}, ${command.name}.\n${secondLine}`;
+    return new Survey(command.clientId, formInfo.title, formInfo.url);
+  }
+
+  async welcome(command: WelcomeCommand): Promise<Welcome> {
+    const lines = await this.chatBotRepository.getWelcomeText();
+
+    return new Welcome(command.name, lines);
   }
 }

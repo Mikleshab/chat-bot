@@ -7,6 +7,8 @@ export interface GoogleConfiguration {
   spreadsheetId: string;
   greetingsSheetName: string;
   greetingsSheetRange: string;
+  formId: string;
+  formShortId: string;
 }
 
 export const googleConfiguration = () => ({
@@ -14,6 +16,8 @@ export const googleConfiguration = () => ({
   spreadsheetId: process.env.GOOGLE_SPREADSHEET_ID,
   greetingsSheetName: process.env.GREETINGS_SHEET_NAME,
   greetingsSheetRange: process.env.GREETINGS_SHEET_RANGE,
+  formId: process.env.GOOGLE_FORM_ID,
+  formShortId: process.env.GOOGLE_FORM_SHORT_ID,
 });
 
 export const googleConfigurationValidationSchema = Joi.object<GoogleConfiguration, true, GoogleConfiguration>({
@@ -21,4 +25,6 @@ export const googleConfigurationValidationSchema = Joi.object<GoogleConfiguratio
   spreadsheetId: Joi.string(),
   greetingsSheetName: Joi.string(),
   greetingsSheetRange: Joi.string(),
+  formId: Joi.string(),
+  formShortId: Joi.string(),
 });
