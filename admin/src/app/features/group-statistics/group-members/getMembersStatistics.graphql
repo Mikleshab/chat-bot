@@ -1,0 +1,14 @@
+query GetMembersStatistics {
+    getMembersStatistics {
+        title
+        count
+        diff
+        icon
+        history {
+            title
+            color
+            text
+            value
+        }
+    }
+}
