@@ -1,8 +1,10 @@
-import { Module } from '@nestjs/common';
-import { ConfigInitializer } from './config.initializer';
+import { Global, Module } from '@nestjs/common';
+import { ConfigInitializer } from '@initializers/config.initializer';
+import { GraphQLInitializer } from '@initializers/graphql.initializer';
+import { BotInitializer } from '@initializers/bot.initializer';
 
+@Global()
 @Module({
-  imports: [ConfigInitializer],
+  imports: [ConfigInitializer, GraphQLInitializer, BotInitializer],
 })
-export class InitializersModule {
-}
+export class InitializersModule {}

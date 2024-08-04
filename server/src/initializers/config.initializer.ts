@@ -1,7 +1,7 @@
 import * as process from 'node:process';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { commonConfiguration, commonConfigurationValidationSchema } from '@config';
+import { commonConfiguration, commonConfigurationValidationSchema } from '@config/common.config';
 
 @Module({
   imports: [
@@ -13,5 +13,4 @@ import { commonConfiguration, commonConfigurationValidationSchema } from '@confi
     }),
   ],
 })
-export class ConfigInitializer {
-}
+export class ConfigInitializer {}

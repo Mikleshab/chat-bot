@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -9,7 +11,7 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "src",
+    "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
@@ -24,14 +26,20 @@
       "./node_modules/@types"
     ],
     "paths": {
-      "@config": [
-        "config/"
+      "@libs/*": [
+        "src/libs/*"
       ],
-      "@initializers": [
-        "initializers/"
+      "@config/*": [
+        "src/config/*"
+      ],
+      "@initializers/*": [
+        "src/initializers/*"
       ],
       "@features": [
-        "features/"
+        "src/features/"
+      ],
+      "@features/*": [
+        "src/features/*"
       ]
     }
   }

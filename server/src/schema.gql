@@ -1,0 +1,56 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Mutation {
+  updateWelcomeMessage(input: WelcomeMessageInput!): Boolean!
+}
+
+type Query {
+  getMembersStatistics: TelegramStatisticObject!
+  getMessagesStatistics: TelegramStatisticObject!
+  getWelcomeMessage: WelcomeMessageObject!
+}
+
+"""Statistics history from telegram group."""
+type StatisticsHistoryObject {
+  """Value color."""
+  color: String!
+
+  """Text for value."""
+  text: String!
+
+  """Title of dimension."""
+  title: String!
+
+  """Value."""
+  value: Float!
+}
+
+"""Statistics from telegram group."""
+type TelegramStatisticObject {
+  """Main counter."""
+  count: String!
+
+  """Difference."""
+  diff: String!
+
+  """Statistics history from telegram group."""
+  history: [StatisticsHistoryObject!]!
+
+  """Difference icon."""
+  icon: String!
+
+  """Title."""
+  title: String!
+}
+
+input WelcomeMessageInput {
+  text: String!
+}
+
+"""Welcome message for new group members."""
+type WelcomeMessageObject {
+  """Text."""
+  text: String!
+}

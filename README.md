@@ -4,18 +4,18 @@ Welcome to the Telegram Church Bot repository. This chatbot is designed to autom
 
 ## Project Overview
 
-The Telegram Church Bot aims to strengthen the connection between church members and their community through automated services. It offers an efficient way to welcome new members, gather their interests and needs through questionnaires, and provide personalized content to support their spiritual growth.
+The Telegram Church Bot aims to strengthen the connection between church members and their community through automated services. It offers an efficient way to greetings new members, gather their interests and needs through questionnaires, and provide personalized content to support their spiritual growth.
 
 ## Features
 
-- **Automated Welcome Messages**: Sends personalized welcome messages and video greetings from the pastor to new users.
+- **Automated Welcome Messages**: Sends personalized greetings messages and video greetings from the pastor to new users.
 - **User Registration**: Initiates a questionnaire to gather information about the user's church experience and preferences.
 - **Personalized Content Delivery**: Provides users with links to educational content based on their questionnaire responses.
 - **Community Interaction**: Encourages users to join church social media groups and local activities.
 
 ## Commands
 
-- `/welcome`: Sends a welcome message and pastor's video to new users.
+- `/greetings`: Sends a greetings message and pastor's video to new users.
 - `/register`: Starts the user registration questionnaire.
 - `/course_info`: Provides information about available church courses.
 - `/submit_feedback`: Allows users to submit questions or feedback to the pastor.
@@ -26,7 +26,7 @@ The Telegram Church Bot aims to strengthen the connection between church members
 
 ## Contributing
 
-Contributions to this project are welcome! Please fork the repository and submit pull requests for any improvements or new features you would like to add.
+Contributions to this project are greetings! Please fork the repository and submit pull requests for any improvements or new features you would like to add.
 
 ## License
 
