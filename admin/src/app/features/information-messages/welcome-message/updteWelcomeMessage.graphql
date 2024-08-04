@@ -1,0 +1,3 @@
+mutation UpdateWelcomeMessage($text: String!) {
+    updateWelcomeMessage(input: { text: $text })
+}
