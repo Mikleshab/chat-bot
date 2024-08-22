@@ -1,0 +1,13 @@
+query GetConversations {
+    getConversations {
+        title
+        state
+        registered
+        messagesCount
+        activity
+        client {
+            userId
+            country
+        }
+    }
+}

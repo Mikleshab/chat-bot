@@ -1,19 +1,16 @@
-import { Component } from '@angular/core';
-import { MarkdownEditorComponent } from '../common/markdown-editor/markdown-editor.component';
-import {
-  GetWelcomeMessageGQL,
-  UpdateWelcomeMessageGQL
-} from '../../../graphql/generated';
-import { debounceTime, map, take } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { Component } from "@angular/core";
+import { TextEditorComponent } from "../../../common/text-editor/text-editor.component";
+import { GetWelcomeMessageGQL, UpdateWelcomeMessageGQL } from "../../../graphql/generated";
+import { debounceTime, map, take } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { AsyncPipe, NgIf } from "@angular/common";
 
 @Component({
-  selector: 'app-welcome-message',
+  selector: "app-welcome-message",
   standalone: true,
-  imports: [MarkdownEditorComponent, AsyncPipe, NgIf],
-  templateUrl: './welcome-message.component.html',
-  styleUrls: ['./welcome-message.component.scss']
+  imports: [TextEditorComponent, AsyncPipe, NgIf],
+  templateUrl: "./welcome-message.component.html",
+  styleUrls: ["./welcome-message.component.scss"]
 })
 export class WelcomeMessageComponent {
   welcomeMessage$ = this.getWelcomeMessageGQL
@@ -30,12 +27,11 @@ export class WelcomeMessageComponent {
       this.updateWelcomeMessageGQL
         .mutate({ text })
         .pipe(take(1))
-        .subscribe(response => console.log('response', response));
+        .subscribe(response => console.log("response", response));
     });
   }
 
   textChanged(text: string) {
-    console.log('text: ', text);
     this.textChange$.next(text);
   }
 }

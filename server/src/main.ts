@@ -6,7 +6,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { CommonConfiguration, DEFAULT_PORT } from '@config/common.config';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { snapshot: true });
   app.enableCors({
     origin: 'http://localhost:4200', // Замените на URL вашего фронтенда
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',

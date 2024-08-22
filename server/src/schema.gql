@@ -2,13 +2,159 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""Represents a conversation between a client and the system."""
+type ConversationObject {
+  """The activity level of the client in the conversation."""
+  activity: Float!
+
+  """The client involved in the conversation."""
+  client: UserObject!
+
+  """
+  Fetches all messages associated with the conversation based on the client ID. Returns an array of message objects.
+  """
+  messages: [MessageObject!]!
+
+  """The total number of messages sent by the client in the conversation."""
+  messagesCount: Float!
+
+  """The registration date of the conversation, represented as a timestamp."""
+  registered: Float!
+
+  """The current state of the conversation."""
+  state: ConversationState!
+
+  """The title of the conversation."""
+  title: String!
+}
+
+"""Represents the state of a conversation"""
+enum ConversationState {
+  NEW
+  RECURRING
+  SLEEP
+}
+
+"""Input arguments for the CreateReply mutation."""
+input CreateReplyInput {
+  """The ID of the client."""
+  clientId: String!
+
+  """The content of the reply message."""
+  content: String!
+
+  """The ID of the parent message to reply to."""
+  parentId: String!
+}
+
+"""Input arguments for the GetConversation query."""
+input GetConversationInput {
+  """The unique identifier of the client."""
+  clientId: String!
+}
+
+"""Input arguments for the getReplies query."""
+input GetRepliesInput {
+  """The cursor to start fetching messages after."""
+  after: String
+
+  """The number of messages to return."""
+  first: Float
+
+  """The unique identifier of the message."""
+  messageId: String!
+}
+
+type MessageConnection {
+  """A list of edges."""
+  edges: [MessageEdge!]!
+
+  """Pagination related information."""
+  pageInfo: PageInfo!
+}
+
+type MessageEdge {
+  """Cursor for this edge."""
+  cursor: String!
+
+  """The message object for this edge."""
+  node: MessageObject!
+}
+
+"""Represents a chat message within a conversation."""
+type MessageObject {
+  """The author of the message."""
+  author: UserObject!
+
+  """Content of the message."""
+  content: String!
+
+  """Unique identifier of the message."""
+  id: String!
+
+  """
+  Unique identifier of the message this message is replying to. Nullable if there is no parent message.
+  """
+  parentId: String
+
+  """A list of messages that are replies to this message."""
+  replies: [MessageObject!]!
+
+  """The number of replies to this message."""
+  replyCount: Float!
+
+  """Timestamp indicating when the message was created."""
+  timestamp: Float!
+}
+
 type Mutation {
+  """
+  Creates a reply to a message. Returns true if the reply is successfully created.
+  """
+  createReply(
+    """Input data for creating a reply."""
+    input: CreateReplyInput!
+  ): Boolean!
   updateWelcomeMessage(input: WelcomeMessageInput!): Boolean!
 }
 
+type PageInfo {
+  """The cursor for the end of this page."""
+  endCursor: String
+
+  """Indicates if there are more pages to fetch."""
+  hasNextPage: Boolean!
+
+  """Indicates if there are previous pages."""
+  hasPreviousPage: Boolean!
+
+  """The cursor for the start of this page."""
+  startCursor: String
+}
+
 type Query {
+  """
+  Fetches a specific conversation based on the client ID provided in the input.
+  """
+  getConversation(
+    """Input containing the client ID to fetch a specific conversation."""
+    input: GetConversationInput!
+  ): ConversationObject!
+
+  """
+  Fetches a list of all conversations. Returns an array of conversation objects.
+  """
+  getConversations: [ConversationObject!]!
   getMembersStatistics: TelegramStatisticObject!
   getMessagesStatistics: TelegramStatisticObject!
+
+  """
+  Fetches paginated replies to this message in Relay-style connection format.
+  """
+  getReplies(
+    """Input data for fetching replies by message ID."""
+    input: GetRepliesInput!
+  ): MessageConnection!
   getWelcomeMessage: WelcomeMessageObject!
 }
 
@@ -27,6 +173,11 @@ type StatisticsHistoryObject {
   value: Float!
 }
 
+type Subscription {
+  ConversationUpdatedEvent(input: GetConversationInput!): Boolean!
+  MessageUpdatedEvent(input: GetRepliesInput!): MessageObject!
+}
+
 """Statistics from telegram group."""
 type TelegramStatisticObject {
   """Main counter."""
@@ -43,6 +194,21 @@ type TelegramStatisticObject {
 
   """Title."""
   title: String!
+}
+
+"""Represents a user entity."""
+type UserObject {
+  """Country of the user."""
+  country: String!
+
+  """Full name of the user."""
+  fullName: String!
+
+  """Unique identifier of the user."""
+  userId: String!
+
+  """Username of the user."""
+  username: String!
 }
 
 input WelcomeMessageInput {

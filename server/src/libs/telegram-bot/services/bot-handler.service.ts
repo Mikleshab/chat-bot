@@ -10,7 +10,7 @@ export class BotHandlerService implements TelegramBotHandler {
   handleEvent(type: BotEventType, callback: (ctx: unknown) => void): void {
     if (!this.eventCallbacks[type]) {
       this.eventCallbacks[type] = [];
-      this.telegramBotService.bot.on(message(type), (ctx: any) => {
+      this.telegramBotService.bot.on(message(type), (ctx) => {
         this.eventCallbacks[type]!.forEach((cb) => cb(ctx));
       });
     }

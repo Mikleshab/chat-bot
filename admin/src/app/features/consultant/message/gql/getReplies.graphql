@@ -1,0 +1,25 @@
+query GetReplies($messageId: String!, $first: Float, $after: String) {
+    getReplies(input: { messageId: $messageId, first: $first, after: $after }) {
+        edges {
+            node {
+                id
+                content
+                timestamp
+                parentId
+                replyCount
+                author {
+                    userId
+                    username
+                    fullName
+                }
+            }
+            cursor
+        }
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+        }
+    }
+}

@@ -1,0 +1,14 @@
+subscription OnMessageUpdated($input: GetRepliesInput!) {
+    MessageUpdatedEvent(input: $input) {
+        id
+        content
+        timestamp
+        parentId
+        replyCount
+        author {
+            userId
+            username
+            fullName
+        }
+    }
+}

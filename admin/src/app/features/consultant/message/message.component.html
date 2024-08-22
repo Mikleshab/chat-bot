@@ -1,0 +1,145 @@
+@if (service.message$ |async; as message) {
+  <c-container class="message mb-3">
+    <c-row class="message__author">
+      <c-col>
+        <strong class="fs-7">{{ message.author.username }} / {{ message.author.fullName }} </strong>
+        <strong class="fs-8 fw-light"> ({{ message.timestamp | date:'medium' }})
+          @if (message | isNewQuestion) {
+            <c-badge color="info">New</c-badge>
+          }
+        </strong>
+      </c-col>
+    </c-row>
+    <c-row class="message__text">
+      <c-col>
+        {{ message.content }}
+      </c-col>
+    </c-row>
+    <c-row class="message__buttons mt-1 mb-2">
+      <c-col>
+        <button
+          cButton
+          class="me-2"
+          color="secondary"
+          size="sm"
+          variant="ghost"
+          shape="rounded-pill"
+          (click)="showTextarea()"
+        >
+          Ответить
+        </button>
+
+        @if (message.replyCount > 0) {
+          <button
+            cButton
+            color="primary"
+            size="sm"
+            variant="ghost"
+            shape="rounded-pill"
+            (click)="toggleRepliesVisibility(message)"
+          >
+            <svg cIcon name="{{ !areRepliesVisible ? 'cilArrowBottom' : 'cilArrowTop' }}"></svg>
+            {{ message.replyCount | customPlural:'ответ':'ответа':'ответов' }}
+          </button>
+        }
+      </c-col>
+    </c-row>
+    @if (isTextareaVisible) {
+      <c-row class="message__reply">
+        <c-row>
+          <c-col>
+            <textarea
+              #textareaElement
+              cFormControl
+              autofocus
+              [disabled]="service.replies.isSending"
+              [(ngModel)]="replyContent"
+              [rows]="textareaRows"
+              (keydown.control.enter)="send(message, replyContent, clientId)"
+              (input)="adjustTextareaHeight()"
+            ></textarea>
+          </c-col>
+        </c-row>
+        <c-row>
+          <c-col class="d-flex justify-content-end mt-2 mb-2">
+            @if (service.replies.replySentError) {
+              <c-alert class="small-alert me-2" color="light">{{ service.replies.replySentError }}</c-alert>
+            }
+            <button
+              cButton
+              class="me-2"
+              color="dark"
+              size="sm"
+              variant="ghost"
+              shape="rounded-pill"
+              [disabled]="service.replies.isSending"
+              (click)="hideTextarea()"
+            >
+              Отмена
+            </button>
+            <button
+              cButton
+              color="primary"
+              size="sm"
+              variant="ghost"
+              shape="rounded-pill"
+              [disabled]="!replyContent.length || service.replies.isSending"
+              (click)="send(message, replyContent, clientId)"
+            >
+              @if (!service.replies.isSending) {
+                Отправить (Ctrl + Enter)
+              } @else {
+                <c-spinner aria-hidden="true" size="sm" variant="grow"></c-spinner>
+                Отправка...
+              }
+            </button>
+          </c-col>
+        </c-row>
+      </c-row>
+    }
+    @if (areRepliesVisible) {
+      <c-row class="message__replies flex-column ms-2">
+        @if (service.replies.isLoading) {
+          <c-col class="d-flex justify-content-center">
+            <c-spinner color="secondary" variant="grow"></c-spinner>
+          </c-col>
+        }
+        <c-col>
+          @for (reply of service.replies.replies$ | async; track reply.id) {
+            <app-message [message]="reply" [clientId]="clientId" />
+          }
+        </c-col>
+      </c-row>
+      <c-row class="message__load-more">
+        <c-col>
+          @if (service.replies.hasNextPage) {
+            <button
+              cButton
+              color="primary"
+              size="sm"
+              variant="ghost"
+              shape="rounded-pill"
+              [disabled]="service.replies.isLoading"
+              (click)="service.replies.loadMore(message)"
+            >
+              @if (!service.replies.isLoading) {
+                <svg cIcon name="cil-level-up"></svg>
+                Другие ответы
+              } @else {
+                <c-spinner aria-hidden="true" size="sm" variant="grow"></c-spinner>
+                Загрузка...
+              }
+            </button>
+          }
+        </c-col>
+      </c-row>
+      @if (service.replies.repliesLoadError) {
+        <c-row class="mt-2">
+          <c-col>
+            <c-alert color="light">{{ service.replies.repliesLoadError }}</c-alert>
+          </c-col>
+        </c-row>
+      }
+    }
+  </c-container>
+}

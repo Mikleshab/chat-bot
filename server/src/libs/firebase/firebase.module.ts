@@ -16,6 +16,6 @@ export const COLLECTION_DIRECTOR = 'CollectionDirector';
       inject: [FirebaseService],
     },
   ],
-  exports: [COLLECTION_DIRECTOR],
+  exports: [COLLECTION_DIRECTOR, FirebaseService],
 })
 export class FirebaseModule {}

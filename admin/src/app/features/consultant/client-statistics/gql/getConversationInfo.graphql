@@ -1,0 +1,11 @@
+query GetConversationInfo($input: GetConversationInput!) {
+    getConversation(input: $input) {
+        client {
+            username
+            fullName
+        }
+        title
+        messagesCount
+        registered
+    }
+}
