@@ -1,15 +1,12 @@
-import { AfterViewInit, Component } from '@angular/core';
-import * as ace from 'ace-builds';
+import { AfterViewInit, Component } from "@angular/core";
+import * as ace from "ace-builds";
+import { CardBodyComponent, CardComponent, CardHeaderComponent, RowComponent } from "@coreui/angular";
 import {
-  CardBodyComponent,
-  CardComponent,
-  CardHeaderComponent,
-  RowComponent
-} from '@coreui/angular';
-import { WelcomeMessageComponent } from '../../../features/information-messages/welcome-message/welcome-message.component';
+  WelcomeMessageComponent
+} from "../../../features/information-messages/welcome-message/welcome-message.component";
 
 @Component({
-  templateUrl: 'welcome.component.html',
+  templateUrl: "welcome.component.html",
   standalone: true,
   imports: [
     CardComponent,
@@ -25,10 +22,10 @@ export class WelcomeComponent implements AfterViewInit {
   }
 
   setEditorOptions() {
-    const element = document.querySelector('md-editor .ace_editor');
+    const element = document.querySelector("md-editor .ace_editor");
     const editor = ace.edit(element!);
     editor.setOptions({
-      fontSize: '16px'
+      fontSize: "16px"
     });
   }
 }

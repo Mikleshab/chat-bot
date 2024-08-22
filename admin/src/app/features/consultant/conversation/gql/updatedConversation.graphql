@@ -1,0 +1,3 @@
+subscription OnConversationUpdated($input: GetConversationInput!) {
+    ConversationUpdatedEvent(input: $input)
+}

@@ -43,7 +43,6 @@ import { NgTemplateOutlet } from "@angular/common";
   ]
 })
 export class DefaultHeaderComponent extends HeaderComponent {
-
   readonly #activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   readonly #colorModeService = inject(ColorModeService);
   readonly colorMode = this.#colorModeService.colorMode;

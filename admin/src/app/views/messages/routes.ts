@@ -1,23 +1,23 @@
-import { Routes } from '@angular/router';
+import { Routes } from "@angular/router";
 
 export const routes: Routes = [
   {
-    path: '',
+    path: "",
     data: {
-      title: 'Сообщения'
+      title: "Сообщения"
     },
     children: [
       {
-        path: '',
-        redirectTo: 'welcome',
-        pathMatch: 'full'
+        path: "",
+        redirectTo: "welcome",
+        pathMatch: "full"
       },
       {
-        path: 'welcome',
+        path: "welcome",
         loadComponent: () =>
-          import('./welcome/welcome.component').then(m => m.WelcomeComponent),
+          import("./welcome/welcome.component").then(m => m.WelcomeComponent),
         data: {
-          title: 'Приветствие'
+          title: "Приветствие"
         }
       }
     ]

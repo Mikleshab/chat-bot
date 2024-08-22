@@ -1,0 +1,18 @@
+<c-card>
+  <c-card-header>Общение</c-card-header>
+  <c-card-body>
+    @if (conversation$ | async; as conversation) {
+      @if (conversation.messages.length > 0) {
+        @for (message of conversation.messages; track message.id) {
+          @defer {
+            <app-message [message]="message" [clientId]="clientId" />
+          }
+        }
+      } @else {
+        Нет сообщений
+      }
+    } @else {
+      Загрузка...
+    }
+  </c-card-body>
+</c-card>

@@ -1,17 +1,70 @@
 import { NgModule } from "@angular/core";
-import { ApolloLink, InMemoryCache } from "@apollo/client/core";
+import { ApolloClientOptions, InMemoryCache, split } from "@apollo/client/core";
 import { HttpLink } from "apollo-angular/http";
 import { APOLLO_OPTIONS, ApolloModule } from "apollo-angular";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { createClient } from "graphql-ws";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { Kind } from "graphql";
+import { GetRepliesQuery } from "../../graphql/generated";
 
 
-const uri = "http://localhost:3000/graphql"; // Замените на URL вашего GraphQL сервера
+const uri = "http://localhost:3000/graphql";
 
-export function createApollo(httpLink: HttpLink) {
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        getReplies: {
+          keyArgs: (args) => {
+            return args?.["input"]?.messageId;
+          },
+          merge(existing: GetRepliesQuery["getReplies"] = {
+            edges: [],
+            pageInfo: { hasNextPage: false, hasPreviousPage: false }
+          }, incoming: GetRepliesQuery["getReplies"]) {
+            return {
+              ...incoming,
+              edges: [...existing.edges, ...incoming.edges]
+            };
+          },
+          read(existing = { edges: [], pageInfo: {} }) {
+            return existing;
+          }
+        }
+      }
+    }
+  }
+});
+
+export function createApollo(httpLink: HttpLink): ApolloClientOptions<unknown> {
+  const http = httpLink.create({
+    uri
+  });
+
+  const ws = new GraphQLWsLink(
+    createClient({
+      url: uri?.replace(/^(http:\/\/)|(https:\/\/)/, match => (match === "http://" ? "ws://" : "wss://"))!,
+      shouldRetry: () => true
+    })
+  );
+
+  const link = split(
+    // Split based on operation type
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+      return definition.kind === Kind.OPERATION_DEFINITION && definition.operation === "subscription";
+    },
+    ws,
+    http
+  );
+
   return {
-    link: ApolloLink.from([httpLink.create({ uri })]),
-    cache: new InMemoryCache()
+    link,
+    cache
   };
 }
+
 
 @NgModule({
   providers: [

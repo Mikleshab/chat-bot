@@ -1,0 +1,16 @@
+query GetConversationQuestions($input: GetConversationInput!) {
+    getConversation(input: $input) {
+        messages {
+            id
+            content
+            timestamp
+            parentId
+            replyCount
+            author {
+                userId
+                username
+                fullName
+            }
+        }
+    }
+}

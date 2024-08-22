@@ -11,6 +11,9 @@ import { join } from 'path';
         return {
           autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
           sortSchema: true,
+          subscriptions: {
+            'graphql-ws': true,
+          },
         };
       },
     }),

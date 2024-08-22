@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { Title } from '@angular/platform-browser';
+import { Component, OnInit } from "@angular/core";
+import { NavigationEnd, Router, RouterOutlet } from "@angular/router";
+import { Title } from "@angular/platform-browser";
 
-import { IconSetService } from '@coreui/icons-angular';
-import { iconSubset } from './icons/icon-subset';
+import { IconSetService } from "@coreui/icons-angular";
+import { iconSubset } from "./icons/icon-subset";
 
 @Component({
-  selector: 'app-root',
-  template: '<router-outlet />',
+  selector: "app-root",
+  template: "<router-outlet />",
   standalone: true,
   imports: [RouterOutlet]
 })
 export class AppComponent implements OnInit {
-  title = 'Бот админ';
+  title = "Бот админ";
 
   constructor(
     private router: Router,

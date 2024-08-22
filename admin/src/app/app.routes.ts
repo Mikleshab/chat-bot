@@ -1,72 +1,77 @@
-import { Routes } from '@angular/router';
-import { DefaultLayoutComponent } from './layout';
+import { Routes } from "@angular/router";
+import { DefaultLayoutComponent } from "./layout";
 
 export const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full'
+    path: "",
+    redirectTo: "dashboard",
+    pathMatch: "full"
   },
   {
-    path: '',
+    path: "",
     component: DefaultLayoutComponent,
     data: {
-      title: 'Меню'
+      title: "Меню"
     },
     children: [
       {
-        path: 'dashboard',
+        path: "dashboard",
         loadChildren: () =>
-          import('./views/dashboard/routes').then(m => m.routes)
+          import("./views/dashboard/routes").then(m => m.routes)
       },
       {
-        path: 'messages',
+        path: "consultant",
         loadChildren: () =>
-          import('./views/messages/routes').then(m => m.routes)
+          import("./views/consultant/routes").then(m => m.routes)
       },
       {
-        path: 'pages',
-        loadChildren: () => import('./views/pages/routes').then(m => m.routes)
+        path: "messages",
+        loadChildren: () =>
+          import("./views/messages/routes").then(m => m.routes)
+      },
+      {
+        path: "pages",
+        loadChildren: () => import("./views/pages/routes").then(m => m.routes)
       }
     ]
   },
   {
-    path: '404',
+    path: "404",
     loadComponent: () =>
-      import('./views/pages/page404/page404.component').then(
+      import("./views/pages/page404/page404.component").then(
         m => m.Page404Component
       ),
     data: {
-      title: 'Page 404'
+      title: "Page 404"
     }
   },
   {
-    path: '500',
+    path: "500",
     loadComponent: () =>
-      import('./views/pages/page500/page500.component').then(
+      import("./views/pages/page500/page500.component").then(
         m => m.Page500Component
       ),
     data: {
-      title: 'Page 500'
+      title: "Page 500"
     }
   },
   {
-    path: 'login',
+    path: "login",
     loadComponent: () =>
-      import('./views/pages/login/login.component').then(m => m.LoginComponent),
+      import("./views/pages/login/login.component").then(m => m.LoginComponent),
     data: {
-      title: 'Login Page'
+      title: "Login Page"
     }
   },
   {
-    path: 'register',
+    path: "register",
     loadComponent: () =>
-      import('./views/pages/register/register.component').then(
+      import("./views/pages/register/register.component").then(
         m => m.RegisterComponent
       ),
     data: {
-      title: 'Register Page'
+      title: "Register Page"
     }
   },
-  { path: '**', redirectTo: 'dashboard' }
+  { path: "**", redirectTo: "dashboard" }
 ];
