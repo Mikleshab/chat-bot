@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { UserObject } from '@features/bot-consultant/presenters/graphql/dto/client.object';
+import { UserObject } from '@features/bot-consultant/presenters/graphql/dto/user.object';
 
 /**
  * Represents a chat message within a conversation.
@@ -19,8 +19,8 @@ import { UserObject } from '@features/bot-consultant/presenters/graphql/dto/clie
  */
 @ObjectType('MessageObject', { description: 'Represents a chat message within a conversation.' })
 export class MessageObject {
-  @Field(() => String, { description: 'Unique identifier of the message.' })
-  id!: string;
+  @Field(() => Number, { description: 'Unique identifier of the message.' })
+  id!: number;
 
   @Field(() => Number, { description: 'Timestamp indicating when the message was created.' })
   timestamp: number;
@@ -28,12 +28,12 @@ export class MessageObject {
   @Field(() => String, { description: 'Content of the message.' })
   content: string;
 
-  @Field(() => String, {
+  @Field(() => Number, {
     description:
       'Unique identifier of the message this message is replying to. Nullable if there is no parent message.',
     nullable: true,
   })
-  parentId: string | null;
+  parentId: number | null;
 
   @Field(() => Number, { description: 'The number of replies to this message.', defaultValue: 0 })
   replyCount: number;
@@ -48,11 +48,11 @@ export class MessageObject {
   replies!: MessageObject[];
 
   constructor(
-    id: string,
+    id: number,
     user: UserObject,
     timestamp: number,
     content: string,
-    parentId: string | null,
+    parentId: number | null,
     replyCount: number,
   ) {
     this.id = id;

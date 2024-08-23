@@ -15,7 +15,7 @@ export class MessageSubscriptionResolver {
     name: MessageUpdatedEvent.name,
     resolve: (payload: MessageDomain) => MessageMapper.toObjectType(payload),
     filter: (payload: MessageDomain, variables: { input: GetRepliesInput }) => {
-      return payload.messageId === variables.input.messageId;
+      return payload.telegramMessageId === variables.input.messageId;
     },
   })
   messageUpdated(@Args('input') _input: GetRepliesInput) {

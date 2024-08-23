@@ -12,8 +12,8 @@ import { Field, ObjectType } from '@nestjs/graphql';
  */
 @ObjectType('UserObject', { description: 'Represents a user entity.' })
 export class UserObject {
-  @Field(() => String, { description: 'Unique identifier of the user.' })
-  userId: string;
+  @Field(() => Number, { description: 'Unique identifier of the user.' })
+  userId: number;
 
   @Field(() => String, { description: 'Username of the user.' })
   username: string;
@@ -24,7 +24,7 @@ export class UserObject {
   @Field(() => String, { description: 'Country of the user.' })
   country: string;
 
-  constructor(userId: string, username: string, fullName: string, country: string) {
+  constructor(userId: number, username: string, fullName: string, country: string) {
     this.userId = userId;
     this.username = username;
     this.fullName = fullName;

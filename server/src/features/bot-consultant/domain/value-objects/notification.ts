@@ -2,8 +2,5 @@ import { TelegramMessage } from '@libs/telegram-message/types/telegram-message.c
 import { MessageDomain } from '@features/bot-consultant/domain/message.domain';
 
 export class Notification extends TelegramMessage {
-  replay?: {
-    parentTelegramId: MessageDomain['telegramMessageId'];
-    replayMessageId: MessageDomain['messageId'];
-  };
+  replyToMessageId?: MessageDomain['telegramMessageId'];
 }

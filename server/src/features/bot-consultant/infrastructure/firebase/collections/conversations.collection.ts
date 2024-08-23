@@ -1,7 +1,7 @@
 import { FirebaseService } from '@libs/firebase/services/firebase.service';
-import { ConversationRepository } from '@features/bot-consultant/application/conversation.repository';
 import { Conversation } from '@features/bot-consultant/domain/value-objects/conversation';
 import { ConversationMapper } from '@features/bot-consultant/infrastructure/firebase/mappers/conversation.mapper';
+import { ConversationRepository } from '@features/bot-consultant/application/ports/conversation.repository';
 
 export class ConversationsCollection implements ConversationRepository {
   private readonly collectionName = 'conversations';

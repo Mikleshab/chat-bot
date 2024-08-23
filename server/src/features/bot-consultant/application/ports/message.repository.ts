@@ -7,17 +7,10 @@ export abstract class MessageRepository {
   abstract getMessages(
     filter: {
       authorId?: MessageDomain['author']['userId'];
-      parentId: MessageDomain['parentId'];
+      replyToMessageId: MessageDomain['replyToMessageId'];
     },
     pageInfo: { first?: number; after?: string },
   ): Promise<MessageDomain[]>;
 
-  abstract getMessageById(id: MessageDomain['messageId']): Promise<MessageDomain>;
-
-  abstract getMessageByTelegramId(telegramMessageId: MessageDomain['telegramMessageId']): Promise<MessageDomain>;
-
-  abstract addTelegramMessageId(
-    messageId: MessageDomain['messageId'],
-    telegramMessageId: MessageDomain['telegramMessageId'],
-  ): Promise<void>;
+  abstract getMessageById(id: MessageDomain['telegramMessageId']): Promise<MessageDomain>;
 }

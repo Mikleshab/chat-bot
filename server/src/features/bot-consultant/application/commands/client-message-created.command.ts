@@ -10,6 +10,6 @@ export class ClientMessageCreatedCommand implements ICommand {
     public readonly country: string,
     public readonly text: string,
     public readonly date: number,
-    public readonly replyId: number | null,
+    public readonly replyToMessageId: number | null,
   ) {}
 }

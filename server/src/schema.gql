@@ -38,19 +38,19 @@ enum ConversationState {
 """Input arguments for the CreateReply mutation."""
 input CreateReplyInput {
   """The ID of the client."""
-  clientId: String!
+  clientId: Float!
 
   """The content of the reply message."""
   content: String!
 
   """The ID of the parent message to reply to."""
-  parentId: String!
+  parentId: Float!
 }
 
 """Input arguments for the GetConversation query."""
 input GetConversationInput {
   """The unique identifier of the client."""
-  clientId: String!
+  clientId: Float!
 }
 
 """Input arguments for the getReplies query."""
@@ -62,7 +62,7 @@ input GetRepliesInput {
   first: Float
 
   """The unique identifier of the message."""
-  messageId: String!
+  messageId: Float!
 }
 
 type MessageConnection {
@@ -90,12 +90,12 @@ type MessageObject {
   content: String!
 
   """Unique identifier of the message."""
-  id: String!
+  id: Float!
 
   """
   Unique identifier of the message this message is replying to. Nullable if there is no parent message.
   """
-  parentId: String
+  parentId: Float
 
   """A list of messages that are replies to this message."""
   replies: [MessageObject!]!
@@ -205,7 +205,7 @@ type UserObject {
   fullName: String!
 
   """Unique identifier of the user."""
-  userId: String!
+  userId: Float!
 
   """Username of the user."""
   username: String!

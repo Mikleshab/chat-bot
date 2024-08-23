@@ -1,11 +1,12 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsPositive, IsString } from 'class-validator';
+import { MessageObject } from '@features/bot-consultant/presenters/graphql/dto/message.object';
 
 @InputType('GetRepliesInput', { description: 'Input arguments for the getReplies query.' })
 export class GetRepliesInput {
-  @Field(() => String, { description: 'The unique identifier of the message.' })
-  @IsString({ message: 'Message ID must be a string.' })
-  messageId!: string;
+  @Field(() => Number, { description: 'The unique identifier of the message.' })
+  @IsPositive({ message: 'Message ID must be a number.' })
+  messageId!: MessageObject['id'];
 
   @Field(() => String, { nullable: true, description: 'The cursor to start fetching messages after.' })
   @IsOptional()

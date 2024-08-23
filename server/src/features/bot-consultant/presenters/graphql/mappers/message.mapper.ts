@@ -5,11 +5,11 @@ import { UserMapper } from '@features/bot-consultant/presenters/graphql/mappers/
 export class MessageMapper {
   static toObjectType(message: MessageDomain): MessageObject {
     return new MessageObject(
-      message.messageId,
+      message.telegramMessageId,
       UserMapper.toObjectType(message.author),
       message.timestamp,
       message.content,
-      message.parentId,
+      message.replyToMessageId,
       message.getReplyCount(),
     );
   }

@@ -6,12 +6,11 @@ import { MessageFactory } from '@features/bot-consultant/domain/factories/messag
 export class MessageMapper {
   static toDocData(message: MessageDomain) {
     return {
-      messageId: message.messageId,
       telegramMessageId: message.telegramMessageId,
       author: UserMapper.toDocData(message.author),
       timestamp: admin.firestore.Timestamp.fromMillis(message.timestamp),
       content: message.content,
-      parentId: message.parentId,
+      replyToMessageId: message.replyToMessageId,
     };
   }
 

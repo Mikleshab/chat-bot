@@ -1,6 +1,6 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { ConversationState } from '@features/bot-consultant/domain/value-objects/conversation-state';
-import { UserObject } from '@features/bot-consultant/presenters/graphql/dto/client.object';
+import { UserObject } from '@features/bot-consultant/presenters/graphql/dto/user.object';
 import { MessageObject } from '@features/bot-consultant/presenters/graphql/dto/message.object';
 
 /**

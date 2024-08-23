@@ -3,16 +3,12 @@ import { MessageObject } from '@features/bot-consultant/presenters/graphql/dto/m
 import { GetRepliesInput } from '@features/bot-consultant/presenters/graphql/dto/get-replies.input';
 import { ConsultantService } from '@features/bot-consultant/application/consultant.service';
 import { MessageConnection } from '@features/bot-consultant/presenters/graphql/dto/message-connection.object';
-import { CommandBus } from '@nestjs/cqrs';
 import { ConsultantMessageCreatedCommand } from '@features/bot-consultant/application/commands/consultant-message-created.command';
 import { CreateReplyInput } from '@features/bot-consultant/presenters/graphql/dto/create-reply.input';
 
 @Resolver(() => MessageObject)
 export class MessageResolver {
-  constructor(
-    private readonly commandBus: CommandBus,
-    private readonly service: ConsultantService,
-  ) {}
+  constructor(private readonly service: ConsultantService) {}
 
   @Query(() => MessageConnection, {
     name: 'getReplies',
@@ -36,8 +32,12 @@ export class MessageResolver {
     name: 'createReply',
     description: 'Creates a reply to a message. Returns true if the reply is successfully created.',
   })
-  createReply(@Args('input', { description: 'Input data for creating a reply.' }) input: CreateReplyInput): boolean {
-    this.commandBus.execute(new ConsultantMessageCreatedCommand(input.content, input.parentId, input.clientId));
+  async createReply(
+    @Args('input', { description: 'Input data for creating a reply.' }) input: CreateReplyInput,
+  ): Promise<boolean> {
+    await this.service.createConsultantMessage(
+      new ConsultantMessageCreatedCommand(input.content, input.parentId, input.clientId),
+    );
 
     return true;
   }

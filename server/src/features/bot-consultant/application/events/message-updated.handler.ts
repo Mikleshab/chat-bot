@@ -1,7 +1,7 @@
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { PubSubEngine } from 'graphql-subscriptions';
 import { MessageUpdatedEvent } from '@features/bot-consultant/domain/events/message-updated.event';
-import { MessageRepository } from '@features/bot-consultant/application/message.repository';
+import { MessageRepository } from '@features/bot-consultant/application/ports/message.repository';
 
 @EventsHandler(MessageUpdatedEvent)
 export class MessageUpdatedHandler implements IEventHandler<MessageUpdatedEvent> {
