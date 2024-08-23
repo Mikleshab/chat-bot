@@ -1,18 +1,27 @@
 <c-card>
   <c-card-header>Общение</c-card-header>
   <c-card-body>
-    @if (conversation$ | async; as conversation) {
-      @if (conversation.messages.length > 0) {
-        @for (message of conversation.messages; track message.id) {
+    @if (result$ | async; as result) {
+      @if (result.errors) {
+        <div class="error-messages">
+          <strong>Произошли ошибки:</strong>
+          @for (error of result.errors; track error.message) {
+            <c-alert color="light">{{ error.message }}</c-alert>
+          }
+        </div>
+      } @else if (result.loading) {
+        Загрузка...
+      } @else {
+        @if (result.data.getConversation.messages.length === 0) {
+          Нет сообщений
+        } @else {
           @defer {
-            <app-message [message]="message" [clientId]="clientId" />
+            @for (message of result.data.getConversation.messages; track message.id) {
+              <app-message [message]="message" [clientId]="clientId" />
+            }
           }
         }
-      } @else {
-        Нет сообщений
       }
-    } @else {
-      Загрузка...
     }
   </c-card-body>
 </c-card>

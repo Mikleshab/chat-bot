@@ -9,7 +9,7 @@ import {
   RowComponent,
   SpinnerComponent
 } from "@coreui/angular";
-import { AsyncPipe, DatePipe } from "@angular/common";
+import { AsyncPipe, DatePipe, JsonPipe } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { IconDirective } from "@coreui/icons-angular";
 import { CustomPluralPipe } from "../../../common/custom-plural.pipe";
@@ -18,6 +18,7 @@ import { IsNewQuestionPipe } from "./pipes/is-new-question.pipe";
 import { ReplyService } from "./services/reply.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { MessageService } from "./services/message.service";
+import { ConversationInfo } from "../conversation-info/conversation-info.type";
 
 @Component({
   selector: "app-message",
@@ -36,7 +37,8 @@ import { MessageService } from "./services/message.service";
     AlertComponent,
     BadgeComponent,
     IsNewQuestionPipe,
-    AsyncPipe
+    AsyncPipe,
+    JsonPipe
   ],
   providers: [MessageService, ReplyService],
   templateUrl: "./message.component.html",
@@ -50,12 +52,11 @@ export class MessageComponent implements OnInit {
     this.service.setMessage(message);
   };
 
-  @Input({ required: true }) clientId!: string;
+  @Input({ required: true }) clientId!: ConversationInfo["client"]["userId"];
 
   textareaRows = 3;
   isTextareaVisible = false;
-  replyContent = "";
-  areRepliesVisible = false;
+  replyContent: Message["content"] = "";
 
   constructor(readonly service: MessageService) {}
 
@@ -65,7 +66,6 @@ export class MessageComponent implements OnInit {
   }
 
   hideTextarea(): void {
-    this.replyContent = "";
     this.isTextareaVisible = false;
   }
 
@@ -74,23 +74,10 @@ export class MessageComponent implements OnInit {
     this.textareaRows = Math.max(lineCount, 3);
   }
 
-  toggleRepliesVisibility(message: Message): void {
-    this.areRepliesVisible = !this.areRepliesVisible;
-
-    if (this.areRepliesVisible) {
-      this.service.replies.loadInitialReplies(message);
-    }
-  }
-
-  send(message: Message, replyContent: string, clientId: string) {
-    this.service.replies.sendReply(message, replyContent, clientId).pipe(
-      takeUntilDestroyed(this.destroyRef)
-    ).subscribe(() => {
-      this.hideTextarea();
-      if (!this.areRepliesVisible) {
-        this.toggleRepliesVisibility(message);
-      }
-    });
+  send(message: Message, replyContent: Message["content"], clientId: ConversationInfo["client"]["userId"]) {
+    this.service.replies.sendReply(message, replyContent, clientId);
+    this.service.replies.loadInitialReplies(message);
+    this.hideTextarea();
   }
 
   ngOnInit(): void {

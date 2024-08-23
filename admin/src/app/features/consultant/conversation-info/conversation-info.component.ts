@@ -5,16 +5,10 @@ import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, Ro
 import { GetConversationInfoGQL, OnConversationUpdatedGQL } from "../../../graphql/generated";
 import { map } from "rxjs/operators";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { Conversation } from "./client-statistics.type";
-
-interface ClientStatistics {
-  name: string;
-  registrationDate: string;
-  messageCount: number;
-}
+import { ConversationInfo } from "./conversation-info.type";
 
 @Component({
-  selector: "app-client-statistics",
+  selector: "app-conversation-info",
   standalone: true,
   imports: [
     CommonModule,
@@ -24,15 +18,15 @@ interface ClientStatistics {
     RowComponent,
     ColComponent
   ],
-  templateUrl: "./client-statistics.component.html",
-  styleUrls: ["./client-statistics.component.scss"]
+  templateUrl: "./conversation-info.component.html",
+  styleUrls: ["./conversation-info.component.scss"]
 })
-export class ClientStatisticsComponent implements OnInit {
+export class ConversationInfoComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
-  conversation$!: Observable<Conversation>;
+  conversation$!: Observable<ConversationInfo>;
 
-  @Input({ required: true }) clientId!: string;
+  @Input({ required: true }) clientId!: ConversationInfo["client"]["userId"];
 
   constructor(
     private readonly getConversationGQL: GetConversationInfoGQL,

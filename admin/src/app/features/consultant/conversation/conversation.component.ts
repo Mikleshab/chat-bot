@@ -1,6 +1,7 @@
 import { Component, DestroyRef, inject, Input, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import {
+  AlertComponent,
   ButtonDirective,
   CardBodyComponent,
   CardComponent,
@@ -10,9 +11,13 @@ import {
 import { MessageComponent } from "../message/message.component";
 import { Observable, startWith, switchMap } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { GetConversationQuestionsGQL, OnConversationUpdatedGQL } from "../../../graphql/generated";
-import { map } from "rxjs/operators";
-import { Conversation } from "./conversation.type";
+import {
+  GetConversationQuestionsGQL,
+  GetConversationQuestionsQuery,
+  OnConversationUpdatedGQL
+} from "../../../graphql/generated";
+import { ConversationInfo } from "../conversation-info/conversation-info.type";
+import { ApolloQueryResult } from "@apollo/client/core";
 
 @Component({
   selector: "app-conversation",
@@ -24,7 +29,8 @@ import { Conversation } from "./conversation.type";
     CardBodyComponent,
     TableDirective,
     ButtonDirective,
-    MessageComponent
+    MessageComponent,
+    AlertComponent
   ],
   templateUrl: "./conversation.component.html",
   styleUrls: ["./conversation.component.scss"]
@@ -32,9 +38,9 @@ import { Conversation } from "./conversation.type";
 export class ConversationComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
-  conversation$?: Observable<Conversation>;
+  result$?: Observable<ApolloQueryResult<GetConversationQuestionsQuery>>;
 
-  @Input({ required: true }) clientId!: string;
+  @Input({ required: true }) clientId!: ConversationInfo["client"]["userId"];
 
   constructor(
     private readonly getConversationGQL: GetConversationQuestionsGQL,
@@ -46,16 +52,14 @@ export class ConversationComponent implements OnInit {
   }
 
   private initializeConversation(): void {
-    this.conversation$ = this.conversationUpdatedGQL
+    this.result$ = this.conversationUpdatedGQL
       .subscribe({ input: { clientId: this.clientId } })
       .pipe(
         startWith(null),
         switchMap(() =>
           this.getConversationGQL
-            .watch({ input: { clientId: this.clientId } }, { fetchPolicy: "no-cache" })
-            .valueChanges.pipe(
-            map(({ data }) => data.getConversation)
-          )
+            .watch({ input: { clientId: this.clientId } }, { fetchPolicy: "no-cache", errorPolicy: "all" })
+            .valueChanges
         ),
         takeUntilDestroyed(this.destroyRef)
       );

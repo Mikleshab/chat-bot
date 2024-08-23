@@ -1,13 +1,14 @@
 import { Component, Input } from "@angular/core";
-import { ClientStatisticsComponent } from "../../../features/consultant/client-statistics/client-statistics.component";
+import { ConversationInfoComponent } from "../../../features/consultant/conversation-info/conversation-info.component";
 import { ConversationComponent } from "../../../features/consultant/conversation/conversation.component";
 import { ColComponent, RowComponent } from "@coreui/angular";
+import { parseInt } from "lodash-es";
 
 @Component({
   selector: "app-client",
   standalone: true,
   imports: [
-    ClientStatisticsComponent,
+    ConversationInfoComponent,
     ConversationComponent,
     RowComponent,
     ColComponent
@@ -16,5 +17,5 @@ import { ColComponent, RowComponent } from "@coreui/angular";
   styleUrl: "./client.component.scss"
 })
 export class ClientComponent {
-  @Input() clientId!: string;
+  @Input({ required: true, transform: (value: string) => parseInt(value) }) clientId!: number;
 }

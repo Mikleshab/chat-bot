@@ -1,6 +1,7 @@
 query GetConversationInfo($input: GetConversationInput!) {
     getConversation(input: $input) {
         client {
+            userId
             username
             fullName
         }

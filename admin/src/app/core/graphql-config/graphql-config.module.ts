@@ -17,7 +17,7 @@ const cache = new InMemoryCache({
       fields: {
         getReplies: {
           keyArgs: (args) => {
-            return args?.["input"]?.messageId;
+            return args?.["input"]?.messageId?.toString();
           },
           merge(existing: GetRepliesQuery["getReplies"] = {
             edges: [],

@@ -36,9 +36,10 @@
             size="sm"
             variant="ghost"
             shape="rounded-pill"
-            (click)="toggleRepliesVisibility(message)"
+            (click)="service.replies.toggleReplies(message)"
           >
-            <svg cIcon name="{{ !areRepliesVisible ? 'cilArrowBottom' : 'cilArrowTop' }}"></svg>
+            <svg cIcon
+                 name="{{ !(service.replies.areRepliesVisible$ | async) ? 'cilArrowBottom' : 'cilArrowTop' }}"></svg>
             {{ message.replyCount | customPlural:'ответ':'ответа':'ответов' }}
           </button>
         }
@@ -52,19 +53,24 @@
               #textareaElement
               cFormControl
               autofocus
-              [disabled]="service.replies.isSending"
+              [disabled]="!!(service.replies.sendReplyLoading$ | async)"
               [(ngModel)]="replyContent"
               [rows]="textareaRows"
               (keydown.control.enter)="send(message, replyContent, clientId)"
               (input)="adjustTextareaHeight()"
             ></textarea>
+            @if (service.replies.sendReplyErrors$ | async; as errors) {
+              <div class="error-messages">
+                <strong>Произошли ошибки:</strong>
+                @for (error of errors; track error.message) {
+                  <c-alert color="light">{{ error.message }}</c-alert>
+                }
+              </div>
+            }
           </c-col>
         </c-row>
         <c-row>
           <c-col class="d-flex justify-content-end mt-2 mb-2">
-            @if (service.replies.replySentError) {
-              <c-alert class="small-alert me-2" color="light">{{ service.replies.replySentError }}</c-alert>
-            }
             <button
               cButton
               class="me-2"
@@ -72,7 +78,7 @@
               size="sm"
               variant="ghost"
               shape="rounded-pill"
-              [disabled]="service.replies.isSending"
+              [disabled]="service.replies.sendReplyLoading$ | async"
               (click)="hideTextarea()"
             >
               Отмена
@@ -83,10 +89,10 @@
               size="sm"
               variant="ghost"
               shape="rounded-pill"
-              [disabled]="!replyContent.length || service.replies.isSending"
+              [disabled]="!replyContent.length || (service.replies.sendReplyLoading$ | async)"
               (click)="send(message, replyContent, clientId)"
             >
-              @if (!service.replies.isSending) {
+              @if (!(service.replies.sendReplyLoading$ | async)) {
                 Отправить (Ctrl + Enter)
               } @else {
                 <c-spinner aria-hidden="true" size="sm" variant="grow"></c-spinner>
@@ -97,7 +103,7 @@
         </c-row>
       </c-row>
     }
-    @if (areRepliesVisible) {
+    @if (service.replies.areRepliesVisible$ | async) {
       <c-row class="message__replies flex-column ms-2">
         @if (service.replies.isLoading) {
           <c-col class="d-flex justify-content-center">

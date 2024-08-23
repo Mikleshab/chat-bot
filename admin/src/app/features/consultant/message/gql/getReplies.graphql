@@ -1,4 +1,4 @@
-query GetReplies($messageId: String!, $first: Float, $after: String) {
+query GetReplies($messageId: Float!, $first: Float, $after: String) {
     getReplies(input: { messageId: $messageId, first: $first, after: $after }) {
         edges {
             node {
