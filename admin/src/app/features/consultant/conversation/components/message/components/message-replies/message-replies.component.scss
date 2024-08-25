@@ -1,0 +1,9 @@
+.replies {
+  &__load-more {
+    button {
+      svg[name='cil-level-up'] {
+        transform: rotate(90deg);
+      }
+    }
+  }
+}

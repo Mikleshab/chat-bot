@@ -1,0 +1,13 @@
+<input class="btn-check" [formControl]="control" type="checkbox" autocomplete="off"/>
+<label
+  (click)="toggle()"
+  cButton
+  cFormCheckLabel
+  [size]="size"
+  [variant]="variant"
+  [color]="color"
+  [shape]="shape"
+>
+  <ng-content select="[cIcon]"></ng-content>
+  {{ labelText }}
+</label>

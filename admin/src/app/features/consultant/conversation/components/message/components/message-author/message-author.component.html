@@ -1,0 +1,8 @@
+<c-container>
+  <strong class="fs-7">{{ message.author.username }} / {{ message.author.fullName }} </strong>
+  <strong class="fs-8 fw-light"> ({{ message.timestamp | timeAgo }})
+    @if (message | isNewQuestion) {
+      <c-badge color="info">New</c-badge>
+    }
+  </strong>
+</c-container>

@@ -1,0 +1,34 @@
+<c-container class="message mb-3">
+
+  @if (feature.message.errors$ | async; as errors) {
+    <c-row class="message__errors">
+      <app-errors [errors]="errors" />
+    </c-row>
+  }
+
+  @if (feature.message.data$ |async; as message) {
+    <c-row class="message__author">
+      <app-message-author [message]="message" />
+    </c-row>
+    <c-row class="message__text my-2">
+      <app-message-text [text]="message.content" />
+    </c-row>
+    <c-row class="message__buttons mt-1 mb-2">
+      <app-message-actions #actions [replyCount]="message.replyCount" />
+    </c-row>
+    @if (actions.replyIsVisible) {
+      <c-row class="message__reply">
+        <app-message-reply
+          (closeTextArea)="actions.toggleReply()"
+          (replySent)="actions.openReplies()"
+        />
+      </c-row>
+    }
+    @if (actions.repliesIsVisible) {
+      <c-row class="message__replies">
+        <app-message-replies></app-message-replies>
+      </c-row>
+    }
+  }
+
+</c-container>

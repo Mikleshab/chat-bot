@@ -1,3 +1,7 @@
 subscription OnConversationUpdated($input: GetConversationInput!) {
-    ConversationUpdatedEvent(input: $input)
+    ConversationUpdatedEvent(input: $input) {
+        client {
+            userId
+        }
+    }
 }

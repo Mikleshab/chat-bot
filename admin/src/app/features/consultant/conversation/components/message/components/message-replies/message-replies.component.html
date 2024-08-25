@@ -1,0 +1,48 @@
+<c-container class="replies">
+  @if (feature.loading$ | async) {
+    <c-row class="replies__loading">
+      <c-col class="d-flex justify-content-center">
+        <c-spinner color="secondary" variant="grow"></c-spinner>
+      </c-col>
+    </c-row>
+  }
+  <c-row class="replies__messages">
+    <c-col>
+      @for (message of feature.data$ | async; track message.id) {
+        <app-message [message]="message" />
+      }
+    </c-col>
+  </c-row>
+  <c-row class="replies__load-more">
+    <c-col>
+      @if (feature.pageInfo$ | async; as pageInfo) {
+        @if (pageInfo.hasNextPage) {
+          <button
+            cButton
+            color="primary"
+            size="sm"
+            variant="ghost"
+            shape="rounded-pill"
+            [disabled]="feature.loading$ | async"
+            (click)="feature.loadMore(pageInfo.endCursor)"
+          >
+            @if (!(feature.loading$ | async)) {
+              <svg cIcon name="cil-level-up"></svg>
+              Другие ответы
+            } @else {
+              <c-spinner aria-hidden="true" size="sm" variant="grow"></c-spinner>
+              Загрузка...
+            }
+          </button>
+        }
+      }
+    </c-col>
+  </c-row>
+  @if (feature.errors$ | async; as errors) {
+    <c-row class="replies__errors">
+      <c-col>
+        <app-errors [errors]="errors" />
+      </c-col>
+    </c-row>
+  }
+</c-container>

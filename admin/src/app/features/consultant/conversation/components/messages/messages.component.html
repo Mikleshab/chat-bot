@@ -1,0 +1,29 @@
+<c-card>
+  <c-card-header>
+    Общение
+    @if (feature.loading$ | async) {
+      <c-spinner class="ms-1" color="secondary" variant="grow" [size]="'sm'"></c-spinner>
+    }
+  </c-card-header>
+  <c-card-body class="px-0">
+    @if (feature.errors$ | async; as errors) {
+      <div class="error-messages">
+        <strong>Произошли ошибки:</strong>
+        @for (error of errors; track error.message) {
+          <c-alert color="light">{{ error.message }}</c-alert>
+        }
+      </div>
+    }
+    @if (feature.data$ | async; as conversation) {
+      @if (conversation.messages.length === 0) {
+        Нет сообщений
+      } @else {
+        @defer {
+          @for (message of conversation.messages; track message.id) {
+            <app-message [message]="message" />
+          }
+        }
+      }
+    }
+  </c-card-body>
+</c-card>

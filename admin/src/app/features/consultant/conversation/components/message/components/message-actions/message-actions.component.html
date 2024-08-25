@@ -1,0 +1,22 @@
+<c-container>
+  <app-toggle-input
+    #textareaToggleInput
+    class="me-2"
+    size="sm"
+    variant="ghost"
+    shape="rounded-pill"
+    labelText="Ответить"
+  />
+  @if (replyCount > 0) {
+    <app-toggle-input
+      #toggleReplies
+      size="sm"
+      color="primary"
+      variant="outline"
+      [labelText]="replyCount | customPlural:'ответ':'ответа':'ответов'"
+      [value]="false"
+    >
+      <svg cIcon [name]="toggleReplies.value ? 'cilArrowTop' : 'cilArrowBottom'"></svg>
+    </app-toggle-input>
+  }
+</c-container>

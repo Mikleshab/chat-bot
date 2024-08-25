@@ -1,21 +1,25 @@
-import { Component, Input } from "@angular/core";
-import { ConversationInfoComponent } from "../../../features/consultant/conversation-info/conversation-info.component";
-import { ConversationComponent } from "../../../features/consultant/conversation/conversation.component";
+import { Component, inject, Input } from "@angular/core";
 import { ColComponent, RowComponent } from "@coreui/angular";
 import { parseInt } from "lodash-es";
+import { ConversationModule } from "../../../features/consultant/conversation/conversation.module";
+import { CLIENT_ID } from "../../../features/consultant/conversation/providers/conversation-client.provider";
+import { ClientId } from "../../../features/consultant/conversation/types/conversation.type";
 
 @Component({
   selector: "app-client",
   standalone: true,
   imports: [
-    ConversationInfoComponent,
-    ConversationComponent,
     RowComponent,
-    ColComponent
+    ColComponent,
+    ConversationModule
   ],
   templateUrl: "./client.component.html",
   styleUrl: "./client.component.scss"
 })
 export class ClientComponent {
-  @Input({ required: true, transform: (value: string) => parseInt(value) }) clientId!: number;
+  readonly clientId$ = inject(CLIENT_ID);
+
+  @Input({ required: true, transform: (value: string) => parseInt(value) }) set clientId(clientId: ClientId) {
+    this.clientId$.next(clientId);
+  };
 }

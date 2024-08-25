@@ -1,0 +1,10 @@
+<textarea
+  #textarea
+  cFormControl
+  [formControl]="control"
+  [rows]="textareaRows"
+  [autofocus]="autofocus"
+  (input)="adjustTextareaHeight()"
+  (keydown)="onKeyDown($event)"
+  (blur)="notifyTouch()"
+></textarea>

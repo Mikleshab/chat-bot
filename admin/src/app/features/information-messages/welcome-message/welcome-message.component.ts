@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { TextEditorComponent } from "../../../common/text-editor/text-editor.component";
+import { TextEditorComponent } from "../../../common/components/text-editor/text-editor.component";
 import { GetWelcomeMessageGQL, UpdateWelcomeMessageGQL } from "../../../graphql/generated";
 import { debounceTime, map, take } from "rxjs/operators";
 import { Subject } from "rxjs";
