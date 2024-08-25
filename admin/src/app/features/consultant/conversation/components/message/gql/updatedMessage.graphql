@@ -1,5 +1,5 @@
-subscription OnMessageUpdated($input: GetRepliesInput!) {
-    MessageUpdatedEvent(input: $input) {
+subscription OnMessageUpdated {
+    MessageUpdatedEvent {
         id
         content
         timestamp

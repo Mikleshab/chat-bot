@@ -18,6 +18,7 @@ import { CLIENT_ID_PROVIDER } from "./providers/conversation-client.provider";
 import { ConversationInfoComponent } from "./components/conversation-info/conversation-info.component";
 import { MessageModule } from "./components/message/message.module";
 import { TimeAgoPipe } from "../../../common/pipes/time-ago.pipe";
+import { MessageUpdatedWss } from "./components/message/api/message-updated.wss";
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { TimeAgoPipe } from "../../../common/pipes/time-ago.pipe";
     ConversationService,
     GetConversationApi,
     ConversationUpdatedWss,
+    MessageUpdatedWss,
     CLIENT_ID_PROVIDER
   ],
   exports: [

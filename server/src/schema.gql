@@ -175,7 +175,7 @@ type StatisticsHistoryObject {
 
 type Subscription {
   ConversationUpdatedEvent(input: GetConversationInput!): ConversationObject!
-  MessageUpdatedEvent(input: GetRepliesInput!): MessageObject!
+  MessageUpdatedEvent: MessageObject!
 }
 
 """Statistics from telegram group."""

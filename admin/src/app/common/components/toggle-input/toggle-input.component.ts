@@ -49,7 +49,6 @@ export class ToggleInputComponent extends AbstractControlValueAccessor<boolean> 
   }
 
   on() {
-    console.log("on");
     this.control.setValue(true);
     this.notifyValueChange(true);
   }

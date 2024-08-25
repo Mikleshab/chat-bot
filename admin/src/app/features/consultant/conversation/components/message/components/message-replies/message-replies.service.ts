@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { combineLatest, startWith, Subject, switchMap } from "rxjs";
 import { MessageService } from "../../message.service";
 import { GetRepliesGQL } from "../../../../../../../graphql/generated";
-import { map, shareReplay } from "rxjs/operators";
+import { filter, map, shareReplay } from "rxjs/operators";
 import { GraphQLFormattedError } from "graphql";
 import { MessageUpdatedWss } from "../../api/message-updated.wss";
 
@@ -47,6 +47,7 @@ export class MessageRepliesService {
   );
 
   readonly updated$ = this.updated.data$.pipe(
+    filter((messageUpdated) => messageUpdated?.id === this.parent.target.getValue()?.id),
     switchMap(() => this.repliesRef.refetch())
   );
 

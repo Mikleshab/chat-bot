@@ -9,6 +9,7 @@ export class GetMessageApi {
   private readonly target$ = inject(MESSAGE);
   readonly updated = inject(MessageUpdatedWss);
   private readonly result$ = this.updated.data$.pipe(
+    filter((messageUpdated) => messageUpdated?.id === this.target$.getValue()?.id),
     startWith(null),
     switchMap(() => this.target$),
     filter(Boolean),

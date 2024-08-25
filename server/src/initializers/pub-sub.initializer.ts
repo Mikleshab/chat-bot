@@ -8,7 +8,7 @@ import { EventEmitter } from 'events';
       provide: PubSubEngine,
       useFactory: async () => {
         const eventEmitter = new EventEmitter();
-        eventEmitter.setMaxListeners(100);
+        eventEmitter.setMaxListeners(10);
 
         return new PubSub({ eventEmitter });
       },
