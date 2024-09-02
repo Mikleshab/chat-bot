@@ -1,0 +1,32 @@
+<c-card class="mb-4">
+  <c-card-header>
+    <c-row>
+      <c-col>
+        <a
+          cButton
+          [routerLink]="['list']"
+          routerLinkActive="active"
+          color="secondary"
+          variant="outline"
+          role="button"
+          class="me-2"
+        >Анонсы</a>
+        <a
+          cButton
+          [routerLink]="['create']"
+          routerLinkActive="active"
+          color="secondary"
+          variant="outline"
+          role="button"
+          class="me-2"
+        >Новый анонс</a>
+      </c-col>
+      <c-col>
+        <app-switch-chat />
+      </c-col>
+    </c-row>
+  </c-card-header>
+  <c-card-body>
+    <router-outlet></router-outlet>
+  </c-card-body>
+</c-card>

@@ -1,0 +1,8 @@
+query GetAllAnnouncements($input: GetAllAnnouncementInput!) {
+    getAllAnnouncements(input: $input) {
+        id
+        chatId
+        title
+        text
+    }
+}

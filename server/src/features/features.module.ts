@@ -7,6 +7,9 @@ import { AccidentMessageModule } from '@features/accident-message/accident-messa
 import { StartPrivateChatMessageModule } from '@features/start-private-chat-message/start-private-chat-message.module';
 import { BotConsultantModule } from '@features/bot-consultant/bot-consultant.module';
 import { BotSurveyModule } from '@features/bot-survey/bot-survey.module';
+import { ChatAnnouncementsModule } from '@features/chat-announcements/chat-announcements.module';
+import { TelegrafModule } from '@features/chat-bot/infrastructure/telegraf/telegraf.module';
+import { ChatEventsModule } from '@features/chat-events/chat-events.module';
 
 @Module({
   imports: [
@@ -18,6 +21,9 @@ import { BotSurveyModule } from '@features/bot-survey/bot-survey.module';
     BotConsultantModule,
     BotSurveyModule,
     GroupStatisticsModule,
+    ChatAnnouncementsModule,
+    TelegrafModule,
+    ChatEventsModule,
   ],
 })
 export class FeaturesModule {}

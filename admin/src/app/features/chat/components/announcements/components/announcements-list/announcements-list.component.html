@@ -1,0 +1,55 @@
+@if (list.loading$ | async) {
+  Загрузка...
+}
+
+@if (list.errors$ | async; as errors) {
+  <app-errors [errors]="errors" />
+}
+
+@if (list.data$ | async; as announcements) {
+  @if (announcements.length > 0) {
+    <table
+      [hover]="true"
+      [responsive]="true"
+      align="middle"
+      cTable
+      class="mb-0 border"
+    >
+      <thead class="text-nowrap text-truncate">
+      <tr>
+        <th class="bg-body-tertiary">Анонс</th>
+        <th class="bg-body-tertiary"></th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (announcement of announcements; track announcement.id) {
+          <tr>
+            <td>
+              <div>
+                <a [routerLink]="['../', 'announcement', announcement.id]">
+                  {{ announcement.title }}
+                </a>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-end">
+                <button
+                  cButton
+                  size="sm"
+                  color="secondary"
+                  variant="outline"
+                  [disabled]="delete.loading$ | async"
+                  (click)="deleteAnnouncement(announcement.id)"
+                >
+                  Удалить
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    Нет анонсов
+  }
+}

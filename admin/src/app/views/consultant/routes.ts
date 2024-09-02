@@ -15,8 +15,8 @@ export const routes: Routes = [
       {
         path: "management",
         loadComponent: () =>
-          import("./management/management.component").then(
-            m => m.ManagementComponent
+          import("./conversations/conversations.component").then(
+            m => m.ConversationsComponent
           ),
         data: {
           title: "Управление"

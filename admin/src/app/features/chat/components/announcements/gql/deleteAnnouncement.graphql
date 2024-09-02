@@ -1,0 +1,3 @@
+mutation DeleteAnnouncement($input: DeleteAnnouncementInput!) {
+    deleteAnnouncement(input: $input)
+}

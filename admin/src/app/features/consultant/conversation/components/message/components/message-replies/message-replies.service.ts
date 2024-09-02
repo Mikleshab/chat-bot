@@ -20,7 +20,6 @@ export class MessageRepliesService {
   }, { errorPolicy: "all" });
 
   private readonly result$ = this.repliesRef.valueChanges.pipe(
-    switchMap(() => this.repliesRef.valueChanges),
     shareReplay({ bufferSize: 1, refCount: true })
   );
 

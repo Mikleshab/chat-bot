@@ -15,13 +15,18 @@ export const navItems: INavData[] = [
     name: "Консультант"
   },
   {
-    name: "Управление",
+    name: "Беседы",
     url: "/consultant/management",
     iconComponent: { name: "cil-people" }
   },
   {
     title: true,
-    name: "Сообщения"
+    name: "Группа"
+  },
+  {
+    name: "Анонсы",
+    url: "/chat/announcements",
+    iconComponent: { name: "cil-handshake" }
   },
   {
     name: "Приветствие",

@@ -25,6 +25,11 @@ export const routes: Routes = [
           import("./views/consultant/routes").then(m => m.routes)
       },
       {
+        path: "chat",
+        loadChildren: () =>
+          import("./views/chat/routes").then(m => m.routes)
+      },
+      {
         path: "messages",
         loadChildren: () =>
           import("./views/messages/routes").then(m => m.routes)

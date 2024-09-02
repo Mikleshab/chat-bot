@@ -2,7 +2,10 @@ import { Component, inject, Input } from "@angular/core";
 import { ColComponent, RowComponent } from "@coreui/angular";
 import { parseInt } from "lodash-es";
 import { ConversationModule } from "../../../features/consultant/conversation/conversation.module";
-import { CLIENT_ID } from "../../../features/consultant/conversation/providers/conversation-client.provider";
+import {
+  CLIENT_ID,
+  CLIENT_ID_PROVIDER
+} from "../../../features/consultant/conversation/providers/conversation-client.provider";
 import { ClientId } from "../../../features/consultant/conversation/types/conversation.type";
 
 @Component({
@@ -13,6 +16,7 @@ import { ClientId } from "../../../features/consultant/conversation/types/conver
     ColComponent,
     ConversationModule
   ],
+  providers: [CLIENT_ID_PROVIDER],
   templateUrl: "./client.component.html",
   styleUrl: "./client.component.scss"
 })
