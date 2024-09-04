@@ -1,0 +1,3 @@
+mutation RemoveChatEvent($input: RemoveChatEventInput!) {
+    removeChatEvent(input: $input)
+}

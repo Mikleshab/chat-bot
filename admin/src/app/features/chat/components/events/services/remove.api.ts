@@ -1,18 +1,18 @@
 import { inject, Injectable } from "@angular/core";
-import { DeleteAnnouncementGQL } from "../../../../../graphql/generated";
 import { startWith, Subject } from "rxjs";
 import { filter, map, shareReplay, switchMap } from "rxjs/operators";
-import { Announcement } from "../types/announcement.type";
+import { RemoveChatEventGQL } from "../../../../../graphql/generated";
+import { ChatEvent } from "../types/chat-event.type";
 
 @Injectable()
-export class DeleteAnnouncementApi {
-  private readonly deleteAnnouncementGQL = inject(DeleteAnnouncementGQL);
-  private readonly announcementId$ = new Subject<Announcement["id"]>();
-  private readonly result$ = this.announcementId$.pipe(
-    switchMap((announcementId) =>
-      this.deleteAnnouncementGQL.mutate({
+export class RemoveChatEventApi {
+  private readonly removeChatEventGQL = inject(RemoveChatEventGQL);
+  private readonly chatEventId$ = new Subject<ChatEvent["id"]>();
+  private readonly result$ = this.chatEventId$.pipe(
+    switchMap((chatEventId) =>
+      this.removeChatEventGQL.mutate({
         input: {
-          id: announcementId
+          id: chatEventId
         }
       }, { errorPolicy: "all" })
     ),
@@ -30,10 +30,10 @@ export class DeleteAnnouncementApi {
   );
 
   readonly complete$ = this.result$.pipe(
-    map(({ data }) => data?.deleteAnnouncement)
+    map(({ data }) => data?.removeChatEvent)
   );
 
-  delete(id: Announcement["id"]) {
-    this.announcementId$.next(id);
+  remove(id: ChatEvent["id"]) {
+    this.chatEventId$.next(id);
   }
 }

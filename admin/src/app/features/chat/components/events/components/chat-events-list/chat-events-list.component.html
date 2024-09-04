@@ -9,7 +9,7 @@
           role="button"
           class="me-2"
           (click)="add()"
-        >Новый анонс
+        >Добавить событие
         </button>
       </c-col>
     </c-row>
@@ -23,8 +23,8 @@
       <app-errors [errors]="errors" />
     }
 
-    @if (feature.list.data$ | async; as announcements) {
-      @if (announcements.length > 0) {
+    @if (feature.list.data$ | async; as events) {
+      @if (events.length > 0) {
         <table
           [hover]="true"
           [responsive]="true"
@@ -39,13 +39,11 @@
           </tr>
           </thead>
           <tbody>
-            @for (announcement of announcements; track announcement.id) {
+            @for (event of events; track event.id) {
               <tr>
                 <td>
                   <div>
-                    <button class="btn btn-link" (click)="edit(announcement.id)">
-                      {{ announcement.title }}
-                    </button>
+                    {{ event.eventType }}
                   </div>
                 </td>
                 <td>
@@ -55,8 +53,8 @@
                       size="sm"
                       color="secondary"
                       variant="outline"
-                      [disabled]="feature.delete.loading$ | async"
-                      (click)="delete(announcement.id)"
+                      [disabled]="feature.remove.loading$ | async"
+                      (click)="remove(event.id)"
                     >
                       Удалить
                     </button>
@@ -67,7 +65,7 @@
           </tbody>
         </table>
       } @else {
-        Нет анонсов
+        Нет событий
       }
     }
   </c-card-body>

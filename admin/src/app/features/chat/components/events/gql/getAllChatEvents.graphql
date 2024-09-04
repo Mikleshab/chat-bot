@@ -1,0 +1,7 @@
+query GetAllChatEvents($input: GetAllChatEventInput!) {
+    getAllChatEvents(input: $input) {
+        id
+        chatId
+        eventType
+    }
+}

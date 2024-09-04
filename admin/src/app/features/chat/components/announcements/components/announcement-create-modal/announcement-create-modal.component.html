@@ -1,9 +1,10 @@
-<form cForm [formGroup]="form" (ngSubmit)="onSubmit()">
+<form cForm [formGroup]="form">
   <div class="mb-3">
     <label cLabel for="inputTitle">Название</label>
     <input
       aria-describedby="titleHelpBlock"
       cFormControl
+      [valid]="!form.get('title')?.invalid"
       id="inputTitle"
       formControlName="title"
     >
@@ -16,6 +17,7 @@
     <textarea
       aria-describedby="textHelpBlock"
       cFormControl
+      [valid]="!form.get('text')?.invalid"
       id="inputText"
       formControlName="text"
       rows="10"
@@ -24,5 +26,4 @@
       Текст анонса будет отправлен в чат группы.
     </span>
   </div>
-  <button cButton color="primary" type="submit" [disabled]="form.disabled">Сохранить</button>
 </form>

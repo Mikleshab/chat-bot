@@ -277,11 +277,23 @@ type Query {
     input: GetAllAnnouncementInput!
   ): [AnnouncementObject!]!
 
+  """Retrieves all events for a specific chat based on chatId"""
+  getAllChatEvents(
+    """Input data to retrieve all events for a specific chat"""
+    input: GetAllChatEventInput!
+  ): [ChatEventObject!]!
+
   """Retrieves an announcement by its ID"""
   getAnnouncement(
     """Input data containing the ID of the announcement to retrieve"""
     input: GetAnnouncementInput!
   ): AnnouncementObject!
+
+  """Retrieves a specific chat event based on chatId and eventType"""
+  getChatEvent(
+    """Input data to retrieve a specific chat event"""
+    input: GetChatEventInput!
+  ): ChatEventObject!
 
   """
   Fetches a specific conversation based on the client ID provided in the input.
@@ -295,18 +307,6 @@ type Query {
   Fetches a list of all conversations. Returns an array of conversation objects.
   """
   getConversations: [ConversationObject!]!
-
-  """Retrieves all events for a specific chat based on chatId"""
-  getGetAllChatEvents(
-    """Input data to retrieve all events for a specific chat"""
-    input: GetAllChatEventInput!
-  ): [ChatEventObject!]!
-
-  """Retrieves a specific chat event based on chatId and eventType"""
-  getGetChatEvent(
-    """Input data to retrieve a specific chat event"""
-    input: GetChatEventInput!
-  ): ChatEventObject!
   getMembersStatistics: TelegramStatisticObject!
   getMessagesStatistics: TelegramStatisticObject!
 

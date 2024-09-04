@@ -1,22 +1,22 @@
 import { inject, Injectable } from "@angular/core";
-import { CreateAnnouncementGQL } from "../../../../../graphql/generated";
 import { startWith, Subject } from "rxjs";
-import { CHAT_ID } from "../../../providers/chat-id.provider";
 import { filter, map, shareReplay, switchMap } from "rxjs/operators";
-import { AnnouncementCreateData } from "../types/announcement.type";
+import { CHAT_ID } from "../../../providers/chat-id.provider";
+import { AddChatEventGQL } from "../../../../../graphql/generated";
+import { ChatEventCreateData } from "../types/chat-event.type";
 
 @Injectable()
-export class CreateAnnouncementApi {
+export class CreateChatEventApi {
   private readonly chatId = inject(CHAT_ID);
-  private readonly createAnnouncementGQL = inject(CreateAnnouncementGQL);
-  private readonly announcement$ = new Subject<AnnouncementCreateData>();
-  private readonly result$ = this.announcement$.pipe(
-    switchMap(({ title, text }) =>
-      this.createAnnouncementGQL.mutate({
+  private readonly addChatEventGQL = inject(AddChatEventGQL);
+  private readonly chatEvent$ = new Subject<ChatEventCreateData>();
+  private readonly result$ = this.chatEvent$.pipe(
+    switchMap(({ eventType, announcementId }) =>
+      this.addChatEventGQL.mutate({
         input: {
           chatId: this.chatId.getValue()!,
-          title,
-          text
+          eventType,
+          announcementId
         }
       }, { errorPolicy: "all" })
     ),
@@ -34,10 +34,10 @@ export class CreateAnnouncementApi {
   );
 
   readonly complete$ = this.result$.pipe(
-    map(({ data }) => data?.createAnnouncement)
+    map(({ data }) => data?.addChatEvent)
   );
 
-  create(data: AnnouncementCreateData) {
-    this.announcement$.next(data);
+  add(data: ChatEventCreateData) {
+    this.chatEvent$.next(data);
   }
 }

@@ -1,6 +1,8 @@
 import { NgModule } from "@angular/core";
 import { AnnouncementsListComponent } from "./components/announcements-list/announcements-list.component";
-import { AnnouncementCreateComponent } from "./components/announcement-create/announcement-create.component";
+import {
+  AnnouncementCreateModalComponent
+} from "./components/announcement-create-modal/announcement-create-modal.component";
 import { CreateAnnouncementApi } from "./services/create.api";
 import { GetAllAnnouncementsApi } from "./services/get-all.api";
 import { AnnouncementsGetAllService } from "./services/announcements-get-all.service";
@@ -8,36 +10,36 @@ import { AnnouncementCreateService } from "./services/announcement-create.servic
 import { ErrorsComponent } from "../../../../common/components/errors/errors.component";
 import {
   ButtonDirective,
+  CardBodyComponent,
+  CardComponent,
+  CardHeaderComponent,
   ColComponent,
   ContainerComponent,
   FormControlDirective,
   FormDirective,
   FormLabelDirective,
   FormTextDirective,
-  ModalBodyComponent,
-  ModalComponent,
-  ModalFooterComponent,
-  ModalHeaderComponent,
-  ModalTitleDirective,
-  ModalToggleDirective,
   RowComponent,
   TableDirective
 } from "@coreui/angular";
-import { RouterLink, RouterLinkActive } from "@angular/router";
 import { AsyncPipe } from "@angular/common";
-import { AnnouncementFormComponent } from "./components/announcement-form/announcement-form.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { CHAT_ID_PROVIDER } from "../../providers/chat-id.provider";
-import { DeleteAnnouncementsApi } from "./services/delete.api";
+import { DeleteAnnouncementApi } from "./services/delete.api";
 import { AnnouncementDeleteService } from "./services/announcement-delete.service";
+import { AnnouncementsListService } from "./services/announcements-list.service";
+import { GetAnnouncementApi } from "./services/get.api";
+import { AnnouncementGetService } from "./services/announcement-get.service";
+import { AnnouncementEditModalComponent } from "./components/announcement-edit-modal/announcement-edit-modal.component";
+import { UpdateAnnouncementApi } from "./services/update.api";
+import { AnnouncementUpdateService } from "./services/announcement-update.service";
 
 
 @NgModule({
-  declarations: [AnnouncementsListComponent, AnnouncementCreateComponent, AnnouncementFormComponent],
+  declarations: [AnnouncementsListComponent, AnnouncementCreateModalComponent, AnnouncementEditModalComponent],
   imports: [
     ErrorsComponent,
     TableDirective,
-    RouterLink,
     AsyncPipe,
     ContainerComponent,
     RowComponent,
@@ -48,25 +50,25 @@ import { AnnouncementDeleteService } from "./services/announcement-delete.servic
     FormLabelDirective,
     FormControlDirective,
     FormTextDirective,
-    RouterLinkActive,
-    ModalComponent,
-    ModalHeaderComponent,
-    ModalTitleDirective,
-    ModalBodyComponent,
-    ModalToggleDirective,
-    ModalFooterComponent
+    CardBodyComponent,
+    CardComponent,
+    CardHeaderComponent
   ],
   exports: [
-    AnnouncementsListComponent,
-    AnnouncementCreateComponent
+    AnnouncementsListComponent
   ],
   providers: [
+    AnnouncementsListService,
     AnnouncementsGetAllService,
+    AnnouncementGetService,
     AnnouncementCreateService,
     AnnouncementDeleteService,
+    AnnouncementUpdateService,
     CreateAnnouncementApi,
     GetAllAnnouncementsApi,
-    DeleteAnnouncementsApi,
+    GetAnnouncementApi,
+    DeleteAnnouncementApi,
+    UpdateAnnouncementApi,
     CHAT_ID_PROVIDER
   ]
 })

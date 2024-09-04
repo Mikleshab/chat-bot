@@ -26,12 +26,12 @@ export const navItems: INavData[] = [
   {
     name: "Анонсы",
     url: "/chat/announcements",
-    iconComponent: { name: "cil-handshake" }
+    iconComponent: { name: "cil-flag-alt" }
   },
   {
-    name: "Приветствие",
-    url: "/messages/welcome",
-    iconComponent: { name: "cil-handshake" }
+    name: "События",
+    url: "/chat/events",
+    iconComponent: { name: "cil-calendar" }
   },
   {
     title: true,

@@ -1,7 +1,6 @@
 import { Routes } from "@angular/router";
-import { AnnouncementsLayoutComponent } from "./announcements/layout/announcements-layout.component";
-import { AnnouncementsComponent } from "./announcements/list/announcements.component";
-import { EditAnnouncementComponent } from "./announcements/edit/edit-announcement.component";
+import { AnnouncementsComponent } from "./announcements/announcements.component";
+import { EventsComponent } from "./events/events.component";
 
 export const routes: Routes = [
   {
@@ -17,30 +16,16 @@ export const routes: Routes = [
       },
       {
         path: "announcements",
-        component: AnnouncementsLayoutComponent,
-        children: [
-          {
-            path: "",
-            redirectTo: "list",
-            pathMatch: "full"
-          },
-          {
-            path: "list",
-            component: AnnouncementsComponent,
-            data: {
-              title: "Анонсы"
-            }
-          },
-          {
-            path: "create",
-            component: EditAnnouncementComponent,
-            data: {
-              title: "Добавить анонс"
-            }
-          }
-        ],
+        component: AnnouncementsComponent,
         data: {
           title: "Анонсы"
+        }
+      },
+      {
+        path: "events",
+        component: EventsComponent,
+        data: {
+          title: "События"
         }
       }
     ]

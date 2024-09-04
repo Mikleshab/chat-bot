@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { CreateAnnouncementApi } from "./create.api";
-import { AnnouncementForm } from "../components/announcement-form/announcement-form.component";
+import { AnnouncementCreateData } from "../types/announcement.type";
 
 @Injectable()
 export class AnnouncementCreateService {
@@ -8,9 +8,9 @@ export class AnnouncementCreateService {
 
   readonly errors$ = this.api.errors$;
   readonly loading$ = this.api.loading$;
-  readonly  complete$ = this.api.complete$;
+  readonly complete$ = this.api.complete$;
 
-  create(data: AnnouncementForm) {
+  create(data: AnnouncementCreateData) {
     this.api.create(data);
   }
 }

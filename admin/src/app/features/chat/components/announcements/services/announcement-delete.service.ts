@@ -1,10 +1,10 @@
 import { inject, Injectable } from "@angular/core";
-import { DeleteAnnouncementsApi } from "./delete.api";
+import { DeleteAnnouncementApi } from "./delete.api";
 import { Announcement } from "../types/announcement.type";
 
 @Injectable()
 export class AnnouncementDeleteService {
-  private readonly api = inject(DeleteAnnouncementsApi);
+  private readonly api = inject(DeleteAnnouncementApi);
 
   readonly errors$ = this.api.errors$;
   readonly loading$ = this.api.loading$;

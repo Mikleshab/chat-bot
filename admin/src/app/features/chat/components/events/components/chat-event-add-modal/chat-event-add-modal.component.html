@@ -1,0 +1,35 @@
+<form cForm [formGroup]="form">
+  <div class="mb-3">
+    <label cLabel for="inputEventType">Тип события</label>
+    <input
+      aria-describedby="eventTypeHelpBlock"
+      cFormControl
+      [valid]="!form.get('eventType')?.invalid"
+      id="inputEventType"
+      formControlName="eventType"
+    >
+    <span cFormText id="eventTypeHelpBlock">
+      Например: "Новый участник группы", "Праздник Пасха".
+    </span>
+  </div>
+
+  <div class="mb-3">
+    <label cLabel for="inputAnnouncementId">Назначить анонс</label>
+    <select
+      id="inputAnnouncementId"
+      [valid]="!form.get('announcementId')?.invalid"
+      formControlName="announcementId"
+      aria-label="Назначить анонс"
+      aria-describedby="announcementIdHelpBlock"
+      cSelect
+    >
+      @for (announcement of announcements; track announcement.id) {
+        <option [value]="announcement.id">{{ announcement.title }}</option>
+      }
+    </select>
+    <span cFormText id="announcementIdHelpBlock">
+    Текст анонса будет использован при отправке события в чат группы.
+  </span>
+  </div>
+
+</form>
