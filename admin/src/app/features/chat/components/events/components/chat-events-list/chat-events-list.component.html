@@ -19,7 +19,7 @@
       Загрузка...
     }
 
-    @if (feature.list.errors$ | async; as errors) {
+    @if (feature.errors$ | async; as errors) {
       <app-errors [errors]="errors" />
     }
 
@@ -43,22 +43,24 @@
               <tr>
                 <td>
                   <div>
-                    {{ event.eventType }}
+                    {{ event.title }}
                   </div>
                 </td>
                 <td>
-                  <div class="d-flex justify-content-end">
-                    <button
-                      cButton
-                      size="sm"
-                      color="secondary"
-                      variant="outline"
-                      [disabled]="feature.remove.loading$ | async"
-                      (click)="remove(event.id)"
-                    >
-                      Удалить
-                    </button>
-                  </div>
+                  @if (!event.eventOptions.system) {
+                    <div class="d-flex justify-content-end">
+                      <button
+                        cButton
+                        size="sm"
+                        color="secondary"
+                        variant="outline"
+                        [disabled]="feature.remove.loading$ | async"
+                        (click)="remove(event.id)"
+                      >
+                        Удалить
+                      </button>
+                    </div>
+                  }
                 </td>
               </tr>
             }

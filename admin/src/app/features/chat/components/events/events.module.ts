@@ -14,10 +14,12 @@ import {
   ContainerComponent,
   FormControlDirective,
   FormDirective,
-  FormLabelDirective, FormSelectDirective,
+  FormLabelDirective,
+  FormSelectDirective,
   FormTextDirective,
   RowComponent,
-  TableDirective
+  TableDirective,
+  TextColorDirective
 } from "@coreui/angular";
 import { AsyncPipe } from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -27,6 +29,9 @@ import { ChatEventRemoveService } from "./services/chat-event-remove.service";
 import { ChatEventsListService } from "./services/chat-events-list.service";
 import { ChatEventAddModalComponent } from "./components/chat-event-add-modal/chat-event-add-modal.component";
 import { AnnouncementsModule } from "../announcements/announcements.module";
+import {
+  ExtendedFormControlDirective
+} from "./components/chat-event-add-modal/directives/extended-form-control.directive";
 
 
 @NgModule({
@@ -48,7 +53,9 @@ import { AnnouncementsModule } from "../announcements/announcements.module";
     CardBodyComponent,
     CardComponent,
     CardHeaderComponent,
-    FormSelectDirective
+    FormSelectDirective,
+    TextColorDirective,
+    ExtendedFormControlDirective
   ],
   exports: [
     ChatEventsListComponent

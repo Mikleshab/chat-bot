@@ -10,16 +10,17 @@ input AddChatEventInput {
   """The unique identifier of the chat where the event will be added"""
   chatId: Float!
 
-  """The type of event to be added to the chat, e.g., message, announcement"""
-  eventType: String!
+  """The type of event to be added to the chat"""
+  eventOptions: ChatEventOptionsInput!
+
+  """The title of event to be added to the chat"""
+  title: String!
 }
 
 """"""
 type AnnouncementEventObject {
-  """
-  The type of the event that occurred in the chat, such as message creation or announcement posting
-  """
-  eventType: String!
+  """The type of the event that occurred in the chat"""
+  eventType: ChatEventType!
 
   """The unique identifier of the event"""
   id: ID!
@@ -54,13 +55,56 @@ type ChatEventObject {
   """The unique identifier of the chat where the event occurred"""
   chatId: Float!
 
-  """
-  The type of the event that occurred in the chat, such as message creation or announcement posting
-  """
-  eventType: String!
+  """Options describing the recurrence and type of the event"""
+  eventOptions: ChatEventOptionsObject!
 
   """The unique identifier of the event"""
   id: ID!
+
+  """The title of the event to be added to the chat"""
+  title: String!
+}
+
+"""Input options for a chat event"""
+input ChatEventOptionsInput {
+  """End date and time for the event recurrence"""
+  endDate: DateTime
+
+  """Frequency type for the event recurrence (e.g., hourly, daily)"""
+  frequencyType: FrequencyType!
+
+  """Interval between recurrences (e.g., every 2 hours)"""
+  interval: Float!
+
+  """Start date and time for the event recurrence"""
+  startDate: DateTime!
+}
+
+"""Object representing chat event options"""
+type ChatEventOptionsObject {
+  """End date and time for the event recurrence"""
+  endDate: DateTime
+
+  """Frequency type for the event recurrence (e.g., hourly, daily)"""
+  frequencyType: FrequencyType
+
+  """Interval between recurrences (e.g., every 2 hours)"""
+  interval: Float
+
+  """Start date and time for the event recurrence"""
+  startDate: DateTime
+
+  """Indicates whether the event was system-generated"""
+  system: Boolean!
+
+  """Type of the chat event"""
+  type: ChatEventType!
+}
+
+"""The type of the chat event, such as GREETINGS or RECURRENT"""
+enum ChatEventType {
+  GREETINGS
+  RECURRENT
 }
 
 """Represents a conversation between a client and the system."""
@@ -120,10 +164,24 @@ input CreateReplyInput {
   parentId: Float!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 """Input type for deleting an announcement by ID"""
 input DeleteAnnouncementInput {
   """The unique identifier of the announcement"""
   id: ID!
+}
+
+"""The frequency type for event recurrence"""
+enum FrequencyType {
+  DAILY
+  HOURLY
+  MONTHLY
+  WEEKLY
+  YEARLY
 }
 
 """Input type for retrieving all announcements by the Chat ID"""
@@ -151,8 +209,8 @@ input GetChatEventInput {
   """The unique identifier of the chat where the event occurred"""
   chatId: Float!
 
-  """The type of event to be retrieved from the chat"""
-  eventType: String!
+  """The type of event to be added to the chat"""
+  eventType: ChatEventType!
 }
 
 """Input arguments for the GetConversation query."""

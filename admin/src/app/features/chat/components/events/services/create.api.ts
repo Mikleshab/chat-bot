@@ -11,11 +11,12 @@ export class CreateChatEventApi {
   private readonly addChatEventGQL = inject(AddChatEventGQL);
   private readonly chatEvent$ = new Subject<ChatEventCreateData>();
   private readonly result$ = this.chatEvent$.pipe(
-    switchMap(({ eventType, announcementId }) =>
+    switchMap(({ title, eventOptions, announcementId }) =>
       this.addChatEventGQL.mutate({
         input: {
           chatId: this.chatId.getValue()!,
-          eventType,
+          title,
+          eventOptions,
           announcementId
         }
       }, { errorPolicy: "all" })

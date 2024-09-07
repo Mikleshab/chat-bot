@@ -1,7 +1,9 @@
 import { BotService } from './bot.service';
 import { ExtraReplyMessage } from 'telegraf/typings/telegram-types';
 import { Telegram } from 'telegraf/src/core/types/typegram';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class SenderService {
   constructor(private readonly service: BotService) {}
 

@@ -3,6 +3,6 @@ import { AnnouncementEventObject } from '@features/chat-announcements/presenters
 
 export class AnnouncementEventMapper {
   static toObjectType(event: ChatEvent): AnnouncementEventObject {
-    return new AnnouncementEventObject(event.id, event.eventType);
+    return new AnnouncementEventObject(event.id, event.eventOptions.type);
   }
 }

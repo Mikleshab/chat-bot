@@ -10,6 +10,7 @@ import { BotSurveyModule } from '@features/bot-survey/bot-survey.module';
 import { ChatAnnouncementsModule } from '@features/chat-announcements/chat-announcements.module';
 import { TelegrafModule } from '@features/chat-bot/infrastructure/telegraf/telegraf.module';
 import { ChatEventsModule } from '@features/chat-events/chat-events.module';
+import { ChatBotModule } from '@features/chat-bot/chat-bot.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ChatEventsModule } from '@features/chat-events/chat-events.module';
     ChatAnnouncementsModule,
     TelegrafModule,
     ChatEventsModule,
+    ChatBotModule,
   ],
 })
 export class FeaturesModule {}

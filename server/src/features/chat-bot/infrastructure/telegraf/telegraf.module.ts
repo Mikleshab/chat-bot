@@ -8,6 +8,7 @@ import { CommandHandler } from './services/command.handler';
 import { CallbackHandler } from './services/callback.handler';
 import { BotRepository } from '../../application/repositories/bot.repository';
 import { BOT_REPOSITORY_PROVIDER } from './providers/bot.provider';
+import { BotService } from '@features/chat-bot/infrastructure/telegraf/services/bot.service';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { BOT_REPOSITORY_PROVIDER } from './providers/bot.provider';
       envFilePath: [`.env.${process.env.NODE_ENV}.local`],
     }),
   ],
-  providers: [BOT_REPOSITORY_PROVIDER, SenderService, EventHandler, CommandHandler, CallbackHandler],
+  providers: [BOT_REPOSITORY_PROVIDER, BotService, SenderService, EventHandler, CommandHandler, CallbackHandler],
   exports: [BotRepository],
 })
 export class TelegrafModule {}

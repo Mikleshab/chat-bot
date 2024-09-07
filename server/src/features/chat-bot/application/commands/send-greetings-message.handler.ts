@@ -5,6 +5,7 @@ import { GetChatEventByTypeQuery } from '@features/chat-events/application/queri
 import { ChatEvent } from '@features/chat-events/domain/model/chat-event';
 import { GetAnnouncementQuery } from '@features/chat-announcements/application/queries/get-announcement.query';
 import { Announcement } from '@features/chat-announcements/domain/model/announcement';
+import { ChatEventType } from '@features/chat-events/domain/value-objects/chat-event-options';
 
 @CommandHandler(SendGreetingsMessageCommand)
 export class ActivateHandlerHandler implements ICommandHandler<SendGreetingsMessageCommand> {
@@ -17,7 +18,7 @@ export class ActivateHandlerHandler implements ICommandHandler<SendGreetingsMess
     const { chatId } = command;
 
     const event = await this.queryBus.execute<GetChatEventByTypeQuery, ChatEvent>(
-      new GetChatEventByTypeQuery(chatId, 'greetings'),
+      new GetChatEventByTypeQuery(chatId, ChatEventType.GREETINGS),
     );
 
     const announcement = await this.queryBus.execute<GetAnnouncementQuery, Announcement>(

@@ -4,7 +4,10 @@ import { ChatEvent } from '../../domain/model/chat-event';
 export abstract class ChatEventRepository {
   abstract add(data: Omit<ChatEvent, 'id'>): Promise<void>;
 
-  abstract getOneByType(filter: { chatId: Chat['id']; eventType: ChatEvent['eventType'] }): Promise<ChatEvent>;
+  abstract getOneByType(filter: {
+    chatId: Chat['id'];
+    eventType: ChatEvent['eventOptions']['type'];
+  }): Promise<ChatEvent>;
 
   abstract getOneByAnnouncementId(announcementId: ChatEvent['announcementId']): Promise<ChatEvent>;
 

@@ -2,13 +2,9 @@ import { INavData } from "@coreui/angular";
 
 export const navItems: INavData[] = [
   {
-    name: "Dashboard",
+    name: "Счётчики",
     url: "/dashboard",
-    iconComponent: { name: "cil-speedometer" },
-    badge: {
-      color: "info",
-      text: "NEW"
-    }
+    iconComponent: { name: "cil-speedometer" }
   },
   {
     title: true,

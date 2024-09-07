@@ -26,7 +26,7 @@
                   <div>{{ conversation.title }}</div>
                   <div class="small text-body-secondary text-nowrap">
                   <span>
-                    {{ conversation.state }} | Начало: {{ conversation.registered | date: 'medium' }}
+                    {{ conversation.state }} | Начало: {{ conversation.registered | timeAgo }}
                   </span>
                   </div>
                 </td>
@@ -43,7 +43,7 @@
                 </td>
                 <td>
                   <div class="small text-body-secondary">Последнее сообщение</div>
-                  <div class="text-nowrap">{{ conversation.activity | date : 'medium' }}</div>
+                  <div class="text-nowrap">{{ conversation.activity | timeAgo }}</div>
                 </td>
               </tr>
             }

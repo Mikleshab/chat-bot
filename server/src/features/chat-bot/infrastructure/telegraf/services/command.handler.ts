@@ -1,5 +1,7 @@
 import { BotService } from './bot.service';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class CommandHandler {
   constructor(private readonly service: BotService) {}
 

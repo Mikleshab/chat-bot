@@ -14,6 +14,7 @@ import { RouterLink } from "@angular/router";
 import { map } from "rxjs/operators";
 import { GetConversationsGQL } from "../../../graphql/generated";
 import { AsyncPipe, DatePipe } from "@angular/common";
+import { TimeAgoPipe } from "../../../common/pipes/time-ago.pipe";
 
 @Component({
   selector: "app-conversations",
@@ -30,7 +31,8 @@ import { AsyncPipe, DatePipe } from "@angular/common";
     CardHeaderComponent,
     RouterLink,
     AsyncPipe,
-    DatePipe
+    DatePipe,
+    TimeAgoPipe
   ],
   templateUrl: "./conversations.component.html",
   styleUrl: "./conversations.component.scss"

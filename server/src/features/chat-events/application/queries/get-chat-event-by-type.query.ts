@@ -5,6 +5,6 @@ import { ChatEvent } from '@features/chat-events/domain/model/chat-event';
 export class GetChatEventByTypeQuery implements IQuery {
   constructor(
     public readonly chatId: Chat['id'],
-    public readonly eventType: ChatEvent['eventType'],
+    public readonly eventType: ChatEvent['eventOptions']['type'],
   ) {}
 }

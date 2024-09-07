@@ -23,7 +23,9 @@ export class ChatEventResolver {
     description: 'Adds a new event to a specific chat',
   })
   async add(@Args('input', { description: 'Input data to create a new chat event' }) input: AddChatEventInput) {
-    await this.commandBus.execute(new AddChatEventCommand(input.chatId, input.eventType, input.announcementId));
+    await this.commandBus.execute(
+      new AddChatEventCommand(input.chatId, input.title, input.eventOptions, input.announcementId),
+    );
 
     return true;
   }

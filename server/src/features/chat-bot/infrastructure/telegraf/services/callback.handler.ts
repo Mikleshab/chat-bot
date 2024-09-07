@@ -1,6 +1,8 @@
 import { CallbackQuery } from 'telegraf/typings/core/types/typegram';
 import { BotService } from './bot.service';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class CallbackHandler {
   constructor(private readonly service: BotService) {}
 

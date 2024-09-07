@@ -18,13 +18,13 @@ export class ChatEventsCollection implements ChatEventRepository {
     await docRef.set({ ...data, id: docRef.id });
   }
 
-  async getOneByType(filter: { chatId: Chat['id']; eventType: ChatEvent['eventType'] }): Promise<ChatEvent> {
+  async getOneByType(filter: { chatId: Chat['id']; eventType: ChatEvent['eventOptions']['type'] }): Promise<ChatEvent> {
     const db = this.firebase.app.firestore();
     const collectionRef = db.collection(this.collectionName);
 
     const query = collectionRef
       .where('chatId', '==', filter.chatId)
-      .where('eventType', '==', filter.eventType)
+      .where('eventType.type', '==', filter.eventType)
       .limit(1);
 
     const querySnapshot = await query.get();
