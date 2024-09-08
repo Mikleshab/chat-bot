@@ -12,5 +12,4 @@ import { telegramConfiguration, telegramConfigurationValidationSchema } from './
     }),
   ],
 })
-export class TelegramConfigInitializer {
-}
+export class TelegramConfigInitializer {}

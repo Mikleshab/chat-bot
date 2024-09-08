@@ -4,7 +4,7 @@ import { GetChatEventByTypeQuery } from '@features/events/application/queries/ge
 import { ChatEvent } from '@features/events/domain/model/chat-event';
 import { ChatEventType } from '@features/events/domain/value-objects/chat-event-options';
 import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { Bot } from '../../domain/models/bot';
+import { Bot } from '@features/chat-bot/domain/models/bot';
 import { SendGreetingsMessageCommand } from './send-greetings-message.command';
 
 @CommandHandler(SendGreetingsMessageCommand)

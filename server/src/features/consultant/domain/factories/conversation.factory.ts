@@ -1,4 +1,4 @@
-import { Conversation } from '../value-objects/conversation';
+import { Conversation } from '@features/consultant/domain/value-objects/conversation';
 import { ConversationMessage } from '@features/consultant/domain/models/conversation-message';
 
 export class ConversationFactory {

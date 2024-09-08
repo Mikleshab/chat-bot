@@ -1,4 +1,4 @@
-import { Announcement, DEFAULT_TEXT } from '../../../domain/model/announcement';
+import { Announcement, DEFAULT_TEXT } from '@features/announcements/domain/model/announcement';
 import { randomUUID } from 'node:crypto';
 
 export class AnnouncementMapper {

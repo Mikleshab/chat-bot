@@ -1,7 +1,6 @@
 import * as process from 'node:process';
 import * as Joi from 'joi';
 
-
 export interface TelegramConfiguration {
   botToken: string;
 }

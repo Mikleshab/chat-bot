@@ -1,4 +1,4 @@
-import { UserDomain } from '../models/user.domain';
+import { UserDomain } from '@features/consultant/domain/models/user.domain';
 import { SaveMemberPrivateMessageCommand } from '@features/consultant/application/commands/save-member-private-message.command';
 
 export class UserFactory {

@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AddChatEventCommand } from './add-chat-event.command';
-import { ChatEventRepository } from '../repositories/chat-event.repository';
+import { ChatEventRepository } from '@features/events/application/repositories/chat-event.repository';
 import { ChatEventType } from '@features/events/domain/value-objects/chat-event-options';
 
 @CommandHandler(AddChatEventCommand)

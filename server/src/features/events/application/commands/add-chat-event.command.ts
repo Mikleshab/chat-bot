@@ -1,5 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
-import { ChatEvent } from '../../domain/model/chat-event';
+import { ChatEvent } from '@features/events/domain/model/chat-event';
 
 export class AddChatEventCommand implements ICommand {
   constructor(

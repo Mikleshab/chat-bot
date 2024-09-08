@@ -1,6 +1,6 @@
 import { NotifyMemberAboutReceivedMessageCommand } from '@features/chat-bot/application/commands/notify-member-about-received-message.command';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { Bot } from '../../domain/models/bot';
+import { Bot } from '@features/chat-bot/domain/models/bot';
 
 @CommandHandler(NotifyMemberAboutReceivedMessageCommand)
 export class NotifyMemberAboutReceivedMessageHandler

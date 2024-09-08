@@ -6,7 +6,7 @@ import { SenderService } from './services/sender.service';
 import { EventHandler } from './services/event.handler';
 import { CommandHandler } from './services/command.handler';
 import { CallbackHandler } from './services/callback.handler';
-import { BotRepository } from '../../application/repositories/bot.repository';
+import { BotRepository } from '@features/chat-bot/application/repositories/bot.repository';
 import { BOT_REPOSITORY_PROVIDER } from './providers/bot.provider';
 import { BotService } from '@features/chat-bot/infrastructure/telegraf/services/bot.service';
 import { CqrsModule } from '@nestjs/cqrs';

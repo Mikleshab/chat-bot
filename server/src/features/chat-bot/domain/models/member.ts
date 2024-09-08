@@ -1,9 +1,9 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { NewChatMemberEvent } from '../../application/events/new-chat-member.event';
-import { LeftChatMemberEvent } from '../../application/events/left-chat-member.event';
-import { MemberSentPrivateMessageEvent } from '../../application/events/member-sent-private-message.event';
+import { NewChatMemberEvent } from '@features/chat-bot/application/events/new-chat-member.event';
+import { LeftChatMemberEvent } from '@features/chat-bot/application/events/left-chat-member.event';
+import { MemberSentPrivateMessageEvent } from '@features/chat-bot/application/events/member-sent-private-message.event';
 import { Chat } from './../models/chat';
-import { Message } from '../../domain/models/message';
+import { Message } from '@features/chat-bot/domain/models/message';
 
 export class Member extends AggregateRoot {
   constructor(

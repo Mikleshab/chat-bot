@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { AnnouncementsRepository } from '../repositories/announcements.repository';
+import { AnnouncementsRepository } from '@features/announcements/application/repositories/announcements.repository';
 import { GetAllAnnouncementQuery } from '@features/announcements/application/queries/get-all-announcement.query';
 
 @QueryHandler(GetAllAnnouncementQuery)

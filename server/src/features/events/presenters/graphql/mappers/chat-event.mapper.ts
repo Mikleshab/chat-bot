@@ -1,5 +1,5 @@
-import { ChatEventObject } from '../dto/chat-event.object';
-import { ChatEvent } from '../../../domain/model/chat-event';
+import { ChatEventObject } from '@features/events/presenters/graphql/dto/chat-event.object';
+import { ChatEvent } from '@features/events/domain/model/chat-event';
 import { ChatEventOptionsObject } from '@features/events/presenters/graphql/dto/event-options';
 
 export class ChatEventMapper {

@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateAnnouncementCommand } from './create-announcement.command';
-import { AnnouncementsRepository } from '../repositories/announcements.repository';
+import { AnnouncementsRepository } from '@features/announcements/application/repositories/announcements.repository';
 
 @CommandHandler(CreateAnnouncementCommand)
 export class CreateAnnouncementHandler implements ICommandHandler<CreateAnnouncementCommand> {

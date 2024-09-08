@@ -1,8 +1,8 @@
 import { FirebaseService } from '@libs/firebase/services/firebase.service';
-import { ChatEventMapper } from '../mappers/chat-event.mapper';
-import { ChatEventRepository } from '../../../application/repositories/chat-event.repository';
+import { ChatEventMapper } from '@features/events/infrastructure/firefase/mappers/chat-event.mapper';
+import { ChatEventRepository } from '@features/events/application/repositories/chat-event.repository';
 import { Chat } from '@features/chat-bot/domain/models/chat';
-import { ChatEvent } from '../../../domain/model/chat-event';
+import { ChatEvent } from '@features/events/domain/model/chat-event';
 import { BadRequestException } from '@nestjs/common';
 
 export class ChatEventsCollection implements ChatEventRepository {

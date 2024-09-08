@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { AnnouncementsRepository } from '../repositories/announcements.repository';
+import { AnnouncementsRepository } from '@features/announcements/application/repositories/announcements.repository';
 import { DeleteAnnouncementCommand } from './delete-announcement.command';
 
 @CommandHandler(DeleteAnnouncementCommand)

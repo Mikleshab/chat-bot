@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { BotRepository } from '../../application/repositories/bot.repository';
-import { Chat } from '../models/chat';
+import { BotRepository } from '@features/chat-bot/application/repositories/bot.repository';
+import { Chat } from '@features/chat-bot/domain/models/chat';
 import { Message } from '@features/chat-bot/domain/models/message';
 
 @Injectable()

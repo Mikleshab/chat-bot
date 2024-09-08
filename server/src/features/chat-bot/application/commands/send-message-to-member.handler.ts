@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { Bot } from '../../domain/models/bot';
+import { Bot } from '@features/chat-bot/domain/models/bot';
 import { SendMessageToMemberCommand } from '@features/chat-bot/application/commands/send-message-to-member.command';
 import { Message } from '@features/chat-bot/domain/models/message';
 

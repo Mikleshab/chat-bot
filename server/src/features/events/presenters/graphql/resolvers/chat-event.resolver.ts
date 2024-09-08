@@ -1,15 +1,15 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ChatEventObject } from '../dto/chat-event.object';
-import { AddChatEventCommand } from '../../../application/commands/add-chat-event.command';
-import { GetChatEventByTypeQuery } from '../../../application/queries/get-chat-event-by-type.query';
-import { RemoveChatEventCommand } from '../../../application/commands/remove-chat-event.command';
-import { GetAllChatEventsQuery } from '../../../application/queries/get-all-chat-events.query';
-import { AddChatEventInput } from '../dto/add.input';
-import { GetChatEventInput } from '../dto/get.input';
-import { GetAllChatEventInput } from '../dto/get-all.input';
-import { RemoveChatEventInput } from '../dto/remove.input';
-import { ChatEventMapper } from '../mappers/chat-event.mapper';
+import { ChatEventObject } from '@features/events/presenters/graphql/dto/chat-event.object';
+import { AddChatEventCommand } from '@features/events/application/commands/add-chat-event.command';
+import { GetChatEventByTypeQuery } from '@features/events/application/queries/get-chat-event-by-type.query';
+import { RemoveChatEventCommand } from '@features/events/application/commands/remove-chat-event.command';
+import { GetAllChatEventsQuery } from '@features/events/application/queries/get-all-chat-events.query';
+import { AddChatEventInput } from '@features/events/presenters/graphql/dto/add.input';
+import { GetChatEventInput } from '@features/events/presenters/graphql/dto/get.input';
+import { GetAllChatEventInput } from '@features/events/presenters/graphql/dto/get-all.input';
+import { RemoveChatEventInput } from '@features/events/presenters/graphql/dto/remove.input';
+import { ChatEventMapper } from '@features/events/presenters/graphql/mappers/chat-event.mapper';
 
 @Resolver(() => ChatEventObject)
 export class ChatEventResolver {

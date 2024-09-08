@@ -1,7 +1,7 @@
 import { FirebaseService } from '@libs/firebase/services/firebase.service';
-import { AnnouncementsRepository } from '../../../application/repositories/announcements.repository';
-import { Announcement } from '../../../domain/model/announcement';
-import { AnnouncementMapper } from '../mappers/announcemet.mapper';
+import { AnnouncementsRepository } from '@features/announcements/application/repositories/announcements.repository';
+import { Announcement } from '@features/announcements/domain/model/announcement';
+import { AnnouncementMapper } from '@features/announcements/infrastructure/firefase/mappers/announcemet.mapper';
 
 export class AnnouncementsCollection implements AnnouncementsRepository {
   private readonly collectionName = 'announcements';

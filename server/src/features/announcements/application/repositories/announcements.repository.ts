@@ -1,4 +1,4 @@
-import { Announcement } from '../../domain/model/announcement';
+import { Announcement } from '@features/announcements/domain/model/announcement';
 
 export abstract class AnnouncementsRepository {
   abstract create(data: Partial<Omit<Announcement, 'id'>>): Promise<void>;

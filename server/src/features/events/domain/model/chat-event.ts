@@ -1,5 +1,5 @@
 import { Chat } from '@features/chat-bot/domain/models/chat';
-import { ChatEventOptions } from '../value-objects/chat-event-options';
+import { ChatEventOptions } from '@features/events/domain/value-objects/chat-event-options';
 import { Announcement } from '@features/announcements/domain/model/announcement';
 
 export class ChatEvent {

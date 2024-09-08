@@ -10,7 +10,7 @@ export class ConversationsCollection implements ConversationRepository {
 
   async getConversations(filter?: { clientIds: Conversation['client']['userId'][] }): Promise<Conversation[]> {
     const db = this.firebase.app.firestore();
-    let conversationsRef = db.collection(this.collectionName);
+    const conversationsRef = db.collection(this.collectionName);
 
     const query = filter?.clientIds?.length
       ? conversationsRef.where('client.userId', 'in', filter.clientIds)

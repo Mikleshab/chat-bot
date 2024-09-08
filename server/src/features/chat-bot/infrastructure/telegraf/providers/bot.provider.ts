@@ -1,8 +1,8 @@
 import { Provider } from '@nestjs/common';
-import { BotRepository } from '../../../application/repositories/bot.repository';
-import { EventHandler } from '../services/event.handler';
-import { SenderService } from '../services/sender.service';
-import { TelegrafBotRepository } from '../repositories/telegraf-bot.repository';
+import { BotRepository } from '@features/chat-bot/application/repositories/bot.repository';
+import { EventHandler } from '@features/chat-bot/infrastructure/telegraf/services/event.handler';
+import { SenderService } from '@features/chat-bot/infrastructure/telegraf/services/sender.service';
+import { TelegrafBotRepository } from '@features/chat-bot/infrastructure/telegraf/repositories/telegraf-bot.repository';
 import { BotService } from '@features/chat-bot/infrastructure/telegraf/services/bot.service';
 import { EventPublisher } from '@nestjs/cqrs';
 

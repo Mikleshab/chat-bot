@@ -3,16 +3,16 @@ import { EventPublisher } from '@nestjs/cqrs';
 import { Message as TelegramMessage } from '@telegraf/types';
 import { Context } from 'telegraf';
 import { Telegram } from 'telegraf/src/core/types/typegram';
-import { BotRepository } from '../../../application/repositories/bot.repository';
-import { Chat } from '../../../domain/models/chat';
-import { ChatMapper } from '../mappers/chat.mapper';
-import { ExtraMapper } from '../mappers/extra.mapper';
-import { MemberMapper } from '../mappers/member.mapper';
-import { MessageMapper } from '../mappers/message.mapper';
-import { TextMapper } from '../mappers/text.mapper';
-import { BotService } from '../services/bot.service';
-import { EventHandler } from '../services/event.handler';
-import { SenderService } from '../services/sender.service';
+import { BotRepository } from '@features/chat-bot/application/repositories/bot.repository';
+import { Chat } from '@features/chat-bot/domain/models/chat';
+import { ChatMapper } from '@features/chat-bot/infrastructure/telegraf/mappers/chat.mapper';
+import { ExtraMapper } from '@features/chat-bot/infrastructure/telegraf/mappers/extra.mapper';
+import { MemberMapper } from '@features/chat-bot/infrastructure/telegraf/mappers/member.mapper';
+import { MessageMapper } from '@features/chat-bot/infrastructure/telegraf/mappers/message.mapper';
+import { TextMapper } from '@features/chat-bot/infrastructure/telegraf/mappers/text.mapper';
+import { BotService } from '@features/chat-bot/infrastructure/telegraf/services/bot.service';
+import { EventHandler } from '@features/chat-bot/infrastructure/telegraf/services/event.handler';
+import { SenderService } from '@features/chat-bot/infrastructure/telegraf/services/sender.service';
 
 export class TelegrafBotRepository implements BotRepository {
   constructor(

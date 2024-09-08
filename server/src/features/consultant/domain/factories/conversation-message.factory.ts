@@ -1,4 +1,4 @@
-import { ConversationMessage } from '../models/conversation-message';
+import { ConversationMessage } from '@features/consultant/domain/models/conversation-message';
 import { SaveMemberPrivateMessageCommand } from '@features/consultant/application/commands/save-member-private-message.command';
 import { UserDomain } from '@features/consultant/domain/models/user.domain';
 import { faker } from '@faker-js/faker';

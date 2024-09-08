@@ -60,6 +60,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-no-relative-import-paths": "^1.5.5",
     "eslint-plugin-prettier": "^5.0.0",
     "pactum": "^3.6.8",
     "prettier": "^3.0.0",

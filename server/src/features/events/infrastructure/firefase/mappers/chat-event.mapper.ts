@@ -1,4 +1,4 @@
-import { ChatEvent } from '../../../domain/model/chat-event';
+import { ChatEvent } from '@features/events/domain/model/chat-event';
 import * as admin from 'firebase-admin';
 
 export class ChatEventMapper {

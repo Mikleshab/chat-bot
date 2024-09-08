@@ -1,5 +1,5 @@
 import { Chat } from '@features/chat-bot/domain/models/chat';
-import { ChatEvent } from '../../domain/model/chat-event';
+import { ChatEvent } from '@features/events/domain/model/chat-event';
 
 export abstract class ChatEventRepository {
   abstract add(data: Omit<ChatEvent, 'id'>): Promise<void>;

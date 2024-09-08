@@ -1,7 +1,7 @@
 import { Telegraf } from 'telegraf';
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
-import { Configuration } from '../config/config.schema';
+import { Configuration } from '@features/chat-bot/infrastructure/telegraf/config/config.schema';
 import { defer, timer } from 'rxjs';
 import { retry } from 'rxjs/operators';
 

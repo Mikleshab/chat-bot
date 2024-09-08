@@ -1,6 +1,6 @@
-import { Keyboard } from '../value-objects/keyboard';
-import { ButtonUrl } from '../value-objects/button-url';
-import { ButtonCallback } from '../value-objects/button-callback';
+import { Keyboard } from '@features/chat-bot/domain/value-objects/keyboard';
+import { ButtonUrl } from '@features/chat-bot/domain/value-objects/button-url';
+import { ButtonCallback } from '@features/chat-bot/domain/value-objects/button-callback';
 
 export class Message {
   private keyboards: Keyboard<ButtonUrl | ButtonCallback>[] = [];

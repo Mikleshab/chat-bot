@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { ChatEventRepository } from '../repositories/chat-event.repository';
-import { ChatEvent } from '../../domain/model/chat-event';
+import { ChatEventRepository } from '@features/events/application/repositories/chat-event.repository';
+import { ChatEvent } from '@features/events/domain/model/chat-event';
 import { GetChatEventByAnnouncementIdQuery } from './get-chat-event-by-announcement-id.query';
 
 @QueryHandler(GetChatEventByAnnouncementIdQuery)

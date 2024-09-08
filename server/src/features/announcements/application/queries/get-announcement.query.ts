@@ -1,5 +1,5 @@
 import { IQuery } from '@nestjs/cqrs';
-import { Announcement } from '../../domain/model/announcement';
+import { Announcement } from '@features/announcements/domain/model/announcement';
 
 export class GetAnnouncementQuery implements IQuery {
   constructor(public readonly id: Announcement['id']) {}

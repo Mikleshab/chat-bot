@@ -1,5 +1,5 @@
-import { AnnouncementObject } from '../dto/announcement.object';
-import { Announcement } from '../../../domain/model/announcement';
+import { AnnouncementObject } from '@features/announcements/presenters/graphql/dto/announcement.object';
+import { Announcement } from '@features/announcements/domain/model/announcement';
 
 export class AnnouncementMapper {
   static toObjectType(announcement: Announcement): AnnouncementObject {
