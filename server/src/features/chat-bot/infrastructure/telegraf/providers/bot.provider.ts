@@ -3,11 +3,18 @@ import { BotRepository } from '../../../application/repositories/bot.repository'
 import { EventHandler } from '../services/event.handler';
 import { SenderService } from '../services/sender.service';
 import { TelegrafBotRepository } from '../repositories/telegraf-bot.repository';
+import { BotService } from '@features/chat-bot/infrastructure/telegraf/services/bot.service';
+import { EventPublisher } from '@nestjs/cqrs';
 
 export const BOT_REPOSITORY_PROVIDER: Provider = {
   provide: BotRepository,
-  useFactory: (eventHandler: EventHandler, sender: SenderService) => {
-    return new TelegrafBotRepository(eventHandler, sender);
+  useFactory: (
+    botService: BotService,
+    eventHandler: EventHandler,
+    sender: SenderService,
+    publisher: EventPublisher,
+  ) => {
+    return new TelegrafBotRepository(botService, eventHandler, sender, publisher);
   },
-  inject: [EventHandler, SenderService],
+  inject: [BotService, EventHandler, SenderService, EventPublisher],
 };

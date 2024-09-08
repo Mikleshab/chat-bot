@@ -5,10 +5,10 @@ import { TelegramConfiguration } from '@libs/telegram-bot/config';
 
 @Injectable()
 export class TelegramBotService {
-  public readonly bot: Telegraf;
+  public readonly bot!: Telegraf;
 
   constructor(configService: ConfigService<TelegramConfiguration>) {
-    const token = configService.get<string>('botToken', '');
-    this.bot = new Telegraf(token);
+    // const token = configService.get<string>('botToken', '');
+    // this.bot = new Telegraf(token);
   }
 }

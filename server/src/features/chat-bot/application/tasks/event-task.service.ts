@@ -2,12 +2,12 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { QueryBus } from '@nestjs/cqrs';
 import { Bot } from '@features/chat-bot/domain/models/bot';
-import { GetAllChatEventsQuery } from '@features/chat-events/application/queries/get-all-chat-events.query';
-import { ChatEvent } from '@features/chat-events/domain/model/chat-event';
-import { GetAnnouncementQuery } from '@features/chat-announcements/application/queries/get-announcement.query';
-import { Announcement } from '@features/chat-announcements/domain/model/announcement';
+import { GetAllChatEventsQuery } from '@features/events/application/queries/get-all-chat-events.query';
+import { ChatEvent } from '@features/events/domain/model/chat-event';
+import { GetAnnouncementQuery } from '@features/announcements/application/queries/get-announcement.query';
+import { Announcement } from '@features/announcements/domain/model/announcement';
 import { DateTime } from 'luxon';
-import { FrequencyType } from '@features/chat-events/domain/value-objects/chat-event-options';
+import { FrequencyType } from '@features/events/domain/value-objects/chat-event-options';
 
 @Injectable()
 export class TasksService {
@@ -37,7 +37,7 @@ export class TasksService {
             new GetAnnouncementQuery(event.announcementId),
           );
 
-          this.bot.send(event.chatId, announcement);
+          await this.bot.send(event.chatId, announcement.text);
         }
       }
     } catch (error: unknown) {

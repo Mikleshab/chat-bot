@@ -1,19 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { BotRepository } from '../../application/repositories/bot.repository';
 import { Chat } from '../models/chat';
-import { Member } from '../models/member';
-import { Announcement } from '@features/chat-announcements/domain/model/announcement';
+import { Message } from '@features/chat-bot/domain/models/message';
 
 @Injectable()
 export class Bot {
-  constructor(private readonly botRepository: BotRepository) {}
+  constructor(private readonly repository: BotRepository) {}
 
   start() {
-    this.botRepository.handleJoin((chat: Chat, member: Member) => member.join(chat));
-    this.botRepository.handleLeft((chat: Chat, member: Member) => member.left(chat));
+    this.repository.launch({ production: false });
   }
 
-  send(chatId: Chat['id'], announcement: Announcement) {
-    this.botRepository.send(chatId, announcement);
+  stop() {
+    this.repository.stop();
+  }
+
+  async send(chatId: Chat['id'], message: Message | string, replyToMessageId?: number | null): Promise<Message> {
+    return this.repository.send(chatId, message, replyToMessageId);
   }
 }

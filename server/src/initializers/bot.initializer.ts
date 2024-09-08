@@ -6,6 +6,6 @@ export class BotInitializer implements OnModuleInit {
   constructor(private readonly telegramBotService: TelegramBotService) {}
 
   onModuleInit() {
-    this.telegramBotService.bot.launch();
+    // this.telegramBotService.bot.launch();
   }
 }

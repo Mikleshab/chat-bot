@@ -17,8 +17,8 @@ export class TelegramHandler {
   ) {}
 
   public listen(): void {
-    this.callback.handleCallback(this.handleSurveyMenuButton.bind(this));
-    this.callback.handleCallback(this.handleSurveyActions.bind(this));
+    // this.callback.handleCallback(this.handleSurveyMenuButton.bind(this));
+    // this.callback.handleCallback(this.handleSurveyActions.bind(this));
   }
 
   private handleSurveyMenuButton(data: MenuPayloadDto, ctx: { from: { id: number } }) {

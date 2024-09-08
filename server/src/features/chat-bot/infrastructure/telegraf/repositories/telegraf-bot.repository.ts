@@ -1,34 +1,74 @@
+import { Message } from '@features/chat-bot/domain/models/message';
+import { EventPublisher } from '@nestjs/cqrs';
+import { Message as TelegramMessage } from '@telegraf/types';
+import { Context } from 'telegraf';
+import { Telegram } from 'telegraf/src/core/types/typegram';
 import { BotRepository } from '../../../application/repositories/bot.repository';
+import { Chat } from '../../../domain/models/chat';
+import { ChatMapper } from '../mappers/chat.mapper';
+import { ExtraMapper } from '../mappers/extra.mapper';
+import { MemberMapper } from '../mappers/member.mapper';
+import { MessageMapper } from '../mappers/message.mapper';
+import { TextMapper } from '../mappers/text.mapper';
+import { BotService } from '../services/bot.service';
 import { EventHandler } from '../services/event.handler';
-import { Chat } from '@features/chat-bot/domain/models/chat';
-import { Member } from '@features/chat-bot/domain/models/member';
-import { ChatFactory } from '@features/chat-bot/infrastructure/telegraf/factories/chat.factory';
-import { MemberFactory } from '@features/chat-bot/infrastructure/telegraf/factories/member.factory';
-import { Announcement } from '@features/chat-announcements/domain/model/announcement';
-import { SenderService } from '@features/chat-bot/infrastructure/telegraf/services/sender.service';
-import { TextFactory } from '@features/chat-bot/infrastructure/telegraf/factories/text.factory';
-import { ExtraFactory } from '@features/chat-bot/infrastructure/telegraf/factories/extra.factory';
-import { ChatMemberUpdated } from '@telegraf/types';
+import { SenderService } from '../services/sender.service';
 
 export class TelegrafBotRepository implements BotRepository {
   constructor(
+    private readonly botService: BotService,
     private readonly eventHandler: EventHandler,
     private readonly sender: SenderService,
+    private readonly publisher: EventPublisher,
   ) {}
 
-  handleJoin(handler: (chat: Chat, member: Member) => void): void {
-    this.eventHandler.handle('new_chat_members', (ctx: ChatMemberUpdated) => {
-      handler(ChatFactory.toDomain(ctx.chat.id), MemberFactory.toDomain(ctx.new_chat_member.user));
-    });
+  launch({ production }: { production: boolean }): void {
+    if (production) {
+    } else {
+      this.botService.launchWithRetry();
+
+      this.eventHandler.handle('new_chat_members', (ctx: Context) => {
+        const message = ctx.message;
+        const chat = ChatMapper.toDomain(message!.chat);
+        const member = this.publisher.mergeObjectContext(MemberMapper.toDomain(message!.from));
+        member.join(chat);
+      });
+
+      this.eventHandler.handle('left_chat_member', (ctx: Context) => {
+        const message = ctx.message;
+        const chat = ChatMapper.toDomain(message!.chat);
+        const member = this.publisher.mergeObjectContext(MemberMapper.toDomain(message!.from));
+        member.left(chat);
+      });
+
+      this.eventHandler.handle('text', (ctx: Context) => {
+        const telegramMessage = ctx.message as TelegramMessage.TextMessage;
+        const chat = ChatMapper.toDomain(telegramMessage!.chat);
+        const member = this.publisher.mergeObjectContext(MemberMapper.toDomain(telegramMessage!.from!));
+        const message = MessageMapper.toDomain(telegramMessage);
+        if (chat.type === 'private') {
+          member.sendPrivate(message, chat);
+        }
+      });
+    }
   }
 
-  handleLeft(handler: (chat: Chat, member: Member) => void): void {
-    this.eventHandler.handle('left_chat_member', (ctx: ChatMemberUpdated) => {
-      handler(ChatFactory.toDomain(ctx.chat.id), MemberFactory.toDomain(ctx.from));
-    });
+  async stop(): Promise<void> {
+    return this.botService.getBot().stop(`Server terminated.`);
   }
 
-  send(chatId: Chat['id'], announcement: Announcement): void {
-    this.sender.sendMessage(chatId, TextFactory.toText(announcement), ExtraFactory.toExtra(announcement));
+  async send(chatId: Chat['id'], message: Message | string, replyToMessageId?: number | null): Promise<Message> {
+    let result: ReturnType<Telegram['sendMessage']>;
+    if (typeof message === 'string') {
+      result = await this.sender.sendMessageWithRetry(chatId, message, ExtraMapper.toExtra(replyToMessageId || null));
+    } else {
+      result = await this.sender.sendMessageWithRetry(
+        chatId,
+        TextMapper.toText(message),
+        ExtraMapper.toExtra(message.replyToMessageId),
+      );
+    }
+
+    return MessageMapper.toDomain(result);
   }
 }

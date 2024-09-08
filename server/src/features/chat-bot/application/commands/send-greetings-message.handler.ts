@@ -1,14 +1,14 @@
+import { GetAnnouncementQuery } from '@features/announcements/application/queries/get-announcement.query';
+import { Announcement } from '@features/announcements/domain/model/announcement';
+import { GetChatEventByTypeQuery } from '@features/events/application/queries/get-chat-event-by-type.query';
+import { ChatEvent } from '@features/events/domain/model/chat-event';
+import { ChatEventType } from '@features/events/domain/value-objects/chat-event-options';
 import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { SendGreetingsMessageCommand } from './send-greetings-message.command';
 import { Bot } from '../../domain/models/bot';
-import { GetChatEventByTypeQuery } from '@features/chat-events/application/queries/get-chat-event-by-type.query';
-import { ChatEvent } from '@features/chat-events/domain/model/chat-event';
-import { GetAnnouncementQuery } from '@features/chat-announcements/application/queries/get-announcement.query';
-import { Announcement } from '@features/chat-announcements/domain/model/announcement';
-import { ChatEventType } from '@features/chat-events/domain/value-objects/chat-event-options';
+import { SendGreetingsMessageCommand } from './send-greetings-message.command';
 
 @CommandHandler(SendGreetingsMessageCommand)
-export class ActivateHandlerHandler implements ICommandHandler<SendGreetingsMessageCommand> {
+export class SendGreetingsMessageHandler implements ICommandHandler<SendGreetingsMessageCommand> {
   constructor(
     private readonly bot: Bot,
     private readonly queryBus: QueryBus,
@@ -25,6 +25,6 @@ export class ActivateHandlerHandler implements ICommandHandler<SendGreetingsMess
       new GetAnnouncementQuery(event.announcementId),
     );
 
-    this.bot.send(chatId, announcement);
+    await this.bot.send(chatId, announcement.text);
   }
 }

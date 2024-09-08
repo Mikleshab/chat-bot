@@ -1,11 +1,9 @@
-import { Chat } from '../../domain/models/chat';
-import { Member } from '../../domain/models/member';
-import { Announcement } from '@features/chat-announcements/domain/model/announcement';
+import { Message } from '@features/chat-bot/domain/models/message';
 
 export abstract class BotRepository {
-  abstract handleJoin(handler: (chat: Chat, member: Member) => void): void;
+  abstract launch({ production }: { production: boolean }): void;
 
-  abstract handleLeft(handler: (chat: Chat, member: Member) => void): void;
+  abstract stop(): void;
 
-  abstract send(chatId: number, announcement: Announcement): void;
+  abstract send(chatId: number, message: Message | string, replyToMessageId?: number | null): Promise<Message>;
 }

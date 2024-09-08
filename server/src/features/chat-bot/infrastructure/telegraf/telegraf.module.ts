@@ -9,9 +9,11 @@ import { CallbackHandler } from './services/callback.handler';
 import { BotRepository } from '../../application/repositories/bot.repository';
 import { BOT_REPOSITORY_PROVIDER } from './providers/bot.provider';
 import { BotService } from '@features/chat-bot/infrastructure/telegraf/services/bot.service';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
   imports: [
+    CqrsModule,
     ConfigModule.forRoot({
       load: [configuration],
       validationSchema: configurationValidationSchema,

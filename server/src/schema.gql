@@ -115,13 +115,13 @@ type ConversationObject {
   """The client involved in the conversation."""
   client: UserObject!
 
-  """
-  Fetches all messages associated with the conversation based on the client ID. Returns an array of message objects.
-  """
-  messages: [MessageObject!]!
-
   """The total number of messages sent by the client in the conversation."""
   messagesCount: Float!
+
+  """
+  Fetches all questions associated with the conversation based on the client ID. Returns an array of message objects.
+  """
+  questions: [MessageObject!]!
 
   """The registration date of the conversation, represented as a timestamp."""
   registered: Float!
@@ -152,8 +152,8 @@ input CreateAnnouncementInput {
   title: String!
 }
 
-"""Input arguments for the CreateReply mutation."""
-input CreateReplyInput {
+"""Input arguments for the createConsultantReply mutation."""
+input CreateConsultantReplyInput {
   """The ID of the client."""
   clientId: Float!
 
@@ -287,11 +287,11 @@ type Mutation {
   ): Boolean!
 
   """
-  Creates a reply to a message. Returns true if the reply is successfully created.
+  Creates a consultant reply to a message. Returns true if the reply is successfully created.
   """
-  createReply(
+  createConsultantReply(
     """Input data for creating a reply."""
-    input: CreateReplyInput!
+    input: CreateConsultantReplyInput!
   ): Boolean!
 
   """Deletes an existing announcement by id"""
@@ -311,7 +311,6 @@ type Mutation {
     """Input data for updating an existing announcement"""
     input: UpdateAnnouncementInput!
   ): Boolean!
-  updateWelcomeMessage(input: WelcomeMessageInput!): Boolean!
 }
 
 type PageInfo {
@@ -365,8 +364,8 @@ type Query {
   Fetches a list of all conversations. Returns an array of conversation objects.
   """
   getConversations: [ConversationObject!]!
-  getMembersStatistics: TelegramStatisticObject!
-  getMessagesStatistics: TelegramStatisticObject!
+  getMembersStatistics: StatisticsObject!
+  getMessagesStatistics: StatisticsObject!
 
   """
   Fetches paginated replies to this message in Relay-style connection format.
@@ -375,7 +374,6 @@ type Query {
     """Input data for fetching replies by message ID."""
     input: GetRepliesInput!
   ): MessageConnection!
-  getWelcomeMessage: WelcomeMessageObject!
 }
 
 """Input data required to remove a specific chat event"""
@@ -399,20 +397,15 @@ type StatisticsHistoryObject {
   value: Float!
 }
 
-type Subscription {
-  ConversationUpdatedEvent(input: GetConversationInput!): ConversationObject!
-  MessageUpdatedEvent: MessageObject!
-}
-
-"""Statistics from telegram group."""
-type TelegramStatisticObject {
+"""Statistics from chat."""
+type StatisticsObject {
   """Main counter."""
   count: String!
 
   """Difference."""
   diff: String!
 
-  """Statistics history from telegram group."""
+  """Statistics history from chat."""
   history: [StatisticsHistoryObject!]!
 
   """Difference icon."""
@@ -420,6 +413,11 @@ type TelegramStatisticObject {
 
   """Title."""
   title: String!
+}
+
+type Subscription {
+  ConversationUpdatedEvent(input: GetConversationInput!): ConversationObject!
+  MessageUpdatedEvent: MessageObject!
 }
 
 """Input type for updating an existing announcement"""
@@ -447,14 +445,4 @@ type UserObject {
 
   """Username of the user."""
   username: String!
-}
-
-input WelcomeMessageInput {
-  text: String!
-}
-
-"""Welcome message for new group members."""
-type WelcomeMessageObject {
-  """Text."""
-  text: String!
 }

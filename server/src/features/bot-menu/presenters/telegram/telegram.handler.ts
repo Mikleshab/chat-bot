@@ -12,7 +12,7 @@ export class TelegramHandler {
   ) {}
 
   public listen(): void {
-    this.handler.hears('/menu', this.hearShowBotMenuCommand.bind(this));
+    // this.handler.hears('/menu', this.hearShowBotMenuCommand.bind(this));
   }
 
   private async hearShowBotMenuCommand(ctx: { from: { id: number } }) {

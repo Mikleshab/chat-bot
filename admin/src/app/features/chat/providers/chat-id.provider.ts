@@ -6,5 +6,5 @@ export const CHAT_ID = new InjectionToken<BehaviorSubject<ChatId>>(`Chat Id for 
 
 export const CHAT_ID_PROVIDER: Provider = {
   provide: CHAT_ID,
-  useFactory: () => new BehaviorSubject<ChatId>(1)
+  useFactory: () => new BehaviorSubject<ChatId>(-1002158314863)
 };
