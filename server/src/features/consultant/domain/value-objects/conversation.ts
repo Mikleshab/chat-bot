@@ -1,6 +1,6 @@
+import { UserDomain } from '@features/consultant/domain/models/user.domain';
 import { ConversationState } from '@features/consultant/domain/value-objects/conversation-state';
 import { DateTime } from 'luxon';
-import { UserDomain } from '@features/consultant/domain/models/user.domain';
 
 export class Conversation {
   private messagesCount = 0;
@@ -16,7 +16,7 @@ export class Conversation {
     return this.updatedAt;
   }
 
-  updateLastActivity(timestamp: number): Conversation {
+  setLastActivity(timestamp: number): Conversation {
     this.updatedAt = timestamp;
 
     return this;
@@ -24,6 +24,12 @@ export class Conversation {
 
   getMessagesCount() {
     return this.messagesCount;
+  }
+
+  setMessagesCount(messagesCount: number) {
+    this.messagesCount = messagesCount;
+
+    return this;
   }
 
   updateMessagesCount() {

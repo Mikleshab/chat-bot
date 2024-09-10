@@ -1,6 +1,6 @@
 import { ConversationMessage } from '@features/consultant/domain/models/conversation-message';
-import * as admin from 'firebase-admin';
 import { UserMapper } from '@features/consultant/infrastructure/firebase/mappers/user.mapper';
+import * as admin from 'firebase-admin';
 
 export class MessageMapper {
   static toDocData(message: ConversationMessage) {
@@ -20,6 +20,6 @@ export class MessageMapper {
       doc.timestamp.toMillis(),
       doc.content,
       doc.replyToMessageId,
-    );
+    ).setReplyCount(doc.replyCount);
   }
 }

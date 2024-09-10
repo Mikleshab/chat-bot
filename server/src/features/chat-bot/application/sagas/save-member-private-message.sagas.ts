@@ -4,7 +4,7 @@ import { SaveMemberPrivateMessageCommand } from '@features/consultant/applicatio
 import { MemberPrivateMessageSavedEvent } from '@features/consultant/application/events/member-private-message-saved.event';
 import { Injectable } from '@nestjs/common';
 import { ICommand, IEvent, ofType, Saga } from '@nestjs/cqrs';
-import { delay, map, mergeMap, Observable } from 'rxjs';
+import { delay, map, Observable } from 'rxjs';
 
 @Injectable()
 export class SaveMemberPrivateMessageSagas {
@@ -14,13 +14,15 @@ export class SaveMemberPrivateMessageSagas {
       ofType(MemberSentPrivateMessageEvent),
       delay(300),
       map((event) => new SaveMemberPrivateMessageCommand(event.member, event.message, event.chat)),
-      mergeMap(() =>
-        events$.pipe(
-          ofType(MemberPrivateMessageSavedEvent),
-          delay(300),
-          map((event: MemberPrivateMessageSavedEvent) => new NotifyMemberAboutReceivedMessageCommand(event.chat)),
-        ),
-      ),
+    );
+  };
+
+  @Saga()
+  notifyMemberAboutMessageSaved = (events$: Observable<IEvent>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(MemberPrivateMessageSavedEvent),
+      delay(300),
+      map((event: MemberPrivateMessageSavedEvent) => new NotifyMemberAboutReceivedMessageCommand(event.chat)),
     );
   };
 }

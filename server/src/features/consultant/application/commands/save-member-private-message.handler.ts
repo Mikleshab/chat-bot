@@ -33,7 +33,7 @@ export class SaveMemberPrivateMessageHandler implements ICommandHandler<SaveMemb
       conversation = ConversationFactory.create(conversationMessage);
     }
 
-    conversation.updateLastActivity(conversationMessage.timestamp).updateMessagesCount();
+    conversation.setLastActivity(conversationMessage.timestamp).updateMessagesCount();
 
     await this.repository.saveMessage(conversation, conversationMessage);
 

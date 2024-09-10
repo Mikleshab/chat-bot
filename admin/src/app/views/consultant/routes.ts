@@ -15,8 +15,8 @@ export const routes: Routes = [
       {
         path: "management",
         loadComponent: () =>
-          import("./conversations/conversations.component").then(
-            m => m.ConversationsComponent
+          import("src/app/views/consultant/conversations/conversations-view.component").then(
+            m => m.ConversationsViewComponent
           ),
         data: {
           title: "Управление"

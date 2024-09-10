@@ -44,7 +44,7 @@ export class SaveConsultantReplyHandler implements ICommandHandler<SaveConsultan
       new GetAllConversations({ clientIds: [clientId] }),
     );
 
-    existingConversation.updateLastActivity(conversationMessage.timestamp).updateMessagesCount();
+    existingConversation.setLastActivity(conversationMessage.timestamp).updateMessagesCount();
 
     await this.repository.saveMessage(existingConversation, conversationMessage);
 

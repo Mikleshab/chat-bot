@@ -14,4 +14,10 @@ export class ConversationMessage {
   getReplyCount() {
     return this.replyCount || 0;
   }
+
+  setReplyCount(replyCount: number) {
+    this.replyCount = replyCount;
+
+    return this;
+  }
 }

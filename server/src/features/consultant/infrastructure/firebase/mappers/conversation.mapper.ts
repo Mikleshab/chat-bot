@@ -14,8 +14,8 @@ export class ConversationMapper {
   }
 
   static toDomain(doc: any) {
-    return new Conversation(doc.title, UserMapper.toDomain(doc.client), doc.createdAt.toMillis()).updateLastActivity(
-      doc.updatedAt.toMillis(),
-    );
+    return new Conversation(doc.title, UserMapper.toDomain(doc.client), doc.createdAt.toMillis())
+      .setMessagesCount(doc.messagesCount)
+      .setLastActivity(doc.updatedAt.toMillis());
   }
 }
