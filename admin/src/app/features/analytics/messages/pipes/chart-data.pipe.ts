@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { ChartData } from "chart.js";
 import { getStyle } from "@coreui/utils";
+import { ChartData } from "chart.js";
 
 @Pipe({
   name: "chartData",
@@ -11,7 +11,7 @@ export class ChartDataPipe implements PipeTransform {
   transform(history: { title: string; color: string; text: string; value: number }[]): ChartData {
     return {
       labels: history.map(({ title }) => title),
-      datasets: [
+      datasets: history.length ? [
         {
           label: history[0].text,
           backgroundColor: "transparent",
@@ -20,7 +20,7 @@ export class ChartDataPipe implements PipeTransform {
           pointHoverBorderColor: getStyle("--cui-primary"),
           data: history.map(({ value }) => value)
         }
-      ]
+      ] : []
     };
   }
 

@@ -1,4 +1,5 @@
 import { MemberLog } from '@features/logger/domain/value-objects/member-log';
+import * as admin from 'firebase-admin';
 
 export class MemberMapper {
   static toDoc(memberLog: MemberLog) {
@@ -10,6 +11,7 @@ export class MemberMapper {
       country: memberLog.country,
       isBot: memberLog.isBot,
       chatId: memberLog.chatId,
+      date: admin.firestore.Timestamp.fromMillis(memberLog.date),
     };
   }
 }

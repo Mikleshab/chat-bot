@@ -11,6 +11,7 @@ export class MemberLogFactory {
       command.country,
       command.chatId,
       command.isBot,
+      command.date,
     );
   }
 }

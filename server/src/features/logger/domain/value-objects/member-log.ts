@@ -10,6 +10,7 @@ export class MemberLog extends Member {
     public readonly country: Member['country'],
     public readonly chatId: Chat['id'],
     public readonly isBot: Member['isBot'],
+    public readonly date: number,
   ) {
     super(id, firstName, lastName, username, country, isBot);
   }
