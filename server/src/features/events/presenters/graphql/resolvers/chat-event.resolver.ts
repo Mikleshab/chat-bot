@@ -1,15 +1,15 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ChatEventObject } from '@features/events/presenters/graphql/dto/chat-event.object';
 import { AddChatEventCommand } from '@features/events/application/commands/add-chat-event.command';
-import { GetChatEventByTypeQuery } from '@features/events/application/queries/get-chat-event-by-type.query';
 import { RemoveChatEventCommand } from '@features/events/application/commands/remove-chat-event.command';
 import { GetAllChatEventsQuery } from '@features/events/application/queries/get-all-chat-events.query';
+import { GetChatEventByTypeQuery } from '@features/events/application/queries/get-chat-event-by-type.query';
 import { AddChatEventInput } from '@features/events/presenters/graphql/dto/add.input';
-import { GetChatEventInput } from '@features/events/presenters/graphql/dto/get.input';
+import { ChatEventObject } from '@features/events/presenters/graphql/dto/chat-event.object';
 import { GetAllChatEventInput } from '@features/events/presenters/graphql/dto/get-all.input';
+import { GetChatEventInput } from '@features/events/presenters/graphql/dto/get.input';
 import { RemoveChatEventInput } from '@features/events/presenters/graphql/dto/remove.input';
 import { ChatEventMapper } from '@features/events/presenters/graphql/mappers/chat-event.mapper';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 @Resolver(() => ChatEventObject)
 export class ChatEventResolver {
@@ -60,7 +60,7 @@ export class ChatEventResolver {
   async remove(
     @Args('input', { description: 'Input data to remove a specific chat event' }) input: RemoveChatEventInput,
   ) {
-    await this.commandBus.execute(new RemoveChatEventCommand(input.id));
+    await this.commandBus.execute(new RemoveChatEventCommand(input.id, input.chatId));
 
     return true;
   }

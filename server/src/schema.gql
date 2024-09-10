@@ -17,6 +17,39 @@ input AddChatEventInput {
   title: String!
 }
 
+"""Analytics history."""
+type AnalyticsHistoryObject {
+  """Value color."""
+  color: String!
+
+  """Text for value."""
+  text: String!
+
+  """Title of dimension."""
+  title: String!
+
+  """Value."""
+  value: Float!
+}
+
+"""Analytics."""
+type AnalyticsObject {
+  """Main counter."""
+  count: String!
+
+  """Difference."""
+  diff: String!
+
+  """Analytics history."""
+  history: [AnalyticsHistoryObject!]!
+
+  """Difference icon."""
+  icon: String!
+
+  """Title."""
+  title: String!
+}
+
 """"""
 type AnnouncementEventObject {
   """The type of the event that occurred in the chat"""
@@ -171,6 +204,9 @@ scalar DateTime
 
 """Input type for deleting an announcement by ID"""
 input DeleteAnnouncementInput {
+  """The unique identifier of the Chat"""
+  chatId: Float!
+
   """The unique identifier of the announcement"""
   id: ID!
 }
@@ -198,8 +234,17 @@ input GetAllChatEventInput {
   chatId: Float!
 }
 
+"""Input data required to retrieve analytics for a specific chat."""
+input GetAnalyticsInput {
+  """The unique identifier of the Chat."""
+  chatId: Float!
+}
+
 """Input type for retrieving an announcement by ID"""
 input GetAnnouncementInput {
+  """The unique identifier of the Chat"""
+  chatId: Float!
+
   """The unique identifier of the announcement"""
   id: ID!
 }
@@ -364,8 +409,14 @@ type Query {
   Fetches a list of all conversations. Returns an array of conversation objects.
   """
   getConversations: [ConversationObject!]!
-  getMembersStatistics: StatisticsObject!
-  getMessagesStatistics: StatisticsObject!
+  getMembersAnalytics(
+    """Input data containing the Chat ID"""
+    input: GetAnalyticsInput!
+  ): AnalyticsObject!
+  getMessagesAnalytics(
+    """Input data containing the Chat ID"""
+    input: GetAnalyticsInput!
+  ): AnalyticsObject!
 
   """
   Fetches paginated replies to this message in Relay-style connection format.
@@ -378,41 +429,11 @@ type Query {
 
 """Input data required to remove a specific chat event"""
 input RemoveChatEventInput {
+  """The unique identifier of the chat"""
+  chatId: Float!
+
   """The unique identifier of the chat event to be removed"""
   id: ID!
-}
-
-"""Statistics history from telegram group."""
-type StatisticsHistoryObject {
-  """Value color."""
-  color: String!
-
-  """Text for value."""
-  text: String!
-
-  """Title of dimension."""
-  title: String!
-
-  """Value."""
-  value: Float!
-}
-
-"""Statistics from chat."""
-type StatisticsObject {
-  """Main counter."""
-  count: String!
-
-  """Difference."""
-  diff: String!
-
-  """Statistics history from chat."""
-  history: [StatisticsHistoryObject!]!
-
-  """Difference icon."""
-  icon: String!
-
-  """Title."""
-  title: String!
 }
 
 type Subscription {
@@ -422,6 +443,9 @@ type Subscription {
 
 """Input type for updating an existing announcement"""
 input UpdateAnnouncementInput {
+  """The unique identifier of the Chat"""
+  chatId: Float!
+
   """The unique identifier of the announcement to be updated"""
   id: ID!
 

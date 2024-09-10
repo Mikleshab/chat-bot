@@ -7,7 +7,7 @@ query GetConversation($input: GetConversationInput!) {
             userId
             username
             fullName        }
-        messages {
+        questions {
             id
             content
             timestamp

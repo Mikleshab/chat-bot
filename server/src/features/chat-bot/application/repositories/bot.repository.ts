@@ -1,7 +1,7 @@
 import { Message } from '@features/chat-bot/domain/models/message';
 
 export abstract class BotRepository {
-  abstract launch({ production }: { production: boolean }): void;
+  abstract launch(): void;
 
   abstract stop(): void;
 

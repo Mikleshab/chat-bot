@@ -1,8 +1,8 @@
 import { inject, Injectable } from "@angular/core";
 import { filter, startWith } from "rxjs";
 import { map, shareReplay } from "rxjs/operators";
-import { CHAT_ID } from "../../../providers/chat-id.provider";
-import { GetAllChatEventsGQL } from "../../../../../graphql/generated";
+import { CHAT_ID } from "src/app/core/providers/chat-id.provider";
+import { GetAllChatEventsGQL } from "src/app/graphql/generated";
 
 
 @Injectable()

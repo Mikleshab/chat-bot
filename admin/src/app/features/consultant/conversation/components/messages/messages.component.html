@@ -15,11 +15,11 @@
       </div>
     }
     @if (feature.data$ | async; as conversation) {
-      @if (conversation.messages.length === 0) {
+      @if (conversation.questions.length === 0) {
         Нет сообщений
       } @else {
         @defer {
-          @for (message of conversation.messages; track message.id) {
+          @for (message of conversation.questions; track message.id) {
             <app-message [message]="message" />
           }
         }

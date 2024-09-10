@@ -1,13 +1,13 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
-import { QueryBus } from '@nestjs/cqrs';
+import { GetAnnouncementQuery } from '@features/announcements/application/queries/get-announcement.query';
+import { Announcement } from '@features/announcements/domain/model/announcement';
 import { Bot } from '@features/chat-bot/domain/models/bot';
 import { GetAllChatEventsQuery } from '@features/events/application/queries/get-all-chat-events.query';
 import { ChatEvent } from '@features/events/domain/model/chat-event';
-import { GetAnnouncementQuery } from '@features/announcements/application/queries/get-announcement.query';
-import { Announcement } from '@features/announcements/domain/model/announcement';
-import { DateTime } from 'luxon';
 import { FrequencyType } from '@features/events/domain/value-objects/chat-event-options';
+import { Injectable, Logger } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
+import { Cron, CronExpression } from '@nestjs/schedule';
+import { DateTime } from 'luxon';
 
 @Injectable()
 export class TasksService {
@@ -34,7 +34,7 @@ export class TasksService {
       for (const event of chatEvents) {
         if (this.shouldSendEvent(event, now)) {
           const announcement = await this.queryBus.execute<GetAnnouncementQuery, Announcement>(
-            new GetAnnouncementQuery(event.announcementId),
+            new GetAnnouncementQuery(event.announcementId, event.chatId),
           );
 
           await this.bot.send(event.chatId, announcement.text);

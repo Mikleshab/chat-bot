@@ -1,23 +1,23 @@
-import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { GetChatEventByAnnouncementIdQuery } from '@features/events/application/queries/get-chat-event-by-announcement-id.query';
-import { GetAllChatEventsQuery } from '@features/events/application/queries/get-all-chat-events.query';
-import { ChatEvent } from '@features/events/domain/model/chat-event';
-import { AnnouncementObject } from '@features/announcements/presenters/graphql/dto/announcement.object';
-import { CreateAnnouncementInput } from '@features/announcements/presenters/graphql/dto/create.input';
-import { GetAnnouncementInput } from '@features/announcements/presenters/graphql/dto/get.input';
-import { UpdateAnnouncementInput } from '@features/announcements/presenters/graphql/dto/update.input';
 import { CreateAnnouncementCommand } from '@features/announcements/application/commands/create-announcement.command';
+import { DeleteAnnouncementCommand } from '@features/announcements/application/commands/delete-announcement.command';
 import { UpdateAnnouncementCommand } from '@features/announcements/application/commands/update-announcement.command';
 import { GetAllAnnouncementQuery } from '@features/announcements/application/queries/get-all-announcement.query';
 import { GetAnnouncementQuery } from '@features/announcements/application/queries/get-announcement.query';
-import { AnnouncementMapper } from '@features/announcements/presenters/graphql/mappers/announcement.mapper';
-import { DeleteAnnouncementCommand } from '@features/announcements/application/commands/delete-announcement.command';
+import { Announcement } from '@features/announcements/domain/model/announcement';
+import { AnnouncementEventObject } from '@features/announcements/presenters/graphql/dto/announcement-event.object';
+import { AnnouncementObject } from '@features/announcements/presenters/graphql/dto/announcement.object';
+import { CreateAnnouncementInput } from '@features/announcements/presenters/graphql/dto/create.input';
 import { DeleteAnnouncementInput } from '@features/announcements/presenters/graphql/dto/delete.input';
 import { GetAllAnnouncementInput } from '@features/announcements/presenters/graphql/dto/get-all.input';
-import { AnnouncementEventObject } from '@features/announcements/presenters/graphql/dto/announcement-event.object';
+import { GetAnnouncementInput } from '@features/announcements/presenters/graphql/dto/get.input';
+import { UpdateAnnouncementInput } from '@features/announcements/presenters/graphql/dto/update.input';
 import { AnnouncementEventMapper } from '@features/announcements/presenters/graphql/mappers/announcement-event.mapper';
-import { Announcement } from '@features/announcements/domain/model/announcement';
+import { AnnouncementMapper } from '@features/announcements/presenters/graphql/mappers/announcement.mapper';
+import { GetAllChatEventsQuery } from '@features/events/application/queries/get-all-chat-events.query';
+import { GetChatEventByAnnouncementIdQuery } from '@features/events/application/queries/get-chat-event-by-announcement-id.query';
+import { ChatEvent } from '@features/events/domain/model/chat-event';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 
 @Resolver(() => AnnouncementObject)
 export class AnnouncementResolver {
@@ -44,7 +44,7 @@ export class AnnouncementResolver {
     input: GetAnnouncementInput,
   ) {
     const announcement = await this.queryBus.execute<GetAnnouncementQuery, Announcement>(
-      new GetAnnouncementQuery(input.id),
+      new GetAnnouncementQuery(input.id, input.chatId),
     );
 
     return AnnouncementMapper.toObjectType(announcement);
@@ -72,7 +72,7 @@ export class AnnouncementResolver {
   async update(
     @Args('input', { description: 'Input data for updating an existing announcement' }) input: UpdateAnnouncementInput,
   ) {
-    await this.commandBus.execute(new UpdateAnnouncementCommand(input.id, input.title, input.text));
+    await this.commandBus.execute(new UpdateAnnouncementCommand(input.id, input.chatId, input.title, input.text));
 
     return true;
   }
@@ -84,7 +84,7 @@ export class AnnouncementResolver {
   async delete(
     @Args('input', { description: 'Input data for deleting an existing announcement' }) input: DeleteAnnouncementInput,
   ) {
-    await this.commandBus.execute(new DeleteAnnouncementCommand(input.id));
+    await this.commandBus.execute(new DeleteAnnouncementCommand(input.id, input.chatId));
 
     return true;
   }
@@ -92,7 +92,7 @@ export class AnnouncementResolver {
   @ResolveField(() => AnnouncementEventObject, { name: 'event', description: '' })
   async eventFor(@Parent() announcement: AnnouncementObject) {
     const event = await this.queryBus.execute<GetChatEventByAnnouncementIdQuery, ChatEvent>(
-      new GetChatEventByAnnouncementIdQuery(announcement.id),
+      new GetChatEventByAnnouncementIdQuery(announcement.id, announcement.chatId),
     );
 
     return AnnouncementEventMapper.toObjectType(event);

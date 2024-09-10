@@ -30,11 +30,6 @@ export const routes: Routes = [
           import("./views/chat/routes").then(m => m.routes)
       },
       {
-        path: "messages",
-        loadChildren: () =>
-          import("./views/messages/routes").then(m => m.routes)
-      },
-      {
         path: "pages",
         loadChildren: () => import("./views/pages/routes").then(m => m.routes)
       }

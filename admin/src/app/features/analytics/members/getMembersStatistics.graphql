@@ -1,0 +1,14 @@
+query GetMembersAnalytics($input: GetAnalyticsInput!) {
+    getMembersAnalytics(input: $input) {
+        title
+        count
+        diff
+        icon
+        history {
+            title
+            color
+            text
+            value
+        }
+    }
+}

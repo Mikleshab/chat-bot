@@ -1,25 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { BOT_CALLBACK_HANDLER } from '@libs/telegram-bot/telegram-bot.module';
-import { MenuPayloadDto } from '@libs/telegram-bot/services/bot-callback.service';
-import { isSurveyCallback } from '@libs/bot-survey/types/callback.type';
+import { PressAnswerButtonCommand } from '@features/bot-survey/application/commands/press-answer-button.command';
+import { StartSurveyCommand } from '@features/bot-survey/application/commands/start-survey.command';
 import { isMenuCallback } from '@libs/bot-menu/types/callback.type';
 import { MenuActions } from '@libs/bot-menu/types/menu-actions.enum';
-import { StartSurveyCommand } from '@features/bot-survey/application/commands/start-survey.command';
-import { PressAnswerButtonCommand } from '@features/bot-survey/application/commands/press-answer-button.command';
-import { TelegramBotCallback } from '@libs/telegram-bot/types/callback.interface';
+import { isSurveyCallback } from '@libs/bot-survey/types/callback.type';
+import { MenuPayloadDto } from '@libs/telegram-bot/services/bot-callback.service';
+import { Injectable } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
 
 @Injectable()
 export class TelegramHandler {
-  constructor(
-    private readonly commandBus: CommandBus,
-    @Inject(BOT_CALLBACK_HANDLER) private readonly callback: TelegramBotCallback,
-  ) {}
-
-  public listen(): void {
-    // this.callback.handleCallback(this.handleSurveyMenuButton.bind(this));
-    // this.callback.handleCallback(this.handleSurveyActions.bind(this));
-  }
+  constructor(private readonly commandBus: CommandBus) {}
 
   private handleSurveyMenuButton(data: MenuPayloadDto, ctx: { from: { id: number } }) {
     if (isMenuCallback(data)) {

@@ -1,5 +1,5 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AnnouncementsRepository } from '@features/announcements/application/repositories/announcements.repository';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UpdateAnnouncementCommand } from './update-announcement.command';
 
 @CommandHandler(UpdateAnnouncementCommand)
@@ -7,8 +7,8 @@ export class UpdateAnnouncementHandler implements ICommandHandler<UpdateAnnounce
   constructor(private readonly repository: AnnouncementsRepository) {}
 
   async execute(command: UpdateAnnouncementCommand): Promise<void> {
-    const { id, title, text } = command;
+    const { id, chatId, title, text } = command;
 
-    await this.repository.update(id, { title, text });
+    await this.repository.update(id, chatId, { title, text });
   }
 }

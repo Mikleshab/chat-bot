@@ -1,15 +1,13 @@
+import { MessageRepository } from '@features/consultant/application/ports/message.repository';
 import { ConversationMessage } from '@features/consultant/domain/models/conversation-message';
-import { FirebaseService } from '@libs/firebase/services/firebase.service';
-import { MessageMapper } from '@features/consultant/infrastructure/firebase/mappers/message.mapper';
 import { Conversation } from '@features/consultant/domain/value-objects/conversation';
 import { ConversationMapper } from '@features/consultant/infrastructure/firebase/mappers/conversation.mapper';
+import { MessageMapper } from '@features/consultant/infrastructure/firebase/mappers/message.mapper';
+import { FirebaseService } from '@libs/firebase/services/firebase.service';
 import * as admin from 'firebase-admin';
-import { MessageRepository } from '@features/consultant/application/ports/message.repository';
+import { CONVERSATIONS, CONVERSATIONS_MESSAGES } from 'src/common/constants/collections';
 
 export class MessagesCollection implements MessageRepository {
-  private readonly messagesCollectionName = 'messages';
-  private readonly conversationsCollectionName = 'conversations';
-
   constructor(private readonly firebase: FirebaseService) {}
 
   async saveMessage(conversation: Conversation, message: ConversationMessage): Promise<void> {
@@ -17,8 +15,8 @@ export class MessagesCollection implements MessageRepository {
     const conversationData = ConversationMapper.toDocData(conversation);
 
     const db = this.firebase.app.firestore();
-    const messageRef = db.collection(this.messagesCollectionName).doc(message.telegramMessageId.toString());
-    const conversationRef = db.collection(this.conversationsCollectionName).doc(conversation.client.userId.toString());
+    const messageRef = db.collection(CONVERSATIONS_MESSAGES).doc(message.telegramMessageId.toString());
+    const conversationRef = db.collection(CONVERSATIONS).doc(conversation.client.userId.toString());
 
     await db.runTransaction(async (transaction) => {
       transaction.set(messageRef, messageData);
@@ -26,7 +24,7 @@ export class MessagesCollection implements MessageRepository {
       transaction.set(conversationRef, conversationData);
 
       if (message.replyToMessageId) {
-        const parentDocRef = db.collection(this.messagesCollectionName).doc(message.replyToMessageId.toString());
+        const parentDocRef = db.collection(CONVERSATIONS_MESSAGES).doc(message.replyToMessageId.toString());
         transaction.update(parentDocRef, {
           replyCount: admin.firestore.FieldValue.increment(1),
         });
@@ -42,7 +40,7 @@ export class MessagesCollection implements MessageRepository {
     pageInfo: { first?: number; after?: string },
   ): Promise<ConversationMessage[]> {
     const db = this.firebase.app.firestore();
-    const messagesRef = db.collection(this.messagesCollectionName);
+    const messagesRef = db.collection(CONVERSATIONS_MESSAGES);
 
     let query = filter.replyToMessageId
       ? messagesRef.where('replyToMessageId', '==', filter.replyToMessageId)
@@ -73,7 +71,7 @@ export class MessagesCollection implements MessageRepository {
 
   async getMessageById(telegramMessageId: ConversationMessage['telegramMessageId']): Promise<ConversationMessage> {
     const db = this.firebase.app.firestore();
-    const messageRef = db.collection(this.messagesCollectionName).doc(telegramMessageId.toString());
+    const messageRef = db.collection(CONVERSATIONS_MESSAGES).doc(telegramMessageId.toString());
 
     const doc = await messageRef.get();
 

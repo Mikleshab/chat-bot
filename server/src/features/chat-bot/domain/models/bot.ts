@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common';
 import { BotRepository } from '@features/chat-bot/application/repositories/bot.repository';
 import { Chat } from '@features/chat-bot/domain/models/chat';
 import { Message } from '@features/chat-bot/domain/models/message';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class Bot {
   constructor(private readonly repository: BotRepository) {}
 
   start() {
-    this.repository.launch({ production: false });
+    this.repository.launch();
   }
 
   stop() {

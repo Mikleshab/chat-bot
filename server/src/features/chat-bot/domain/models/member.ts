@@ -1,9 +1,10 @@
-import { AggregateRoot } from '@nestjs/cqrs';
-import { NewChatMemberEvent } from '@features/chat-bot/application/events/new-chat-member.event';
 import { LeftChatMemberEvent } from '@features/chat-bot/application/events/left-chat-member.event';
+import { MemberSentMessageEvent } from '@features/chat-bot/application/events/member-sent-message.event';
 import { MemberSentPrivateMessageEvent } from '@features/chat-bot/application/events/member-sent-private-message.event';
-import { Chat } from './../models/chat';
+import { NewChatMemberEvent } from '@features/chat-bot/application/events/new-chat-member.event';
 import { Message } from '@features/chat-bot/domain/models/message';
+import { AggregateRoot } from '@nestjs/cqrs';
+import { Chat } from './../models/chat';
 
 export class Member extends AggregateRoot {
   constructor(
@@ -12,13 +13,14 @@ export class Member extends AggregateRoot {
     public readonly lastName: string,
     public readonly username: string,
     public readonly country: string,
+    public readonly isBot: boolean,
   ) {
     super();
     this.autoCommit = true;
   }
 
-  join(chat: Chat) {
-    this.apply(new NewChatMemberEvent(this, chat));
+  join(chat: Chat, date: number) {
+    this.apply(new NewChatMemberEvent(this, chat, date));
   }
 
   left(chat: Chat) {
@@ -27,5 +29,9 @@ export class Member extends AggregateRoot {
 
   sendPrivate(message: Message, chat: Chat) {
     this.apply(new MemberSentPrivateMessageEvent(this, message, chat));
+  }
+
+  send(message: Message, chat: Chat) {
+    this.apply(new MemberSentMessageEvent(this, message, chat));
   }
 }

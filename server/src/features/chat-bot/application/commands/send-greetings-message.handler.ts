@@ -1,10 +1,10 @@
 import { GetAnnouncementQuery } from '@features/announcements/application/queries/get-announcement.query';
 import { Announcement } from '@features/announcements/domain/model/announcement';
+import { Bot } from '@features/chat-bot/domain/models/bot';
 import { GetChatEventByTypeQuery } from '@features/events/application/queries/get-chat-event-by-type.query';
 import { ChatEvent } from '@features/events/domain/model/chat-event';
 import { ChatEventType } from '@features/events/domain/value-objects/chat-event-options';
 import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { Bot } from '@features/chat-bot/domain/models/bot';
 import { SendGreetingsMessageCommand } from './send-greetings-message.command';
 
 @CommandHandler(SendGreetingsMessageCommand)
@@ -22,7 +22,7 @@ export class SendGreetingsMessageHandler implements ICommandHandler<SendGreeting
     );
 
     const announcement = await this.queryBus.execute<GetAnnouncementQuery, Announcement>(
-      new GetAnnouncementQuery(event.announcementId),
+      new GetAnnouncementQuery(event.announcementId, chatId),
     );
 
     await this.bot.send(chatId, announcement.text);

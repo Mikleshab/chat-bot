@@ -1,3 +1,0 @@
-<ng-container *ngIf="welcomeMessage$ | async as message">
-  <app-text-editor [content]="message.text" (content-changed)="textChanged($event)"></app-text-editor>
-</ng-container>

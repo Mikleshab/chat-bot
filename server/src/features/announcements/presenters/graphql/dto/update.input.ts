@@ -1,11 +1,15 @@
 import { Field, ID, InputType } from '@nestjs/graphql';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 @InputType({ description: 'Input type for updating an existing announcement' })
 export class UpdateAnnouncementInput {
   @Field(() => ID, { description: 'The unique identifier of the announcement to be updated' })
   @IsString({ message: 'The ID must be a string' })
   id!: string;
+
+  @Field(() => Number, { description: 'The unique identifier of the Chat' })
+  @IsInt({ message: 'The chat ID must be an integer value' })
+  chatId!: number;
 
   @Field(() => String, { nullable: true, description: 'The updated text content of the announcement' })
   @IsOptional()

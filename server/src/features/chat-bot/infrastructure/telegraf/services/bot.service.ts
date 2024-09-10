@@ -1,9 +1,9 @@
-import { Telegraf } from 'telegraf';
-import { ConfigService } from '@nestjs/config';
-import { Injectable } from '@nestjs/common';
 import { Configuration } from '@features/chat-bot/infrastructure/telegraf/config/config.schema';
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { defer, timer } from 'rxjs';
 import { retry } from 'rxjs/operators';
+import { Telegraf } from 'telegraf';
 
 @Injectable()
 export class BotService {
@@ -24,8 +24,15 @@ export class BotService {
   }
 
   private tryLaunchBot() {
+    const production = false;
+
     return defer(() =>
       this.bot.launch({
+        webhook: production
+          ? {
+              domain: '',
+            }
+          : undefined,
         dropPendingUpdates: true,
         allowedUpdates: ['message', 'chat_member'],
       }),

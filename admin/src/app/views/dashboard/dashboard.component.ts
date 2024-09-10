@@ -1,11 +1,11 @@
 import { Component } from "@angular/core";
-import { WidgetsDropdownComponent } from "../widgets/widgets-dropdown/widgets-dropdown.component";
+import { WidgetsAnalyticsComponent } from "src/app/views/widgets/analytics/widgets-analytics.component";
 
 @Component({
   templateUrl: "dashboard.component.html",
   styleUrls: ["dashboard.component.scss"],
   standalone: true,
-  imports: [WidgetsDropdownComponent]
+  imports: [WidgetsAnalyticsComponent]
 })
 export class DashboardComponent {
 }

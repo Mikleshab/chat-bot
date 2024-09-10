@@ -1,10 +1,6 @@
-import { Message } from '@features/chat-bot/domain/models/message';
-import { EventPublisher } from '@nestjs/cqrs';
-import { Message as TelegramMessage } from '@telegraf/types';
-import { Context } from 'telegraf';
-import { Telegram } from 'telegraf/src/core/types/typegram';
 import { BotRepository } from '@features/chat-bot/application/repositories/bot.repository';
 import { Chat } from '@features/chat-bot/domain/models/chat';
+import { Message } from '@features/chat-bot/domain/models/message';
 import { ChatMapper } from '@features/chat-bot/infrastructure/telegraf/mappers/chat.mapper';
 import { ExtraMapper } from '@features/chat-bot/infrastructure/telegraf/mappers/extra.mapper';
 import { MemberMapper } from '@features/chat-bot/infrastructure/telegraf/mappers/member.mapper';
@@ -13,6 +9,10 @@ import { TextMapper } from '@features/chat-bot/infrastructure/telegraf/mappers/t
 import { BotService } from '@features/chat-bot/infrastructure/telegraf/services/bot.service';
 import { EventHandler } from '@features/chat-bot/infrastructure/telegraf/services/event.handler';
 import { SenderService } from '@features/chat-bot/infrastructure/telegraf/services/sender.service';
+import { EventPublisher } from '@nestjs/cqrs';
+import { Message as TelegramMessage } from '@telegraf/types';
+import { Context } from 'telegraf';
+import { Telegram } from 'telegraf/src/core/types/typegram';
 
 export class TelegrafBotRepository implements BotRepository {
   constructor(
@@ -22,35 +22,34 @@ export class TelegrafBotRepository implements BotRepository {
     private readonly publisher: EventPublisher,
   ) {}
 
-  launch({ production }: { production: boolean }): void {
-    if (production) {
-    } else {
-      this.botService.launchWithRetry();
+  launch(): void {
+    this.botService.launchWithRetry();
 
-      this.eventHandler.handle('new_chat_members', (ctx: Context) => {
-        const message = ctx.message;
-        const chat = ChatMapper.toDomain(message!.chat);
-        const member = this.publisher.mergeObjectContext(MemberMapper.toDomain(message!.from));
-        member.join(chat);
-      });
+    this.eventHandler.handle('new_chat_members', (ctx: Context) => {
+      const message = ctx.message;
+      const chat = ChatMapper.toDomain(message!.chat);
+      const member = this.publisher.mergeObjectContext(MemberMapper.toDomain(message!.from));
+      member.join(chat, message!.date * 1000);
+    });
 
-      this.eventHandler.handle('left_chat_member', (ctx: Context) => {
-        const message = ctx.message;
-        const chat = ChatMapper.toDomain(message!.chat);
-        const member = this.publisher.mergeObjectContext(MemberMapper.toDomain(message!.from));
-        member.left(chat);
-      });
+    this.eventHandler.handle('left_chat_member', (ctx: Context) => {
+      const message = ctx.message;
+      const chat = ChatMapper.toDomain(message!.chat);
+      const member = this.publisher.mergeObjectContext(MemberMapper.toDomain(message!.from));
+      member.left(chat);
+    });
 
-      this.eventHandler.handle('text', (ctx: Context) => {
-        const telegramMessage = ctx.message as TelegramMessage.TextMessage;
-        const chat = ChatMapper.toDomain(telegramMessage!.chat);
-        const member = this.publisher.mergeObjectContext(MemberMapper.toDomain(telegramMessage!.from!));
-        const message = MessageMapper.toDomain(telegramMessage);
-        if (chat.type === 'private') {
-          member.sendPrivate(message, chat);
-        }
-      });
-    }
+    this.eventHandler.handle('text', (ctx: Context) => {
+      const telegramMessage = ctx.message as TelegramMessage.TextMessage;
+      const chat = ChatMapper.toDomain(telegramMessage!.chat);
+      const member = this.publisher.mergeObjectContext(MemberMapper.toDomain(telegramMessage!.from!));
+      const message = MessageMapper.toDomain(telegramMessage);
+      if (chat.type === 'private') {
+        member.sendPrivate(message, chat);
+      } else {
+        member.send(message, chat);
+      }
+    });
   }
 
   async stop(): Promise<void> {

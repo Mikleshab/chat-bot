@@ -9,6 +9,7 @@ export class MemberMapper {
       user.last_name || 'unknown "last_name"',
       user.username || 'unknown "last_name"',
       user.language_code || 'unknown "country"',
+      user.is_bot,
     );
   }
 }

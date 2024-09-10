@@ -13,10 +13,7 @@ export class SaveMemberPrivateMessageSagas {
     return events$.pipe(
       ofType(MemberSentPrivateMessageEvent),
       delay(300),
-      map(
-        (event: MemberSentPrivateMessageEvent) =>
-          new SaveMemberPrivateMessageCommand(event.member, event.message, event.chat),
-      ),
+      map((event) => new SaveMemberPrivateMessageCommand(event.member, event.message, event.chat)),
       mergeMap(() =>
         events$.pipe(
           ofType(MemberPrivateMessageSavedEvent),

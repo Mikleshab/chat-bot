@@ -1,0 +1,14 @@
+query GetMessagesAnalytics($input: GetAnalyticsInput!) {
+    getMessagesAnalytics(input: $input) {
+        title
+        count
+        diff
+        icon
+        history {
+            title
+            color
+            text
+            value
+        }
+    }
+}

@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { startWith, Subject } from "rxjs";
 import { MessageService } from "../../message.service";
-import { CreateReplyGQL } from "../../../../../../../graphql/generated";
+import { CreateConsultantReplyGQL } from "src/app/graphql/generated";
 import { map, shareReplay, switchMap } from "rxjs/operators";
 import { Message } from "../../../../types/conversation.type";
 import { CLIENT_ID } from "../../../../providers/conversation-client.provider";
@@ -10,13 +10,13 @@ import { CLIENT_ID } from "../../../../providers/conversation-client.provider";
 export class MessageReplyService {
   private readonly parent = inject(MessageService);
   private readonly clientId = inject(CLIENT_ID);
-  private readonly createReplyGQL = inject(CreateReplyGQL);
+  private readonly createConsultantReplyGQL = inject(CreateConsultantReplyGQL);
   private readonly reply$ = new Subject<{
     text: Message["content"],
   }>();
   private readonly result$ = this.reply$.pipe(
     switchMap(({ text }) =>
-      this.createReplyGQL.mutate({
+      this.createConsultantReplyGQL.mutate({
         input: {
           parentId: this.parent.target.getValue()?.id!,
           content: text, clientId: this.clientId.getValue()!
@@ -36,7 +36,7 @@ export class MessageReplyService {
   );
 
   readonly complete$ = this.result$.pipe(
-    map(({ data }) => data?.createReply)
+    map(({ data }) => data?.createConsultantReply)
   );
 
   sendReply(text: Message["content"]) {
