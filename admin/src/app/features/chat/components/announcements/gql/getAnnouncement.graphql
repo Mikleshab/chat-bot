@@ -1,8 +1,0 @@
-query GetAnnouncement($input: GetAnnouncementInput!) {
-    getAnnouncement(input: $input) {
-        id
-        chatId
-        title
-        text
-    }
-}

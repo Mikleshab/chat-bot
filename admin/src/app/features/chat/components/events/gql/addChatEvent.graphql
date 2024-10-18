@@ -1,3 +1,0 @@
-mutation AddChatEvent($input: AddChatEventInput!) {
-    addChatEvent(input: $input)
-}

@@ -1,3 +1,0 @@
-mutation UpdateAnnouncement($input: UpdateAnnouncementInput!) {
-    updateAnnouncement(input: $input)
-}
