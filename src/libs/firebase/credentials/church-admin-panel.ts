@@ -1,3 +1,5 @@
+console.log('FIREBASE_PROJECT_ID:', process.env.FIREBASE_PROJECT_ID);
+
 export const serviceAccount = {
   type: process.env.FIREBASE_TYPE,
   project_id: process.env.FIREBASE_PROJECT_ID,
