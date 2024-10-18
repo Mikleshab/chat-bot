@@ -1,0 +1,484 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Input data required to add a new chat event"""
+input AddChatEventInput {
+  """The unique identifier of the announcement associated with this event"""
+  announcementId: ID!
+
+  """The unique identifier of the chat where the event will be added"""
+  chatId: Float!
+
+  """The type of event to be added to the chat"""
+  eventOptions: ChatEventOptionsInput!
+
+  """The title of event to be added to the chat"""
+  title: String!
+}
+
+"""Analytics history."""
+type AnalyticsHistoryObject {
+  """Value color."""
+  color: String!
+
+  """Text for value."""
+  text: String!
+
+  """Title of dimension."""
+  title: String!
+
+  """Value."""
+  value: Float!
+}
+
+"""Analytics."""
+type AnalyticsObject {
+  """Main counter."""
+  count: String!
+
+  """Difference."""
+  diff: String!
+
+  """Analytics history."""
+  history: [AnalyticsHistoryObject!]!
+
+  """Difference icon."""
+  icon: String!
+
+  """Title."""
+  title: String!
+}
+
+""""""
+type AnnouncementEventObject {
+  """The type of the event that occurred in the chat"""
+  eventType: ChatEventType!
+
+  """The unique identifier of the event"""
+  id: ID!
+}
+
+"""Represents an announcement object containing ID and text"""
+type AnnouncementObject {
+  """The unique identifier of the chat where the announcement occurred"""
+  chatId: Float!
+
+  """"""
+  event: AnnouncementEventObject!
+
+  """"""
+  eventsForAnnouncement: AnnouncementEventObject!
+
+  """The unique identifier of the announcement"""
+  id: ID!
+
+  """The text content of the announcement"""
+  text: String!
+
+  """The title of the announcement"""
+  title: String!
+}
+
+"""Represents an event within a chat that is linked to an announcement"""
+type ChatEventObject {
+  """The unique identifier of the announcement associated with this event"""
+  announcementId: ID!
+
+  """The unique identifier of the chat where the event occurred"""
+  chatId: Float!
+
+  """Options describing the recurrence and type of the event"""
+  eventOptions: ChatEventOptionsObject!
+
+  """The unique identifier of the event"""
+  id: ID!
+
+  """The title of the event to be added to the chat"""
+  title: String!
+}
+
+"""Input options for a chat event"""
+input ChatEventOptionsInput {
+  """End date and time for the event recurrence"""
+  endDate: DateTime
+
+  """Frequency type for the event recurrence (e.g., hourly, daily)"""
+  frequencyType: FrequencyType!
+
+  """Interval between recurrences (e.g., every 2 hours)"""
+  interval: Float!
+
+  """Start date and time for the event recurrence"""
+  startDate: DateTime!
+}
+
+"""Object representing chat event options"""
+type ChatEventOptionsObject {
+  """End date and time for the event recurrence"""
+  endDate: DateTime
+
+  """Frequency type for the event recurrence (e.g., hourly, daily)"""
+  frequencyType: FrequencyType
+
+  """Interval between recurrences (e.g., every 2 hours)"""
+  interval: Float
+
+  """Start date and time for the event recurrence"""
+  startDate: DateTime
+
+  """Indicates whether the event was system-generated"""
+  system: Boolean!
+
+  """Type of the chat event"""
+  type: ChatEventType!
+}
+
+"""The type of the chat event, such as GREETINGS or RECURRENT"""
+enum ChatEventType {
+  GREETINGS
+  RECURRENT
+}
+
+"""Represents a chat entity."""
+type ChatObject {
+  """The unique identifier of the chat."""
+  id: Float!
+
+  """The name or title of the chat."""
+  name: String!
+}
+
+"""Represents a conversation between a client and the system."""
+type ConversationObject {
+  """The activity level of the client in the conversation."""
+  activity: Float!
+
+  """The client involved in the conversation."""
+  client: UserObject!
+
+  """The total number of messages sent by the client in the conversation."""
+  messagesCount: Float!
+
+  """
+  Fetches all questions associated with the conversation based on the client ID. Returns an array of message objects.
+  """
+  questions: [MessageObject!]!
+
+  """The registration date of the conversation, represented as a timestamp."""
+  registered: Float!
+
+  """The current state of the conversation."""
+  state: ConversationState!
+
+  """The title of the conversation."""
+  title: String!
+}
+
+"""Represents the state of a conversation"""
+enum ConversationState {
+  NEW
+  RECURRING
+  SLEEP
+}
+
+"""Input type for creating an announcement"""
+input CreateAnnouncementInput {
+  """The unique identifier of the chat where the announcement will be added"""
+  chatId: Float!
+
+  """The text content of the announcement"""
+  text: String!
+
+  """The title of the announcement"""
+  title: String!
+}
+
+"""Input arguments for the createConsultantReply mutation."""
+input CreateConsultantReplyInput {
+  """The ID of the client."""
+  clientId: Float!
+
+  """The content of the reply message."""
+  content: String!
+
+  """The ID of the parent message to reply to."""
+  parentId: Float!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""Input type for deleting an announcement by ID"""
+input DeleteAnnouncementInput {
+  """The unique identifier of the Chat"""
+  chatId: Float!
+
+  """The unique identifier of the announcement"""
+  id: ID!
+}
+
+"""The frequency type for event recurrence"""
+enum FrequencyType {
+  DAILY
+  HOURLY
+  MONTHLY
+  WEEKLY
+  YEARLY
+}
+
+"""Input type for retrieving all announcements by the Chat ID"""
+input GetAllAnnouncementInput {
+  """The unique identifier of the Chat"""
+  chatId: Float!
+}
+
+"""Input data required to retrieve all events for a specific chat"""
+input GetAllChatEventInput {
+  """
+  The unique identifier of the chat for which all events will be retrieved
+  """
+  chatId: Float!
+}
+
+"""Input data required to retrieve analytics for a specific chat."""
+input GetAnalyticsInput {
+  """The unique identifier of the Chat."""
+  chatId: Float!
+}
+
+"""Input type for retrieving an announcement by ID"""
+input GetAnnouncementInput {
+  """The unique identifier of the Chat"""
+  chatId: Float!
+
+  """The unique identifier of the announcement"""
+  id: ID!
+}
+
+"""Input data required to retrieve a specific chat event"""
+input GetChatEventInput {
+  """The unique identifier of the chat where the event occurred"""
+  chatId: Float!
+
+  """The type of event to be added to the chat"""
+  eventType: ChatEventType!
+}
+
+"""Input arguments for the GetConversation query."""
+input GetConversationInput {
+  """The unique identifier of the client."""
+  clientId: Float!
+}
+
+"""Input arguments for the getReplies query."""
+input GetRepliesInput {
+  """The cursor to start fetching messages after."""
+  after: String
+
+  """The number of messages to return."""
+  first: Float
+
+  """The unique identifier of the message."""
+  messageId: Float!
+}
+
+type MessageConnection {
+  """A list of edges."""
+  edges: [MessageEdge!]!
+
+  """Pagination related information."""
+  pageInfo: PageInfo!
+}
+
+type MessageEdge {
+  """Cursor for this edge."""
+  cursor: String!
+
+  """The message object for this edge."""
+  node: MessageObject!
+}
+
+"""Represents a chat message within a conversation."""
+type MessageObject {
+  """The author of the message."""
+  author: UserObject!
+
+  """Content of the message."""
+  content: String!
+
+  """Unique identifier of the message."""
+  id: Float!
+
+  """
+  Unique identifier of the message this message is replying to. Nullable if there is no parent message.
+  """
+  parentId: Float
+
+  """A list of messages that are replies to this message."""
+  replies: [MessageObject!]!
+
+  """The number of replies to this message."""
+  replyCount: Float!
+
+  """Timestamp indicating when the message was created."""
+  timestamp: Float!
+}
+
+type Mutation {
+  """Adds a new event to a specific chat"""
+  addChatEvent(
+    """Input data to create a new chat event"""
+    input: AddChatEventInput!
+  ): Boolean!
+
+  """Creates a new announcement with the provided text"""
+  createAnnouncement(
+    """Input data for creating a new announcement"""
+    input: CreateAnnouncementInput!
+  ): Boolean!
+
+  """
+  Creates a consultant reply to a message. Returns true if the reply is successfully created.
+  """
+  createConsultantReply(
+    """Input data for creating a reply."""
+    input: CreateConsultantReplyInput!
+  ): Boolean!
+
+  """Deletes an existing announcement by id"""
+  deleteAnnouncement(
+    """Input data for deleting an existing announcement"""
+    input: DeleteAnnouncementInput!
+  ): Boolean!
+
+  """Removes a specific event from a chat based on chatId and eventType"""
+  removeChatEvent(
+    """Input data to remove a specific chat event"""
+    input: RemoveChatEventInput!
+  ): Boolean!
+
+  """Updates an existing announcement with the provided text"""
+  updateAnnouncement(
+    """Input data for updating an existing announcement"""
+    input: UpdateAnnouncementInput!
+  ): Boolean!
+}
+
+type PageInfo {
+  """The cursor for the end of this page."""
+  endCursor: String
+
+  """Indicates if there are more pages to fetch."""
+  hasNextPage: Boolean!
+
+  """Indicates if there are previous pages."""
+  hasPreviousPage: Boolean!
+
+  """The cursor for the start of this page."""
+  startCursor: String
+}
+
+type Query {
+  """Retrieves all announcement for the Chat"""
+  getAllAnnouncements(
+    """Input data containing the Chat ID"""
+    input: GetAllAnnouncementInput!
+  ): [AnnouncementObject!]!
+
+  """Retrieves all events for a specific chat based on chatId"""
+  getAllChatEvents(
+    """Input data to retrieve all events for a specific chat"""
+    input: GetAllChatEventInput!
+  ): [ChatEventObject!]!
+
+  """Retrieves all chat records available in the system."""
+  getAllChats: [ChatObject!]!
+
+  """Retrieves an announcement by its ID"""
+  getAnnouncement(
+    """Input data containing the ID of the announcement to retrieve"""
+    input: GetAnnouncementInput!
+  ): AnnouncementObject!
+
+  """Retrieves a specific chat event based on chatId and eventType"""
+  getChatEvent(
+    """Input data to retrieve a specific chat event"""
+    input: GetChatEventInput!
+  ): ChatEventObject!
+
+  """
+  Fetches a specific conversation based on the client ID provided in the input.
+  """
+  getConversation(
+    """Input containing the client ID to fetch a specific conversation."""
+    input: GetConversationInput!
+  ): ConversationObject!
+
+  """
+  Fetches a list of all conversations. Returns an array of conversation objects.
+  """
+  getConversations: [ConversationObject!]!
+  getMembersAnalytics(
+    """Input data containing the Chat ID"""
+    input: GetAnalyticsInput!
+  ): AnalyticsObject!
+  getMessagesAnalytics(
+    """Input data containing the Chat ID"""
+    input: GetAnalyticsInput!
+  ): AnalyticsObject!
+
+  """
+  Fetches paginated replies to this message in Relay-style connection format.
+  """
+  getReplies(
+    """Input data for fetching replies by message ID."""
+    input: GetRepliesInput!
+  ): MessageConnection!
+}
+
+"""Input data required to remove a specific chat event"""
+input RemoveChatEventInput {
+  """The unique identifier of the chat"""
+  chatId: Float!
+
+  """The unique identifier of the chat event to be removed"""
+  id: ID!
+}
+
+type Subscription {
+  ConversationUpdatedEvent(input: GetConversationInput!): ConversationObject!
+  MessageUpdatedEvent: MessageObject!
+}
+
+"""Input type for updating an existing announcement"""
+input UpdateAnnouncementInput {
+  """The unique identifier of the Chat"""
+  chatId: Float!
+
+  """The unique identifier of the announcement to be updated"""
+  id: ID!
+
+  """The updated text content of the announcement"""
+  text: String
+
+  """The updated title content of the announcement"""
+  title: String
+}
+
+"""Represents a user entity."""
+type UserObject {
+  """Country of the user."""
+  country: String!
+
+  """Full name of the user."""
+  fullName: String!
+
+  """Unique identifier of the user."""
+  userId: Float!
+
+  """Username of the user."""
+  username: String!
+}
