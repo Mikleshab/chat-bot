@@ -1,14 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
-import * as serviceAccount from '@libs/firebase/credentials/church-admin-panel.json';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class FirebaseService {
-  public readonly app: admin.app.App;
+  public app: admin.app.App;
 
-  constructor() {
+  constructor(configService: ConfigService<admin.ServiceAccount>) {
+    const serviceAccount = {
+      projectId: configService.get<string>('projectId'),
+      clientEmail: configService.get<string>('clientEmail'),
+      privateKey: configService.get<string>('privateKey'),
+    };
     this.app = admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+      credential: admin.credential.cert(serviceAccount),
     });
   }
 }

@@ -37,5 +37,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 For any further questions or to get involved, please email [book.of.life.thai@gmail.com
 ](mailto:book.of.life.thai@gmail.com
 ).
-
-Thank you for your interest in improving church community engagement through technology!

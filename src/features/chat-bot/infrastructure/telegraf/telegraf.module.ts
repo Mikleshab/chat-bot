@@ -17,7 +17,7 @@ import { CqrsModule } from '@nestjs/cqrs';
     ConfigModule.forRoot({
       load: [configuration],
       validationSchema: configurationValidationSchema,
-      envFilePath: [`.env.${process.env.NODE_ENV}.local`],
+      envFilePath: process.env.NODE_ENV !== 'production' ? [`.env.${process.env.NODE_ENV}.local`] : [],
     }),
   ],
   providers: [BOT_REPOSITORY_PROVIDER, BotService, SenderService, EventHandler, CommandHandler, CallbackHandler],
