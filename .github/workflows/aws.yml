@@ -11,17 +11,6 @@ env:
   ECS_CLUSTER: seed-church                        # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: .aws/task-definition.json  # set this to the path to your Amazon ECS task definition
   CONTAINER_NAME: seed-church-bot-server          # set this to the name of the container in the containerDefinitions section of your task definition
-  FIREBASE_TYPE: ${{ secrets.FIREBASE_TYPE }}
-  FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
-  FIREBASE_PRIVATE_KEY_ID: ${{ secrets.FIREBASE_PRIVATE_KEY_ID }}
-  FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}  # base64 encoded
-  FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
-  FIREBASE_CLIENT_ID: ${{ secrets.FIREBASE_CLIENT_ID }}
-  FIREBASE_AUTH_URI: ${{ secrets.FIREBASE_AUTH_URI }}
-  FIREBASE_TOKEN_URI: ${{ secrets.FIREBASE_TOKEN_URI }}
-  FIREBASE_AUTH_PROVIDER_CERT_URL: ${{ secrets.FIREBASE_AUTH_PROVIDER_CERT_URL }}
-  FIREBASE_CLIENT_CERT_URL: ${{ secrets.FIREBASE_CLIENT_CERT_URL }}
-
 
 permissions:
   contents: read
@@ -33,10 +22,24 @@ jobs:
     environment: production
 
     steps:
-      - name: Check environment variables
-        run: |
-          echo "FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID"
-          echo "FIREBASE_PRIVATE_KEY=$FIREBASE_PRIVATE_KEY"
+      - name: Fill in the new image ID and environment variables in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.image }}
+          environment-variables: |
+            FIREBASE_TYPE=${{ secrets.FIREBASE_TYPE }}
+            FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}
+            FIREBASE_PRIVATE_KEY_ID=${{ secrets.FIREBASE_PRIVATE_KEY_ID }}
+            FIREBASE_PRIVATE_KEY=${{ secrets.FIREBASE_PRIVATE_KEY }}
+            FIREBASE_CLIENT_EMAIL=${{ secrets.FIREBASE_CLIENT_EMAIL }}
+            FIREBASE_CLIENT_ID=${{ secrets.FIREBASE_CLIENT_ID }}
+            FIREBASE_AUTH_URI=${{ secrets.FIREBASE_AUTH_URI }}
+            FIREBASE_TOKEN_URI=${{ secrets.FIREBASE_TOKEN_URI }}
+            FIREBASE_AUTH_PROVIDER_CERT_URL=${{ secrets.FIREBASE_AUTH_PROVIDER_CERT_URL }}
+            FIREBASE_CLIENT_CERT_URL=${{ secrets.FIREBASE_CLIENT_CERT_URL }}
 
       - name: Checkout
         uses: actions/checkout@v4
