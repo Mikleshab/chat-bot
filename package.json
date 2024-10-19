@@ -1,8 +1,8 @@
 {
-  "name": "profi.io",
+  "name": "seed-church-bot-server",
   "version": "0.0.1",
-  "description": "Profi.io API",
-  "author": "Profi.io",
+  "description": "seed church bot server",
+  "author": "Seed church",
   "private": true,
   "license": "UNLICENSED",
   "engines": {
