@@ -11,8 +11,6 @@ export class FirebaseService {
   async init() {
     const secret = await this.secretsService.getSecret('prod/Forebase');
 
-    console.log('secretsecretsecretsecretsecretsecret =>>>>>>>>>>>>>>>>>>>', secret);
-
     this.app = admin.initializeApp({
       credential: admin.credential.cert(secret as admin.ServiceAccount),
     });
