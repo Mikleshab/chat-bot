@@ -5,6 +5,7 @@ import { FirebaseModule } from '@libs/firebase/firebase.module';
 import { TelegramBotModule } from '@libs/telegram-bot/telegram-bot.module';
 import { FeaturesModule } from '@features/features.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { SecretsService } from '@libs/aws/secrets.service';
 
 const libs = [FirebaseModule, TelegramBotModule];
 
@@ -18,5 +19,6 @@ const libs = [FirebaseModule, TelegramBotModule];
       http: process.env.NODE_ENV !== 'production',
     }),
   ],
+  providers: [SecretsService],
 })
 export class AppModule {}

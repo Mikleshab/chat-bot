@@ -1,14 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
-import { serviceAccount } from '@libs/firebase/credentials/church-admin-panel';
+import { SecretsService } from '@libs/aws/secrets.service';
 
 @Injectable()
 export class FirebaseService {
-  public readonly app: admin.app.App;
+  public app!: admin.app.App;
 
-  constructor() {
+  constructor(private readonly secretsService: SecretsService) {}
+
+  async init() {
+    const secret = await this.secretsService.getSecret('prod/Forebase');
+
+    console.log('secretsecretsecretsecretsecretsecret =>>>>>>>>>>>>>>>>>>>', secret);
+
     this.app = admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+      credential: admin.credential.cert(secret as admin.ServiceAccount),
     });
   }
 }
