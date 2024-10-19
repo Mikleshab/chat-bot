@@ -22,8 +22,8 @@ jobs:
     environment: production
 
     steps:
-      - name: Fill in the new image ID and environment variables in the Amazon ECS task definition
-        id: task-def
+      - name: Fill in environment variables in the Amazon ECS task definition
+        id: fill-task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
