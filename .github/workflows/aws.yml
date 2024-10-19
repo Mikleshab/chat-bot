@@ -22,11 +22,6 @@ jobs:
     environment: production
 
     steps:
-      - name: Check environment variables
-        run: |
-          echo "FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID"
-          echo "FIREBASE_PRIVATE_KEY=$FIREBASE_PRIVATE_KEY"
-
       - name: Checkout
         uses: actions/checkout@v4
 
