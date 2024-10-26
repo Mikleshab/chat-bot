@@ -6,8 +6,11 @@ import { GetAnalyticsInput } from '@features/analytics/presenters/graphql/dto/ge
 import { AnalyticsMapper } from '@features/analytics/presenters/graphql/mappers/analytics.mapper';
 import { QueryBus } from '@nestjs/cqrs';
 import { Args, Query, Resolver } from '@nestjs/graphql';
+import { AuthGuard } from 'src/core/auth/auth.guard';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => AnalyticsObject)
+@UseGuards(AuthGuard)
 export class AnalyticsResolver {
   constructor(private readonly queryBus: QueryBus) {}
 

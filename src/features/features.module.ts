@@ -7,9 +7,11 @@ import { EventsModule } from '@features/events/events.module';
 import { LoggerModule } from '@features/logger/logger.module';
 import { Module } from '@nestjs/common';
 import { ChatsModule } from '@features/chat/chats.module';
+import { HealthModule } from '@features/health/health.module';
 
 @Module({
   imports: [
+    HealthModule,
     ChatsModule,
     ConsultantModule,
     AnalyticsModule,

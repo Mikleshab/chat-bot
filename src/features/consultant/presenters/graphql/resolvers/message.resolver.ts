@@ -8,8 +8,11 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetAllRepliesQuery } from '@features/consultant/application/queries/get-all-replies.query';
 import { ConversationMessage } from '@features/consultant/domain/models/conversation-message';
 import { ConversationMessageConnectionMapper } from '@features/consultant/presenters/graphql/mappers/conversation-message-connection.mapper';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/core/auth/auth.guard';
 
 @Resolver(() => MessageObject)
+@UseGuards(AuthGuard)
 export class MessageResolver {
   constructor(
     private readonly queryBus: QueryBus,

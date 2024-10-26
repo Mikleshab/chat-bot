@@ -2,7 +2,6 @@ import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import process from 'node:process';
 import { configuration, configurationValidationSchema } from './config/config.schema';
-import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth.guard';
 
 @Global()
@@ -14,11 +13,7 @@ import { AuthGuard } from './auth.guard';
       envFilePath: process.env.NODE_ENV !== 'production' ? [`.env.${process.env.NODE_ENV}.local`] : [],
     }),
   ],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
-  ],
+  providers: [AuthGuard],
+  exports: [AuthGuard],
 })
 export class AuthModule {}
