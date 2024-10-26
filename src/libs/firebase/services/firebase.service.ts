@@ -12,6 +12,7 @@ export class FirebaseService {
       clientEmail: configService.get<string>('clientEmail'),
       privateKey: configService.get<string>('privateKey'),
     };
+    console.log('serviceAccount');
     this.app = admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
     });
