@@ -8,9 +8,9 @@ import { CommonConfiguration, DEFAULT_PORT } from '@config/common.config';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { snapshot: true });
   app.enableCors({
-    origin: '*',
+    origin: ['https://d1otptx74btwrk.cloudfront.net', 'http://localhost:3000', 'http://localhost:4200'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type, Accept, Token',
+    allowedHeaders: 'Content-Type, Accept, Token, x-apollo-operation-name, apollo-require-preflight',
     credentials: true,
   });
   app.useGlobalPipes(new ValidationPipe());
