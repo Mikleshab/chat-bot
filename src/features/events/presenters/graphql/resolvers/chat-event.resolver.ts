@@ -10,8 +10,11 @@ import { RemoveChatEventInput } from '@features/events/presenters/graphql/dto/re
 import { ChatEventMapper } from '@features/events/presenters/graphql/mappers/chat-event.mapper';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/core/auth/auth.guard';
 
 @Resolver(() => ChatEventObject)
+@UseGuards(AuthGuard)
 export class ChatEventResolver {
   constructor(
     private readonly commandBus: CommandBus,

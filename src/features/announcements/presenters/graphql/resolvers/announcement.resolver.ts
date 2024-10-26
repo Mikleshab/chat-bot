@@ -18,8 +18,11 @@ import { GetChatEventByAnnouncementIdQuery } from '@features/events/application/
 import { ChatEvent } from '@features/events/domain/model/chat-event';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/core/auth/auth.guard';
 
 @Resolver(() => AnnouncementObject)
+@UseGuards(AuthGuard)
 export class AnnouncementResolver {
   constructor(
     private readonly commandBus: CommandBus,

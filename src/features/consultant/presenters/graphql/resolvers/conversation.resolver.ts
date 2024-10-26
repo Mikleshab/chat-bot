@@ -9,8 +9,11 @@ import { GetAllConversations } from '@features/consultant/application/queries/ge
 import { Conversation } from '@features/consultant/domain/value-objects/conversation';
 import { GetAllClientQuestionsQuery } from '@features/consultant/application/queries/get-all-client-questions.query';
 import { ConversationMessage } from '@features/consultant/domain/models/conversation-message';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/core/auth/auth.guard';
 
 @Resolver(() => ConversationObject)
+@UseGuards(AuthGuard)
 export class ConversationResolver {
   constructor(private readonly queryBus: QueryBus) {}
 
