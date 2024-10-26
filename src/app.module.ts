@@ -4,6 +4,7 @@ import { InitializersModule } from '@initializers/initializers.module';
 import { FirebaseModule } from '@libs/firebase/firebase.module';
 import { FeaturesModule } from '@features/features.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { AuthModule } from './core/auth/auth.module';
 
 const libs = [FirebaseModule];
 
@@ -16,6 +17,7 @@ const libs = [FirebaseModule];
     DevtoolsModule.register({
       http: process.env.NODE_ENV !== 'production',
     }),
+    AuthModule,
   ],
 })
 export class AppModule {}

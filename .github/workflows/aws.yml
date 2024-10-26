@@ -11,6 +11,7 @@ env:
   ECS_CLUSTER: seed-church                        # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: .aws/task-definition.json  # set this to the path to your Amazon ECS task definition
   CONTAINER_NAME: seed-church-bot-server          # set this to the name of the container in the containerDefinitions section of your task definition
+  DEFAULT_PORT: 3000
 
 permissions:
   contents: read
@@ -57,6 +58,7 @@ jobs:
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
           environment-variables: |
+            DEFAULT_PORT=${{ env.DEFAULT_PORT }}
             FIREBASE_TYPE=${{ secrets.FIREBASE_TYPE }}
             FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}
             FIREBASE_PRIVATE_KEY_ID=${{ secrets.FIREBASE_PRIVATE_KEY_ID }}
