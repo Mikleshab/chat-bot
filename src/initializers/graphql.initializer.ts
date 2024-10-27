@@ -32,8 +32,6 @@ import { AuthConfig } from 'src/core/auth/config/config.schema';
                 try {
                   user = await admin.auth().verifyIdToken(token as string);
                 } catch (error) {
-                  console.log('GraphQLInitializer', JSON.stringify(error));
-
                   throw new UnauthorizedException('Invalid token.');
                 }
 
