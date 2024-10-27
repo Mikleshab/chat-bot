@@ -25,7 +25,6 @@ export class AuthGuard implements CanActivate {
     try {
       ctx.user = await admin.auth().verifyIdToken(token as string);
     } catch (error) {
-      console.log('AuthGuard', JSON.stringify(error));
       throw new UnauthorizedException('Invalid token.');
     }
 
