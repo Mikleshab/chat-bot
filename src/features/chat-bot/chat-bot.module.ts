@@ -11,6 +11,7 @@ import { Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { Bot } from './domain/models/bot';
 import { TelegrafModule } from './infrastructure/telegraf/telegraf.module';
+import { WebhookController } from '@features/chat-bot/presenters/rest/webhook.controller';
 
 const handlers = [SendGreetingsMessageHandler, NotifyMemberAboutReceivedMessageHandler, SendMessageToMemberHandler];
 const sagas = [NewChatMemberSagas, LeftChatMemberSagas, SaveMemberPrivateMessageSagas, SaveMemberMessageSagas];
@@ -18,6 +19,7 @@ const sagas = [NewChatMemberSagas, LeftChatMemberSagas, SaveMemberPrivateMessage
 @Module({
   imports: [CqrsModule, TelegrafModule],
   providers: [...handlers, ...sagas, Bot, TasksService, ExceptionLoggerService],
+  controllers: [WebhookController],
 })
 export class ChatBotModule implements OnModuleInit, OnModuleDestroy {
   constructor(private readonly bot: Bot) {}

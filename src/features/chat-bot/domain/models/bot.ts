@@ -18,4 +18,8 @@ export class Bot {
   async send(chatId: Chat['id'], message: Message | string, replyToMessageId?: number | null): Promise<Message> {
     return this.repository.send(chatId, message, replyToMessageId);
   }
+
+  async update(update: unknown): Promise<void> {
+    await this.repository.update(update);
+  }
 }
