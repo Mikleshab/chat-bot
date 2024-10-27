@@ -8,10 +8,8 @@ import { Telegraf } from 'telegraf';
 @Injectable()
 export class BotService {
   private bot!: Telegraf;
-  private readonly token: string;
 
-  constructor(configService: ConfigService<Configuration>) {
-    this.token = configService.get<string>('botToken', '');
+  constructor(private configService: ConfigService<Configuration>) {
     this.initializeBot();
   }
 
@@ -20,22 +18,24 @@ export class BotService {
   }
 
   private initializeBot() {
-    this.bot = new Telegraf(this.token, { handlerTimeout: 30000 });
+    this.bot = new Telegraf(this.configService.get<Configuration['botToken']>('botToken', ''), {
+      handlerTimeout: 30000,
+    });
   }
 
   private tryLaunchBot() {
-    const production = false;
-
     return defer(() =>
-      this.bot.launch({
-        webhook: production
-          ? {
-              domain: '',
-            }
-          : undefined,
-        dropPendingUpdates: true,
-        allowedUpdates: ['message', 'chat_member'],
-      }),
+      this.configService.get<Configuration['isProduction']>('isProduction', false)
+        ? this.bot.launch({
+            webhook: {
+              domain: this.configService.get<Configuration['webHookUri']>('webHookUri', ''),
+            },
+            dropPendingUpdates: true,
+            allowedUpdates: ['message', 'chat_member'],
+          })
+        : this.bot.launch({
+            dropPendingUpdates: true,
+          }),
     );
   }
 

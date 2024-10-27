@@ -10,9 +10,8 @@ import { BotService } from '@features/chat-bot/infrastructure/telegraf/services/
 import { EventHandler } from '@features/chat-bot/infrastructure/telegraf/services/event.handler';
 import { SenderService } from '@features/chat-bot/infrastructure/telegraf/services/sender.service';
 import { EventPublisher } from '@nestjs/cqrs';
-import { Message as TelegramMessage } from '@telegraf/types';
+import { ApiMethods, Message as TelegramMessage, Update } from '@telegraf/types';
 import { Context } from 'telegraf';
-import { Telegram } from 'telegraf/src/core/types/typegram';
 
 export class TelegrafBotRepository implements BotRepository {
   constructor(
@@ -57,7 +56,7 @@ export class TelegrafBotRepository implements BotRepository {
   }
 
   async send(chatId: Chat['id'], message: Message | string, replyToMessageId?: number | null): Promise<Message> {
-    let result: ReturnType<Telegram['sendMessage']>;
+    let result: ReturnType<ApiMethods<unknown>['sendMessage']>;
     if (typeof message === 'string') {
       result = await this.sender.sendMessageWithRetry(chatId, message, ExtraMapper.toExtra(replyToMessageId || null));
     } else {
@@ -69,5 +68,9 @@ export class TelegrafBotRepository implements BotRepository {
     }
 
     return MessageMapper.toDomain(result);
+  }
+
+  async update(update: unknown): Promise<void> {
+    await this.botService.getBot().handleUpdate(update as Update);
   }
 }

@@ -6,4 +6,6 @@ export abstract class BotRepository {
   abstract stop(): void;
 
   abstract send(chatId: number, message: Message | string, replyToMessageId?: number | null): Promise<Message>;
+
+  abstract update(update: unknown): Promise<void>;
 }
