@@ -42,7 +42,7 @@ export class FirebaseAnalyticsRepository implements AnalyticsRepository {
 
     const data = doc.data();
 
-    if (!data || !data[collectionKey]) {
+    if (!data || data[collectionKey] === undefined) {
       throw new Error(`Data in path ${COUNTERS_COLLECTION}/${chatId}/${collectionKey} not found.`);
     }
 
