@@ -6,6 +6,7 @@ import * as admin from 'firebase-admin';
 import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier';
 import { ConfigService } from '@nestjs/config';
 import { AuthConfig } from 'src/core/auth/config/config.schema';
+import process from 'node:process';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthConfig } from 'src/core/auth/config/config.schema';
         return {
           autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
           sortSchema: true,
+          introspection: process.env.NODE_ENV !== 'production',
           subscriptions: {
             'graphql-ws': {
               onConnect: async (context) => {
